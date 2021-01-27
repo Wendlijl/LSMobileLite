@@ -61,13 +61,7 @@ public class ManageMap : MonoBehaviour
     private int revealedLength; //variable to store the length of the list of revealed tiles
     private int mapLength; //variable to store the length of the list of map tiles
     private int randTileIndx; //variable to store a random index used to determine which background tile to set a given hex to
-    private int numSpawnedEnemies;
-    private int randEnemy;
     private float dispInterval = 0.1f; //variable to determine how often to update the cell highlighted by the mouse. In this case it is done every 0.1 seconds
-    private string enemyKey;
-    
-
-    private GameObject enemyTemp;
 
     private GridLayout gridLayout; //create a variable to hold an instance of the grid layout
 
@@ -110,7 +104,6 @@ public class ManageMap : MonoBehaviour
         starTileStrings.Add("starTile7");
 
         spawnedEnemies = new Dictionary<string, GameObject>(); //create a dictionary to hold spawned enemies
-        numSpawnedEnemies = 0;
         maxEnemies = 2;
 
         lastHighCell = new Vector3(0, 0, 0); //set the inital value of the last cell highlighted by the mouse pointer
@@ -384,9 +377,51 @@ public class ManageMap : MonoBehaviour
         }
     }
 
-    public void SpawnEnemies()
+    public void SpawnEnemies(int maxEnemies, bool repeatEnemies, List<int> allowedEnemies)
     {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        List<GameObject> availableEnemies = new List<GameObject>() { enemyA, enemyB };
+        List<GameObject> allowableEnemies = new List<GameObject>();
+        List<Vector3Int> availableSpawnPoints = new List<Vector3Int>();
 
+        foreach (GameObject enemy in enemies)
+        {
+            GameObject.Destroy(enemy);
+        }
+
+        foreach (int enemy in allowedEnemies)
+        {
+            allowableEnemies.Add(availableEnemies[enemy]);
+        }
+
+        availableSpawnPoints.AddRange(revealedTilesUnique);
+
+        int maxNoRepeatEnemies = allowableEnemies.Count;
+
+        for (int enemiesSpawned = 0; enemiesSpawned <= maxEnemies; enemiesSpawned++)
+        {
+            if (!repeatEnemies && enemiesSpawned >= maxNoRepeatEnemies)
+            {
+                break;
+            }
+            else
+            {
+                int randEnemyIndex = Random.Range(0, allowableEnemies.Count);
+                int randSpawnIndex = Random.Range(0, availableSpawnPoints.Count);
+
+                if (repeatEnemies)
+                {
+                    Instantiate(allowableEnemies[randEnemyIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    availableSpawnPoints.RemoveAt(randSpawnIndex);
+                }
+                else
+                {
+                    Instantiate(allowableEnemies[randEnemyIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    availableSpawnPoints.RemoveAt(randSpawnIndex);
+                    allowableEnemies.RemoveAt(randEnemyIndex);
+                }
+            }
+        }
     }
 
     public void GenericSpawnPlanets()
@@ -397,6 +432,7 @@ public class ManageMap : MonoBehaviour
     }
     public void GenericSpawnEnemies()
     {
-
+        List<int> allowedEnemies = new List<int>() { 0, 1};
+        SpawnEnemies(5, true, allowedEnemies);
     }
 }
