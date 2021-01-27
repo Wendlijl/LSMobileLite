@@ -42,6 +42,18 @@ public class ManageMap : MonoBehaviour
     public Tile starTile6;
     public Tile starTile7;
 
+    public GameObject planet0;
+    public GameObject planet1;
+    public GameObject planet2;
+    public GameObject planet3;
+    public GameObject planet4;
+    public GameObject planet5;
+    public GameObject planet6;
+    public GameObject planet7;
+    public GameObject planet8;
+    public GameObject planet9;
+    public GameObject planet10;
+
     
     public List<Vector3Int> currentHighlightedTiles; //create a list to hold references to the tiles highlighted by the laser range ability. This list is public so that the abiltiy controller script can access this list to check for in range tiles (not currently implemented)
     public Dictionary<string, GameObject> spawnedEnemies;
@@ -150,33 +162,6 @@ public class ManageMap : MonoBehaviour
         //this function calculates distance using the cube coordinate method
         //this method of calculating distance was taken from here https://www.redblobgames.com/grids/hexagons/
         return Mathf.Max(Mathf.Abs(hex2.x - hex1.x), Mathf.Abs(hex2.y - hex1.y), Mathf.Abs(hex2.z - hex1.z));
-    }
-
-    public void SpawnEnemies()
-    {
-
-        foreach ( string key in spawnedEnemies.Keys)
-        {
-            numSpawnedEnemies++;
-        }
-
-        if (numSpawnedEnemies < maxEnemies)
-        {
-            numSpawnedEnemies++;
-            randEnemy = Random.Range(0, 1);
-            
-            if (randEnemy == 0)
-            {
-                enemyTemp = Instantiate(enemyA, gameObject.transform.position, Quaternion.identity);
-            }
-            else
-            {
-                enemyTemp = Instantiate(enemyB, gameObject.transform.position, Quaternion.identity);
-            }
-            
-            spawnedEnemies.Add("enemy1", enemyTemp);
-            
-        }
     }
 
     public void GenerateMap() //this function runs as soon as the scene loads. It's purpose is to either load a map from memory or create a new map for the game to use
@@ -344,5 +329,74 @@ public class ManageMap : MonoBehaviour
         {
             print("Nothing to delete"); //if no save file exists, send a message that nothing was done
         }
+    }
+
+    public void SpawnPlanets(int spawnMaxX, int spawnMaxY, int spawnMinX, int spawnMinY, bool repeatPlanets, List<int> allowedPlanets, int maxPlanets)
+    {
+        GameObject[] planets = GameObject.FindGameObjectsWithTag("Planet");
+        List<GameObject> availablePlaents = new List<GameObject>() { planet0, planet1, planet2, planet3, planet4, planet5, planet6, planet7, planet8, planet9, planet10 };
+        List<GameObject> allowablePlanets = new List<GameObject>();
+        List<Vector3Int> availableSpawnPoints = new List<Vector3Int>();
+        
+        foreach (GameObject planet in planets)
+        {
+            GameObject.Destroy(planet);
+        }
+
+        foreach(int planet in allowedPlanets)
+        {
+            allowablePlanets.Add(availablePlaents[planet]);
+        }
+
+        for (int x = spawnMinX; x <= spawnMaxX; x++) //iterate through x coordinates to create map
+        {
+            for (int y = spawnMinY; y <= spawnMaxY; y++) //iterate through y coordinates to create map
+            {
+                availableSpawnPoints.Add(new Vector3Int(x, y, 0));
+            }
+        }
+
+        int maxNoRepeatPlanets = allowablePlanets.Count;
+
+        for (int planetsSpawned = 0; planetsSpawned <= maxPlanets; planetsSpawned++)
+        {
+            if (!repeatPlanets && planetsSpawned >= maxNoRepeatPlanets )
+            {
+                break;
+            }
+            else
+            {
+                int randPlanetIndex = Random.Range(0, allowablePlanets.Count);
+                int randSpawnIndex = Random.Range(0, availableSpawnPoints.Count);
+
+                if (repeatPlanets)
+                {
+                    Instantiate(allowablePlanets[randPlanetIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    availableSpawnPoints.RemoveAt(randSpawnIndex);
+                }
+                else
+                {
+                    Instantiate(allowablePlanets[randPlanetIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    availableSpawnPoints.RemoveAt(randSpawnIndex);
+                    allowablePlanets.RemoveAt(randPlanetIndex);
+                }
+            }
+        }
+    }
+
+    public void SpawnEnemies()
+    {
+
+    }
+
+    public void GenericSpawnPlanets()
+    {
+        List<int> allowedPlaents = new List<int>() {0,1,2,3,4,5,6,7,8,9,10};
+        //List<int> allowedPlaents = new List<int>() {5,8};
+        SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 20);
+    }
+    public void GenericSpawnEnemies()
+    {
+
     }
 }

@@ -71,7 +71,7 @@ public class MovementController : MonoBehaviour
                 clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
-                Debug.Log(mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
+                //Debug.Log(mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
 
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
