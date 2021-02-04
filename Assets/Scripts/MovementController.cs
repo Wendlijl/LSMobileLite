@@ -15,7 +15,7 @@ public class MovementController : MonoBehaviour
     public bool abilityActive; //boolean to indicate when abilities are active
     public Tilemap fogOfWar; //Get a reference to the overlay tiles
     public Tilemap starField; //Get a reference to the overlay tiles
-    public Vector3Int playerCellPosition; //variable to store the cellPosition of the player
+    public Vector3Int playerCellPosition; //variable to store the cell position of the player
     public Vector3Int playerCellPositionCubeCoords; //variable to store the cellPosition of the player
     public Vector3 setAngleVector; //variable to hold the player ship directional angle
 
@@ -72,7 +72,7 @@ public class MovementController : MonoBehaviour
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
                 //Debug.Log(mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-
+                Debug.Log(clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
 

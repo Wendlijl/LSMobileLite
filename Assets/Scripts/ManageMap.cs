@@ -12,6 +12,7 @@ public class ManageMap : MonoBehaviour
     public int mapYMax;
     public int mapYMin;
     public int maxEnemies;
+    public int enemiesInList;
 
     public string saveName;//variable for inputing the save file name
 
@@ -56,7 +57,7 @@ public class ManageMap : MonoBehaviour
 
     
     public List<Vector3Int> currentHighlightedTiles; //create a list to hold references to the tiles highlighted by the laser range ability. This list is public so that the abiltiy controller script can access this list to check for in range tiles (not currently implemented)
-    public Dictionary<string, GameObject> spawnedEnemies;
+
 
     private int revealedLength; //variable to store the length of the list of revealed tiles
     private int mapLength; //variable to store the length of the list of map tiles
@@ -69,10 +70,13 @@ public class ManageMap : MonoBehaviour
     private List<MapTile> revealedTiles; //create a list of hold the reference to the revealed map tiles
     private List<Vector3Int> revealedTilesRaw; //create a list to hold the unedited references of revealed tile coordinates (this list will have duplicates)
     private List<Vector3Int> revealedTilesUnique; //create a list to hold edited references of revealed tile coordinates (this list should not have duplicates)
-    
-    
+    private List<PlanetObject> spawnedPlanets;
+    public List<EnemyObject> spawnedEnemies;
+
     private List<string> starTileStrings; //list of dictionary names for the star tiles used as the map background
     private Dictionary<string, Tile> starTileDict; //a dictionary (key, value list) that holds all of the possible background tiles
+    private Dictionary<string, GameObject> planetObjectsDict;
+    private Dictionary<string, GameObject> enemyObjectsDict;
 
     private MovementController playerState; //variable to hold a reference to the movement controller script
     private Vector3 loadedPlayerTile; //variable to hold a reference to the player grid position saved in memory
@@ -81,30 +85,43 @@ public class ManageMap : MonoBehaviour
 
     void Awake()
     {
-        starTileDict = new Dictionary<string, Tile>(); //create a dictionary to hold key value pairs for all the background star tiles
-        //These next lines are all adding the background tiles to the dictionary and associating them with a keyword
-        starTileDict.Add("starTile0", starTile0);
-        starTileDict.Add("starTile1", starTile1);
-        starTileDict.Add("starTile2", starTile2);
-        starTileDict.Add("starTile3", starTile3);
-        starTileDict.Add("starTile4", starTile4);
-        starTileDict.Add("starTile5", starTile5);
-        starTileDict.Add("starTile6", starTile6);
-        starTileDict.Add("starTile7", starTile7);
+        //create a dictionary to hold key value pairs for all the background star tiles
+        starTileDict = new Dictionary<string, Tile>() {
+            { "starTile0", starTile0 },
+            { "starTile1", starTile1 },
+            { "starTile2", starTile2 },
+            { "starTile3", starTile3 },
+            { "starTile4", starTile4 },
+            { "starTile5", starTile5 },
+            { "starTile6", starTile6 },
+            { "starTile7", starTile7 },
+        }; 
+        
+        //create a list to hold all of the star tile keywords
+        starTileStrings = new List<string>() { "starTile0", "starTile1", "starTile2", "starTile3", "starTile4", "starTile5", "starTile6", "starTile7", };
 
-        starTileStrings = new List<string>(); //create a list to hold all of the star tile keywords
-        //These next lines are adding all of the star tile keywords to the list
-        starTileStrings.Add("starTile0"); 
-        starTileStrings.Add("starTile1");
-        starTileStrings.Add("starTile2");
-        starTileStrings.Add("starTile3");
-        starTileStrings.Add("starTile4");
-        starTileStrings.Add("starTile5");
-        starTileStrings.Add("starTile6");
-        starTileStrings.Add("starTile7");
+        planetObjectsDict = new Dictionary<string, GameObject>()
+        {
+            { "Planet0", planet0 },
+            { "Planet1", planet1 },
+            { "Planet2", planet2 },
+            { "Planet3", planet3 },
+            { "Planet4", planet4 },
+            { "Planet5", planet5 },
+            { "Planet6", planet6 },
+            { "Planet7", planet7 },
+            { "Planet8", planet8 },
+            { "Planet9", planet9 },
+            { "Planet10", planet10 },
+        };
+        spawnedPlanets = new List<PlanetObject>();
 
-        spawnedEnemies = new Dictionary<string, GameObject>(); //create a dictionary to hold spawned enemies
-        maxEnemies = 2;
+        enemyObjectsDict = new Dictionary<string, GameObject>()
+        {
+            { "EnemyA", enemyA },
+            { "EnemyB", enemyB },
+        };
+        spawnedEnemies = new List<EnemyObject>();
 
         lastHighCell = new Vector3(0, 0, 0); //set the inital value of the last cell highlighted by the mouse pointer
 
@@ -136,6 +153,7 @@ public class ManageMap : MonoBehaviour
         {
             UpdateHighlight(player.GetComponent<AbilityController>().laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the function to update the map highlighting
         }
+        enemiesInList = spawnedEnemies.Count;
     }
 
     public Vector3Int evenq2cube(Vector3Int evenqCoords)
@@ -176,6 +194,7 @@ public class ManageMap : MonoBehaviour
                     starField.SetTile(new Vector3Int(x, y, 0), starTileDict[starTileStrings[randTileIndx]]); //set the background hex at the current coordinates based on the random map tile selected before
                 }
             }
+            GenericSpawnPlanets();
         }
     }
     public void UpdateFogOfWar(int vision, Vector3Int playerCellPosition) //this script will clear the fog of war based on the player's vision
@@ -262,6 +281,8 @@ public class ManageMap : MonoBehaviour
         mapLength = mapTiles.Count; //determine how long the map tiles list is and save that to a variable 
         instWriter.Write<int>("revealedLength", revealedLength); //write the revealed tiles length to the save file to be used when loading
         instWriter.Write<int>("mapLength", mapLength); //write the map tiles length to the save file to be used when loading
+        instWriter.Write<int>("planetLength", spawnedPlanets.Count); 
+        instWriter.Write<int>("enemyLength", spawnedEnemies.Count); 
         instWriter.Write<Vector3>("playerPos",playerState.playerCellPosition); //write the player position to the save file
         foreach (MapTile revealedTile in revealedTiles)//loop through the revealed tiles list and save off each to the save file
         {
@@ -272,10 +293,24 @@ public class ManageMap : MonoBehaviour
         i = 0; //after the loop finishes, reset the index tracker to 0
         foreach (MapTile mapTile in mapTiles)//loop through the map tiles list and save off each to the save file
         {
-            Vector2 saveItem = new Vector2(mapTile.xCoordinate, mapTile.yCoordinate);//this step might be redundant because this operation is now saving map tile directly to the save file
             instWriter.Write<MapTile>("mapTile" + i.ToString(), mapTile);//write the map tile directly to the save file
             i++;//increment the index tracker
         }
+        i = 0; //after the loop finishes, reset the index tracker to 0
+
+        foreach (PlanetObject planetSpawn in spawnedPlanets)
+        {
+            instWriter.Write<PlanetObject>("spawnedPlanet" + i.ToString(), planetSpawn);
+            i++;//increment the index tracker
+        }
+        i = 0; //after the loop finishes, reset the index tracker to 0
+        foreach (EnemyObject enemySpawn in spawnedEnemies)
+        {
+            instWriter.Write<EnemyObject>("spawnedEnemy" + i.ToString(), enemySpawn);
+                i++;//increment the index tracker
+        }
+
+
         instWriter.Commit();//write the save file
         print("Saved");//send a message that the file has been saved
     }
@@ -287,6 +322,8 @@ public class ManageMap : MonoBehaviour
             QuickSaveReader instReader = QuickSaveReader.Create(saveName); //create an instance of the quick save reader to pull in the save file            
             revealedLength = instReader.Read<int>("revealedLength"); //extract the revealed tiles list length parameter from the save file
             mapLength = instReader.Read<int>("mapLength"); //extract the map tiles list length parameter from the save file
+            int planetLength = instReader.Read<int>("planetLength");
+            int enemyLength = instReader.Read<int>("enemyLength");
             loadedPlayerTile = instReader.Read<Vector3>("playerPos"); //extract the player position coordinates from the save file
             playerState.transform.position = gridLayout.CellToWorld(new Vector3Int ((int)loadedPlayerTile.x, (int)loadedPlayerTile.y, (int)loadedPlayerTile.z)); //set the position of the player basded on the data extracted from the save file
             for(int i = 0; i < mapLength; i++) //set up a for loop to iterate through the save file and extract all of the map tiles. This uses the map tiles length to shorten the number of iterations for this loop
@@ -301,6 +338,27 @@ public class ManageMap : MonoBehaviour
                 Vector2 loadedItem = instReader.Read<Vector2>("revealedTile" + i.ToString()); //extract the vector2 data from the save file for the revealed tiles
                 fogOfWar.SetTile(new Vector3Int((int)loadedItem.x, (int)loadedItem.y, 0), null); //set the fog of war based on the revealed tiles
                 revealedTilesRaw.Add(new Vector3Int((int)loadedItem.x, (int)loadedItem.y, 0)); //save the coordinates from this to the revealed tiles raw list. This is important because this list needs to be checked against the tiles that get checked each time to ensure that only unique tiles go into the final list.
+            }
+            for(int i=0; i < planetLength; i++)
+            {
+                PlanetObject planetObject = instReader.Read<PlanetObject>("spawnedPlanet" + i.ToString());
+                spawnedPlanets.Add(planetObject);
+                Vector3Int planetSpawnPoint = new Vector3Int(planetObject.xCoordinate, planetObject.yCoordinate, 0);
+                Instantiate(planetObjectsDict[planetObject.planetString],starField.CellToWorld(planetSpawnPoint),Quaternion.identity);
+            }
+            GameObject tempEnemy;
+            for (int i = 0; i < enemyLength; i++)
+            {
+                EnemyObject enemyObject = instReader.Read<EnemyObject>("spawnedEnemy" + i.ToString());
+                spawnedEnemies.Add(enemyObject);
+                Vector3Int enemySpawnPoint = new Vector3Int(enemyObject.xCoordinate, enemyObject.yCoordinate, 0);
+                tempEnemy = Instantiate(enemyObjectsDict[enemyObject.enemyString], starField.CellToWorld(enemySpawnPoint), Quaternion.identity);
+                string clone = "(Clone)";
+                string enemyName = tempEnemy.name;
+                Vector3Int enemyPosition = starField.WorldToCell(tempEnemy.transform.position);
+                enemyName = enemyName.Replace(clone, "");
+                EnemyObject enemyObjectRef = new EnemyObject(enemyPosition.x, enemyPosition.y, enemyName);
+                tempEnemy.gameObject.GetComponent<EnemyShipControl>().thisEnemyObject = enemyObjectRef;
             }
             print("Loaded"); //send a message that data was loaded
         }
@@ -326,52 +384,76 @@ public class ManageMap : MonoBehaviour
 
     public void SpawnPlanets(int spawnMaxX, int spawnMaxY, int spawnMinX, int spawnMinY, bool repeatPlanets, List<int> allowedPlanets, int maxPlanets)
     {
-        GameObject[] planets = GameObject.FindGameObjectsWithTag("Planet");
-        List<GameObject> availablePlaents = new List<GameObject>() { planet0, planet1, planet2, planet3, planet4, planet5, planet6, planet7, planet8, planet9, planet10 };
-        List<GameObject> allowablePlanets = new List<GameObject>();
-        List<Vector3Int> availableSpawnPoints = new List<Vector3Int>();
+        /*
+         * This script is designed to spawn planets randomly throughout the map. It takes the following inputs
+         * spawnMaxX, spawnMaxY, spawnMinX, spawnMinY: These four inputs define the range of coordinates that the planets can spawn within.
+         * repeatPlanets: This Boolean defines whether a planet is allowed to repeat or not
+         * allowedPlanets: This is a list of the planets that the function can choose from when spawning the planets
+         * maxPlanets: This is a parameter that defines how many planets will be spawned (Note: this parameter will be overruled in the case that the available spaces to spawn planets is less than this number)
+        */
+        GameObject[] planets = GameObject.FindGameObjectsWithTag("Planet"); //create a list of any planets in the current scene
+        List<GameObject> availablePlaents = new List<GameObject>() { planet0, planet1, planet2, planet3, planet4, planet5, planet6, planet7, planet8, planet9, planet10 }; //create a list of planets that can be used based on supplied prefabs
+        List<GameObject> allowablePlanets = new List<GameObject>(); //create a placeholder for a list that will define what planets the function is allowed to spawn
+        List<Vector3Int> availableSpawnPoints = new List<Vector3Int>(); //create a placeholder for a list that will define where planets are allowed to spawn
         
-        foreach (GameObject planet in planets)
+        foreach (GameObject planet in planets) //loop through and destroy any planets currently in the scene
         {
             GameObject.Destroy(planet);
         }
+        spawnedPlanets.Clear();
 
-        foreach(int planet in allowedPlanets)
+        foreach(int planet in allowedPlanets) //loop through the supplied list of allowed planets and build the list of planets that the function is allowed to spawn
         {
             allowablePlanets.Add(availablePlaents[planet]);
         }
 
-        for (int x = spawnMinX; x <= spawnMaxX; x++) //iterate through x coordinates to create map
+        for (int x = spawnMinX; x <= spawnMaxX; x++) //This loop, and the one nested within it, are designed to populate the list of spawn points that can be used by the function
         {
-            for (int y = spawnMinY; y <= spawnMaxY; y++) //iterate through y coordinates to create map
+            for (int y = spawnMinY; y <= spawnMaxY; y++)
             {
                 availableSpawnPoints.Add(new Vector3Int(x, y, 0));
             }
         }
 
-        int maxNoRepeatPlanets = allowablePlanets.Count;
+        availableSpawnPoints.Remove(playerState.playerCellPosition); //remove the current player position from the list of available planets spawn points so that a planet does not spawn under the player
 
-        for (int planetsSpawned = 0; planetsSpawned <= maxPlanets; planetsSpawned++)
+        int maxNoRepeatPlanets = allowablePlanets.Count; //set a value for the maximum planets that can be spawned if the planets are not allowed to repeat. This will simply be equal to the number of available planets provided, but it needs to be saved off here becuase the list of avialble planets is shortened as they spawn for the case where no repeats are allowed.
+        int maxSpawnPointsAvailable = availableSpawnPoints.Count; //set a value for the maximum planets that can be spawned based on how many spawn points exist. This functions similarly to the above
+
+        for (int planetsSpawned = 0; planetsSpawned <= maxPlanets; planetsSpawned++) //set up a for loop to spawn planets until the maximum is reached
         {
-            if (!repeatPlanets && planetsSpawned >= maxNoRepeatPlanets )
+            if ((!repeatPlanets && planetsSpawned >= maxNoRepeatPlanets)||(planetsSpawned >= maxSpawnPointsAvailable)) //set up an alternate termination conditions for non repeating planets or maximum spawn point exceedance (i.e. if the number of planets spawned is greater than or equal to the number of planets in the list of available planets or if all of the avilable spawn points have been filled then no more planets can be spawned without either repeating or stacking planets respectively and the loop must end)
             {
                 break;
             }
             else
             {
-                int randPlanetIndex = Random.Range(0, allowablePlanets.Count);
-                int randSpawnIndex = Random.Range(0, availableSpawnPoints.Count);
+                int randPlanetIndex = Random.Range(0, allowablePlanets.Count); //on each loop, generate a random index value between 0 and the length of the allowed planets list. This will determine what planet is spawned in this iteration of the loop
+                int randSpawnIndex = Random.Range(0, availableSpawnPoints.Count); //on each loop, generate a random index value between 0 and the length of the available spawn points list. This will determine where the planet is spawned on the map
 
-                if (repeatPlanets)
+                if (repeatPlanets) //If planets are allowed to repeat, instantiate a randomly selected planet at the randomly selected coordinates from above, then remove the coordinates from the list of available coordinates
                 {
-                    Instantiate(allowablePlanets[randPlanetIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    GameObject planetTemp;
+                    planetTemp = Instantiate(allowablePlanets[randPlanetIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
                     availableSpawnPoints.RemoveAt(randSpawnIndex);
+                    
+                    string clone = "(Clone)";
+                    string planetName = planetTemp.name;
+                    Vector3Int planetPosition = starField.WorldToCell(planetTemp.transform.position);
+                    planetName = planetName.Replace(clone, "");
+                    spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName));
                 }
-                else
+                else //If planets are not allowed to repeat, then instantiate a randomly selected planet at the randomly selected coordinates and then remove both the planet and the coordinates from their respective lists to ensure niether is used again
                 {
-                    Instantiate(allowablePlanets[randPlanetIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    GameObject planetTemp;
+                    planetTemp = Instantiate(allowablePlanets[randPlanetIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
                     availableSpawnPoints.RemoveAt(randSpawnIndex);
                     allowablePlanets.RemoveAt(randPlanetIndex);
+                    string clone = "(Clone)";
+                    string planetName = planetTemp.name;
+                    Vector3Int planetPosition = starField.WorldToCell(planetTemp.transform.position);
+                    planetName = planetName.Replace(clone, "");
+                    spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName));
                 }
             }
         }
@@ -379,60 +461,84 @@ public class ManageMap : MonoBehaviour
 
     public void SpawnEnemies(int maxEnemies, bool repeatEnemies, List<int> allowedEnemies)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        List<GameObject> availableEnemies = new List<GameObject>() { enemyA, enemyB };
-        List<GameObject> allowableEnemies = new List<GameObject>();
-        List<Vector3Int> availableSpawnPoints = new List<Vector3Int>();
+        /*
+         * This script is designed to spawn enemies randomly throughout the revealed sections of the map. It takes the following inputs
+         * maxEnemies: This is a parameter that defines how many enemies will be spawned (Note: this parameter will be overruled in the case that the available spaces to spawn planets is less than this number)
+         * repeatPlanets: This Boolean defines whether a planet is allowed to repeat or not
+         * allowedPlanets: This is a list of the planets that the function can choose from when spawning the planets
+         */
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); //create a list of any enemies that are currently in the scene
+        List<GameObject> availableEnemies = new List<GameObject>() { enemyA, enemyB }; //create a list of available enemies based on supplied prefabs
+        List<GameObject> allowableEnemies = new List<GameObject>(); //create a placeholder list for enemies that the function is allowed to spawn
+        List<Vector3Int> availableSpawnPoints = new List<Vector3Int>(); //create a placeholder list for the available spawn points
 
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject enemy in enemies) //loop through the list of any enemies currently in the scene and destroy them
         {
             GameObject.Destroy(enemy);
         }
+        spawnedEnemies.Clear();
 
-        foreach (int enemy in allowedEnemies)
+        foreach (int enemy in allowedEnemies) //loop through the allowed enemies supplied to the function and build a list of enemies that the function is allowed to spawn
         {
             allowableEnemies.Add(availableEnemies[enemy]);
         }
 
-        availableSpawnPoints.AddRange(revealedTilesUnique);
+        availableSpawnPoints.AddRange(revealedTilesUnique); //populate the list of avaiable spawn points by adding all of the currently revelaed tiles
+        availableSpawnPoints.Remove(playerState.playerCellPosition); //remove the players current position from the list of available spawn points so that enemies do not spawn beneath the player
+        int maxNoRepeatEnemies = allowableEnemies.Count; //set the maximum number of enemies that can be spawned if they are not allowed to repeat
+        int maxSpawnPointsAvailable = availableSpawnPoints.Count; //set the maxium number of spawn points that enemies can be spawned at
 
-        int maxNoRepeatEnemies = allowableEnemies.Count;
-
-        for (int enemiesSpawned = 0; enemiesSpawned <= maxEnemies; enemiesSpawned++)
+        for (int enemiesSpawned = 0; enemiesSpawned <= maxEnemies; enemiesSpawned++) //set up a loop to spawn enemies until the max value is reached
         {
-            if (!repeatEnemies && enemiesSpawned >= maxNoRepeatEnemies)
+            if ((!repeatEnemies && enemiesSpawned >= maxNoRepeatEnemies)||(enemiesSpawned >= maxSpawnPointsAvailable)) //set up an alternate termination condition in the event that spawned enemies exceed either the no repeat condition or the available spawn points
             {
                 break;
             }
             else
             {
-                int randEnemyIndex = Random.Range(0, allowableEnemies.Count);
-                int randSpawnIndex = Random.Range(0, availableSpawnPoints.Count);
-
-                if (repeatEnemies)
+                int randEnemyIndex = Random.Range(0, allowableEnemies.Count); //generate a random index to be used to select which enemy will be spawned
+                int randSpawnIndex = Random.Range(0, availableSpawnPoints.Count); //generate a random index to be used to select the spawn position of the enemy
+                GameObject tempEnemy;
+                if (repeatEnemies) //if enemies are allowed to repeat, then instantiate a random enemy at the randomly selected coordinates and thne remove those coordinates from the list of available coordinates
                 {
-                    Instantiate(allowableEnemies[randEnemyIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    tempEnemy = Instantiate(allowableEnemies[randEnemyIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
                     availableSpawnPoints.RemoveAt(randSpawnIndex);
+
+                    string clone = "(Clone)";
+                    string enemyName = tempEnemy.name;
+                    Vector3Int enemyPosition = starField.WorldToCell(tempEnemy.transform.position);
+                    enemyName = enemyName.Replace(clone, "");
+                    EnemyObject enemyObjectRef = new EnemyObject(enemyPosition.x, enemyPosition.y, enemyName);
+                    spawnedEnemies.Add(new EnemyObject(enemyPosition.x, enemyPosition.y, enemyName));
+                    tempEnemy.gameObject.GetComponent<EnemyShipControl>().thisEnemyObject = enemyObjectRef;
                 }
-                else
+                else //if enemies are not allowed to repeat, then instantiate a random enemy at the randomly selected coordinates and thne remove both the enemy and those coordinates from their respective lists 
                 {
-                    Instantiate(allowableEnemies[randEnemyIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
+                    tempEnemy = Instantiate(allowableEnemies[randEnemyIndex], starField.CellToWorld(availableSpawnPoints[randSpawnIndex]), Quaternion.identity);
                     availableSpawnPoints.RemoveAt(randSpawnIndex);
                     allowableEnemies.RemoveAt(randEnemyIndex);
+
+                    string clone = "(Clone)";
+                    string enemyName = tempEnemy.name;
+                    Vector3Int enemyPosition = starField.WorldToCell(tempEnemy.transform.position);
+                    enemyName = enemyName.Replace(clone, "");
+                    EnemyObject enemyObjectRef = new EnemyObject(enemyPosition.x, enemyPosition.y, enemyName);
+                    spawnedEnemies.Add(enemyObjectRef);
+                    tempEnemy.gameObject.GetComponent<EnemyShipControl>().thisEnemyObject = enemyObjectRef;
                 }
             }
         }
     }
 
-    public void GenericSpawnPlanets()
+    public void GenericSpawnPlanets() //this function is intended to be the most basic application of the spawn planets function to be used for testing
     {
         List<int> allowedPlaents = new List<int>() {0,1,2,3,4,5,6,7,8,9,10};
         //List<int> allowedPlaents = new List<int>() {5,8};
-        SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 20);
+        SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, false, allowedPlaents, 20);
     }
-    public void GenericSpawnEnemies()
+    public void GenericSpawnEnemies() //this function is intended to be the most basic application of the spawn enemies function to be used for testing
     {
         List<int> allowedEnemies = new List<int>() { 0, 1};
-        SpawnEnemies(5, true, allowedEnemies);
+        SpawnEnemies(7, true, allowedEnemies);
     }
 }

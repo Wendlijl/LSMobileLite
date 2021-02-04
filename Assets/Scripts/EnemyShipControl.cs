@@ -14,9 +14,11 @@ public class EnemyShipControl : MonoBehaviour
     private bool shotIncoming; //Boolean to track if the laser animation is running
     private bool inRagne; //Boolean to track if this enemy is currently in range of the player 
     private float timer; //A timer for tracking the life of the laser shot
+    private string thisEnemyName;
     private GameObject player; //Variable to hold an instance of the player game object
     private GridLayout gridLayout; //Variable to hold an instance of the grid layout
     private ManageMap mapManager; //Variable to hold an instance of the map manager
+    public EnemyObject thisEnemyObject;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,6 +32,10 @@ public class EnemyShipControl : MonoBehaviour
         inRagne = false; //Set the initial state of the Boolean tracking range to the player
         shotIncoming = false; //Set the initial state of the laser animation
         timer = 0; //Set the initial value for the timer tracking the laser lifespan
+        string clone = "(Clone)";
+        thisEnemyName = gameObject.name;
+        thisEnemyName = thisEnemyName.Replace(clone, "");
+        //thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyName);
     }
 
     // Update is called once per frame
@@ -58,7 +64,20 @@ public class EnemyShipControl : MonoBehaviour
                         if (timer > 0.5)
                         {
                             //Once the timer has reached the determined length of the laser lifespan, create an instance of the explosion animation, destroy this game object, and set the shotIncoming and inRange values to false.
-                            Instantiate(explosion, gameObject.transform.position, Quaternion.identity); 
+                            Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
+                            
+                            Debug.Log("Enemy Destroyed"+thisEnemyObject.xCoordinate + " " + thisEnemyObject.yCoordinate + " " + thisEnemyObject.enemyString);
+                            int i= 0;
+                            foreach (EnemyObject listEnemy in mapManager.spawnedEnemies) {
+                            Debug.Log("List Enemy " + i + " " + listEnemy.xCoordinate + " " + listEnemy.yCoordinate + " " + listEnemy.enemyString);
+                                i++;
+                                if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
+                                {
+                                    mapManager.spawnedEnemies.Remove(listEnemy);
+                                    break;
+                                }
+                            }
+                            //mapManager.spawnedEnemies.Remove(thisEnemyObject);
                             Destroy(gameObject);
                             shotIncoming = false;
                             inRagne = false;
