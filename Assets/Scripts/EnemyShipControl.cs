@@ -65,19 +65,14 @@ public class EnemyShipControl : MonoBehaviour
                         {
                             //Once the timer has reached the determined length of the laser lifespan, create an instance of the explosion animation, destroy this game object, and set the shotIncoming and inRange values to false.
                             Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
-                            
-                            Debug.Log("Enemy Destroyed"+thisEnemyObject.xCoordinate + " " + thisEnemyObject.yCoordinate + " " + thisEnemyObject.enemyString);
-                            int i= 0;
+                            //The following foreach loop is designed to remove dead enemies from the list of living enemies that gets written to the save file. This prevents killed enemies from spawning again when the game is loaded.
                             foreach (EnemyObject listEnemy in mapManager.spawnedEnemies) {
-                            Debug.Log("List Enemy " + i + " " + listEnemy.xCoordinate + " " + listEnemy.yCoordinate + " " + listEnemy.enemyString);
-                                i++;
                                 if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
                                 {
                                     mapManager.spawnedEnemies.Remove(listEnemy);
                                     break;
                                 }
                             }
-                            //mapManager.spawnedEnemies.Remove(thisEnemyObject);
                             Destroy(gameObject);
                             shotIncoming = false;
                             inRagne = false;

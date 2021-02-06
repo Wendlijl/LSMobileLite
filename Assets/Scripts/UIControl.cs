@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using CI.QuickSave;
 
 public class UIControl : MonoBehaviour
 {
@@ -12,18 +13,30 @@ public class UIControl : MonoBehaviour
     public GameObject hologramMenu; //variable to hold the hologram upgrade menu
     public GameObject pausePanel; //variable to hold the game pause screen
     public GameObject upgradePanel; //variable to hold the upgrade panel
+    public GameObject newGamePanel; //variable to hold the upgrade panel
 
     private Button landOnPlanet; //contextual button used for landing on planets
     private bool isPaused; //boolean used to track if the game is paused 
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
-    
+    private ManageMap mapManager;
+
 
     private void Awake()
     {
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
+        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         isPaused = false; //set the game pause state to false
         sceneIndex = SceneManager.GetActiveScene().buildIndex; //get a reference to the current scene index
+
+        if (QuickSaveRoot.Exists(mapManager.saveName))
+        {
+            //Do nothing
+        }
+        else
+        {
+            newGamePanel.SetActive(true);
+        }
     }
 
     void Update()
