@@ -44,7 +44,7 @@ public class AbilityController : MonoBehaviour
     void Update()
     {
         //player = GameObject.FindGameObjectWithTag("Player"); //at one point, the player game object was being set every update. I don't think this is necessary, but it may have had some effect.
-        if (laserState) //check if the laser has been activated
+        if (laserState && !turnOffAb) //check if the laser has been activated
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
             target = gridLayout.WorldToCell(ray.origin); //set the position of the target to the position of the mouse pointer in grid coordinates
@@ -83,18 +83,21 @@ public class AbilityController : MonoBehaviour
 
     public void LaserActive()
     {
-        //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
-        if (laserState)
+        if (mapManager.playerTurn)
         {
-            laserState = false; //the laser state was true, so set it false
-            player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
-            mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the method that will update the map display to disable the range display
-        }
-        else
-        {
-            laserState = true; //the laser state was false, so set it true
-            player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
-            mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the method that will update the map display to enable the range display
+            //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
+            if (laserState)
+            {
+                laserState = false; //the laser state was true, so set it false
+                player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
+                mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the method that will update the map display to disable the range display
+            }
+            else
+            {
+                laserState = true; //the laser state was false, so set it true
+                player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
+                mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the method that will update the map display to enable the range display
+            }
         }
     }
 }

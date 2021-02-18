@@ -13,6 +13,9 @@ public class ManageMap : MonoBehaviour
     public int mapYMin;
     public int maxEnemies;
     public int enemiesInList;
+    public bool enemyTurn;
+    public bool playerTurn;
+    public bool combatActive;
 
     public string saveName;//variable for inputing the save file name
 
@@ -64,6 +67,7 @@ public class ManageMap : MonoBehaviour
     private int randTileIndx; //variable to store a random index used to determine which background tile to set a given hex to
     private float dispInterval = 0.1f; //variable to determine how often to update the cell highlighted by the mouse. In this case it is done every 0.1 seconds
 
+
     private GridLayout gridLayout; //create a variable to hold an instance of the grid layout
 
     private List<MapTile> mapTiles; //create a list to hold the reference to the map tiles
@@ -82,6 +86,8 @@ public class ManageMap : MonoBehaviour
     private Vector3 loadedPlayerTile; //variable to hold a reference to the player grid position saved in memory
     private Vector3 highCell; //variable to hold the coordinates of the currently highlighted grid cell
     private Vector3 lastHighCell; //variable to hold the coordinates of the previously highlighted grid cell. 
+
+    private UIControl uiController;
 
     void Awake()
     {
@@ -134,6 +140,10 @@ public class ManageMap : MonoBehaviour
         currentHighlightedTiles = new List<Vector3Int>(); //create a list to hold the tiles currently highlighted by the laser range
         playerState = GameObject.Find("Player").GetComponent<MovementController>(); //get a reference to the player game object
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //get a reference to the grid layout 
+        enemyTurn = true;
+        playerTurn = false;
+        combatActive = false;
+        uiController = GameObject.Find("GameController").GetComponent<UIControl>();
         GenerateMap(); //call the function to generate the map.
     }
     private void Update()
@@ -154,6 +164,14 @@ public class ManageMap : MonoBehaviour
             UpdateHighlight(player.GetComponent<AbilityController>().laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the function to update the map highlighting
         }
         enemiesInList = spawnedEnemies.Count;
+
+        if (spawnedEnemies.Count > 0 && !combatActive)
+        {
+            Debug.Log("Combat Active");
+            combatActive = true;
+            uiController.SetEndTurnButtonState();
+            uiController.DeactivateLandOnPlanet();
+        }
     }
 
     public Vector3Int evenq2cube(Vector3Int evenqCoords)
@@ -540,5 +558,22 @@ public class ManageMap : MonoBehaviour
     {
         List<int> allowedEnemies = new List<int>() { 0, 1};
         SpawnEnemies(7, true, allowedEnemies);
+    }
+
+    public List<PlanetObject> UndiscoveredPlanets( List<PlanetObject> spawnedPlanets, List<Vector3Int> revealedTilesUnique)
+    {
+        List<PlanetObject> undiscPlanet = new List<PlanetObject>();
+        
+        foreach (Vector3Int tile in revealedTilesUnique)
+        {
+            foreach (PlanetObject planet in spawnedPlanets)
+            {
+                if(planet.xCoordinate == tile.x && planet.yCoordinate == tile.y)
+                {
+                    undiscPlanet.Add(planet);
+                }
+            }
+        }
+        return undiscPlanet;
     }
 }

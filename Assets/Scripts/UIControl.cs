@@ -16,6 +16,8 @@ public class UIControl : MonoBehaviour
     public GameObject newGamePanel; //variable to hold the upgrade panel
 
     private Button landOnPlanet; //contextual button used for landing on planets
+    private Button endPlayerTurn; //contextual button used for landing on planets
+    private Button endEnemyTurn; //contextual button used for landing on planets
     private bool isPaused; //boolean used to track if the game is paused 
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
@@ -24,8 +26,12 @@ public class UIControl : MonoBehaviour
     private void Awake()
     {
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
+        endPlayerTurn = GameObject.Find("EndPlayerTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
+        endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
+        endPlayerTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
+        endEnemyTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         isPaused = false; //set the game pause state to false
         sceneIndex = SceneManager.GetActiveScene().buildIndex; //get a reference to the current scene index
 
@@ -102,6 +108,35 @@ public class UIControl : MonoBehaviour
         //upgradePanel.SetActive(false);
         hologramMenu.GetComponent<Animator>().Play("UpgradePanelClose");
 
+    }
+
+    public void SetEndTurnButtonState()
+    {
+        if (mapManager.spawnedEnemies.Count <= 0)
+        {
+            endEnemyTurn.gameObject.SetActive(false);
+            endPlayerTurn.gameObject.SetActive(false);
+            mapManager.combatActive = false;
+            mapManager.enemyTurn = true;
+            mapManager.playerTurn = false;
+        }
+        else
+        {
+            if (mapManager.playerTurn)
+            {
+                endEnemyTurn.gameObject.SetActive(true);
+                endPlayerTurn.gameObject.SetActive(false);
+                mapManager.enemyTurn = true;
+                mapManager.playerTurn = false;
+            }
+            else
+            {
+                endEnemyTurn.gameObject.SetActive(false);
+                endPlayerTurn.gameObject.SetActive(true);
+                mapManager.enemyTurn = false;
+                mapManager.playerTurn = true;
+            }
+        }
     }
 
     public void Pause()

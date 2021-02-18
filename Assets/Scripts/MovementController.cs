@@ -21,6 +21,7 @@ public class MovementController : MonoBehaviour
 
 
     private bool hasMoved; //variable to check for whether movement has happened yet
+    private bool cantMove;
     private float sidewaysMovement; //varaible to define sideways movement of player
     private float upDownMovement; //variable to define vertical movement of player
     //private float rotTrack; //variable to track where the ship is in it's rotation (Depricated)
@@ -41,13 +42,14 @@ public class MovementController : MonoBehaviour
         mapManager.UpdateFogOfWar(vision, playerCellPosition); //run an update fog of war command from the map manager to clear the fog around the player character on scene start
         //rotTrack = 0; //set rotation tracking to 0 (this will likely be depreicated with a new rotation system
         abilityActive = false; //set the ability active flag to false
+        cantMove = false;
 
     }
 
     void LateUpdate()
     {
         //This update loop is looking for player input and determining if movement is available to the hex indicated
-        if (!abilityActive) //if the ability active flag is true then disable movement
+        if (!abilityActive && (!mapManager.combatActive || mapManager.playerTurn)) //if the ability active flag is true then disable movement
         {
             //The next two parameters and the following if statement are for keyboard movement. Primary movement is mouse based, but keyboard is kept for an alternate control scheme. Will need to make sure that all functionality is duplicated on the keyboard
             sidewaysMovement = Input.GetAxis("Horizontal");
@@ -67,18 +69,35 @@ public class MovementController : MonoBehaviour
             //the following if statement controls the mouse movement 
             if (Input.GetMouseButtonDown(0)) //listen for mouse input from the user
             {
+                cantMove = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //when the mouse is clicked, create a ray whose origin is at the mouse click position
                 clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
                 //Debug.Log(mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-                Debug.Log(clickCellPosition);
+                //Debug.Log(clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
+                int i = 1;
+                foreach(EnemyObject enemyPos in mapManager.spawnedEnemies)
+                {
+                    Debug.Log("Enemy " + i + " " + enemyPos.xCoordinate + " " + enemyPos.yCoordinate);
+                    i++;
+
+                    if(clickCellPosition.x == enemyPos.xCoordinate && clickCellPosition.y == enemyPos.yCoordinate)
+                    {
+                        cantMove = true;
+                    }
+                }
+
+                if (clickCellPosition.x > mapManager.mapXMax - 2 || clickCellPosition.x < mapManager.mapXMin + 2 || clickCellPosition.y > mapManager.mapYMax - 1 || clickCellPosition.y < mapManager.mapYMin + 1)
+                {
+                    cantMove = true;
+                }
 
 
                 //if (clickDistance < 0.33f) //Each cell is 32 pixels wide, so if the click distance is 32 or less then allow the player to move
-                if (clickDistance <= moveRange) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
+                if (clickDistance <= moveRange && !cantMove) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
                 {
                     SetOrientation(gridLayout.CellToWorld(clickCellPosition)); //first, orient the ship correctly for the hex it will be moving to
                     transform.position += (gridLayout.CellToWorld(clickCellPosition) - gridLayout.CellToWorld(playerCellPosition)); //update the player game object transform position to the new coordinates from the clicked cell (look at how to do this smoothly)
