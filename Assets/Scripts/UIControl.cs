@@ -128,6 +128,7 @@ public class UIControl : MonoBehaviour
                 endPlayerTurn.gameObject.SetActive(false);
                 mapManager.enemyTurn = true;
                 mapManager.playerTurn = false;
+                mapManager.OrderEnemyTurns();
             }
             else
             {

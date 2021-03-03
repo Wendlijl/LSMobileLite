@@ -82,7 +82,7 @@ public class MovementController : MonoBehaviour
                 int i = 1;
                 foreach(EnemyObject enemyPos in mapManager.spawnedEnemies)
                 {
-                    Debug.Log("Enemy " + i + " " + enemyPos.xCoordinate + " " + enemyPos.yCoordinate);
+                    //Debug.Log("Enemy " + i + " " + enemyPos.xCoordinate + " " + enemyPos.yCoordinate);
                     i++;
 
                     if(clickCellPosition.x == enemyPos.xCoordinate && clickCellPosition.y == enemyPos.yCoordinate)

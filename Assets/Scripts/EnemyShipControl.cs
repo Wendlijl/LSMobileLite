@@ -91,6 +91,9 @@ public class EnemyShipControl : MonoBehaviour
 
     public void TakeTurn()
     {
-
+        if (!shotIncoming)
+        {
+            Debug.Log("I took my turn");
+        }
     }
 }

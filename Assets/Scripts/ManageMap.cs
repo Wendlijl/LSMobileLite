@@ -576,4 +576,15 @@ public class ManageMap : MonoBehaviour
         }
         return undiscPlanet;
     }
+
+    public void OrderEnemyTurns()
+    {
+        GameObject[] enemyGameObjects;
+        enemyGameObjects = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject enemy in enemyGameObjects)
+        {
+            enemy.GetComponent<EnemyShipControl>().TakeTurn();
+        }
+        uiController.SetEndTurnButtonState();
+    }
 }
