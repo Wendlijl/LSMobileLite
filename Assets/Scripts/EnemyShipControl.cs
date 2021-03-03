@@ -85,7 +85,12 @@ public class EnemyShipControl : MonoBehaviour
 
     public void DestroySelf()
     {
-        //this method just anticipates needing to destory the enempy from another game script somewhere at some point
+        //this method just anticipates needing to destory the enemy from another game script somewhere at some point
         Destroy(gameObject);
+    }
+
+    public void TakeTurn()
+    {
+
     }
 }

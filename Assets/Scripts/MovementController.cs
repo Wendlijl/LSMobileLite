@@ -31,7 +31,7 @@ public class MovementController : MonoBehaviour
     private Vector3 direction; //variable to define direction of player movement
     private Vector3Int clickCellPosition; //variable to hold the cell position of the clicked hex
     private Vector3Int clickCellPositionCubeCoords; //variable to hold the cell position of the clicked hex converted to cube coordinates
-
+    private UIControl uiController;
 
     void Start()
     {
@@ -43,6 +43,7 @@ public class MovementController : MonoBehaviour
         //rotTrack = 0; //set rotation tracking to 0 (this will likely be depreicated with a new rotation system
         abilityActive = false; //set the ability active flag to false
         cantMove = false;
+        uiController = GameObject.Find("GameController").GetComponent<UIControl>();
 
     }
 
@@ -105,6 +106,10 @@ public class MovementController : MonoBehaviour
                     transform.position = gridLayout.CellToWorld(playerCellPosition); //use the updated player cell position to ensure the player game object is centered in the cell
                     //transform.position = Vector3.Lerp(transform.position,gridLayout.CellToWorld(playerCellPosition),Time.deltaTime); //use the updated player cell position to ensure the player game object is centered in the cell
                     mapManager.UpdateFogOfWar(vision, playerCellPosition); //clear the fog of was from the new position
+                    if (mapManager.combatActive)
+                    {
+                        uiController.SetEndTurnButtonState();
+                    }
                 }
             }
         }

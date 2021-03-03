@@ -18,6 +18,7 @@ public class AbilityController : MonoBehaviour
     private Vector3 laserSpwanMod; //variable to store desired modifications to the instantiated position 
     private Vector3Int playerHex; //variable to store the current hex grid coordinates of the player game object
     private GridLayout gridLayout; //variable for storing a reference to the grid layout
+    private UIControl uiController;
 
     private float timer;
     private bool turnOffAb;
@@ -27,6 +28,7 @@ public class AbilityController : MonoBehaviour
     {
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //store a reference to the grid layout component
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //store a reference to the map manager
+        uiController = GameObject.Find("GameController").GetComponent<UIControl>(); //store a reference to the map manager
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
         laserRange = 3; //set the initial state of the laser range parameter
         instX = player.transform.position.x; //set the initial x position for instantiated objects
@@ -77,6 +79,10 @@ public class AbilityController : MonoBehaviour
                 LaserActive();
                 timer = 0;
                 turnOffAb = false;
+                if (mapManager.combatActive)
+                {
+                    uiController.SetEndTurnButtonState();
+                }
             }
         }
     }
