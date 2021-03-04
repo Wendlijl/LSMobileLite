@@ -93,7 +93,43 @@ public class EnemyShipControl : MonoBehaviour
     {
         if (!shotIncoming)
         {
-            Debug.Log("I took my turn");
+            //Debug.Log(enemyCellPosition);
+            //Debug.Log(mapManager.evenq2cube(enemyCellPosition));
+            //Debug.Log(player.gameObject.GetComponent<MovementController>().playerCellPosition);
+            //Debug.Log(mapManager.evenq2cube(player.gameObject.GetComponent<MovementController>().playerCellPosition));
+            //enemyCellPosition
+
+            int distToPlayer = mapManager.HexCellDistance(mapManager.evenq2cube(enemyCellPosition), mapManager.evenq2cube(player.gameObject.GetComponent<MovementController>().playerCellPosition));
+            
+
+            switch (thisEnemyName)
+            {
+                case "EnemyA":
+                    if (distToPlayer > 3)
+                    {
+                        Debug.Log("EnemyA Moved closer");
+                    }
+                    else
+                    {
+                        Debug.Log("EnemyA attacked");
+                    }
+                    
+
+                    break;
+                case "EnemyB":
+                    if (distToPlayer > 1)
+                    {
+                        Debug.Log("EnemyB moved closer");
+                    }
+                    else
+                    {
+                        Debug.Log("EnemyB attacked");
+                    }
+                    
+                    break;
+            }
+                
+
         }
     }
 }
