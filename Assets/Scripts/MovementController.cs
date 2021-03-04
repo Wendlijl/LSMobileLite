@@ -75,8 +75,8 @@ public class MovementController : MonoBehaviour
                 clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
-                //Debug.Log(mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-                //Debug.Log(clickCellPosition);
+                Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
+                Debug.Log("Clicked on "+clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
                 int i = 1;
@@ -104,6 +104,7 @@ public class MovementController : MonoBehaviour
                     transform.position += (gridLayout.CellToWorld(clickCellPosition) - gridLayout.CellToWorld(playerCellPosition)); //update the player game object transform position to the new coordinates from the clicked cell (look at how to do this smoothly)
                     playerCellPosition = gridLayout.WorldToCell(transform.position); //update the player cell position 
                     transform.position = gridLayout.CellToWorld(playerCellPosition); //use the updated player cell position to ensure the player game object is centered in the cell
+                    playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);
                     //transform.position = Vector3.Lerp(transform.position,gridLayout.CellToWorld(playerCellPosition),Time.deltaTime); //use the updated player cell position to ensure the player game object is centered in the cell
                     mapManager.UpdateFogOfWar(vision, playerCellPosition); //clear the fog of was from the new position
                     if (mapManager.combatActive)
@@ -161,7 +162,7 @@ public class MovementController : MonoBehaviour
         mapManager.UpdateFogOfWar(vision, playerCellPosition); //A call to the fog of war function is made to update what the player can see
     }
 
-    public void SetOrientation(Vector3 target)
+    private void SetOrientation(Vector3 target)
     {
  
         transform.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(target.x, target.y, 0) - transform.position); ; //Uses quaternion math to determine what rotation is necessary to point at the target then rotates the ship to correct orientation

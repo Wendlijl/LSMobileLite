@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 //This script is designed to facilitate the behaviour of the enemy ships
 public class EnemyShipControl : MonoBehaviour
 {
-    
+
     public Vector3Int enemyCellPosition; //Variable to store the cellPosition of this enemy
     public GameObject explosion; //Variable to hold an instance of the explosion animation
 
@@ -18,7 +18,7 @@ public class EnemyShipControl : MonoBehaviour
     private GameObject player; //Variable to hold an instance of the player game object
     private GridLayout gridLayout; //Variable to hold an instance of the grid layout
     private ManageMap mapManager; //Variable to hold an instance of the map manager
-    public EnemyObject thisEnemyObject;
+    public EnemyObject thisEnemyObject; //This variable gets set initially from ManageMap when this object is created
 
     // Start is called before the first frame update
     void Awake()
@@ -100,36 +100,164 @@ public class EnemyShipControl : MonoBehaviour
             //enemyCellPosition
 
             int distToPlayer = mapManager.HexCellDistance(mapManager.evenq2cube(enemyCellPosition), mapManager.evenq2cube(player.gameObject.GetComponent<MovementController>().playerCellPosition));
-            
+
 
             switch (thisEnemyName)
             {
                 case "EnemyA":
                     if (distToPlayer > 3)
                     {
-                        Debug.Log("EnemyA Moved closer");
+                        Debug.Log("EnemyA is at " + enemyCellPosition);
+                        Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
+                        List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
+                        Vector3Int shortestMove = new Vector3Int(0, 0, 0);
+                        int shortestMoveDist = 100;
+                        int i = 1;
+                        foreach (Vector3Int neighbour in neighbours)
+                        {
+                            if (i == 1)
+                            {
+                                shortestMove = neighbour;
+                                shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                            }
+                            else
+                            {
+                                if (mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords) < shortestMoveDist)
+                                {
+                                    shortestMove = neighbour;
+                                    shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                                }
+                            }
+                            i++;
+                        }
+                        Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
+
+                        foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
+                        {
+                            if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
+                            {
+                                mapManager.spawnedEnemies.Remove(listEnemy);
+                                break;
+                            }
+                        }
+
+                        SetOrientation(gridLayout.CellToWorld(shortestMove));
+                        transform.position += (gridLayout.CellToWorld(shortestMove) - gridLayout.CellToWorld(enemyCellPosition));
+                        enemyCellPosition = gridLayout.WorldToCell(transform.position);
+                        thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyObject.enemyString);
+                        mapManager.spawnedEnemies.Add(thisEnemyObject);
                     }
                     else
                     {
                         Debug.Log("EnemyA attacked");
                     }
-                    
+
 
                     break;
                 case "EnemyB":
                     if (distToPlayer > 1)
                     {
-                        Debug.Log("EnemyB moved closer");
+                        Debug.Log("EnemyB is at " + enemyCellPosition);
+                        Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
+                        List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
+                        Vector3Int shortestMove = new Vector3Int(0, 0, 0);
+                        int shortestMoveDist = 100;
+                        int i = 1;
+                        foreach (Vector3Int neighbour in neighbours)
+                        {
+                            if (i == 1)
+                            {
+                                shortestMove = neighbour;
+                                shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                            }
+                            else
+                            {
+                                if (mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords) < shortestMoveDist)
+                                {
+                                    shortestMove = neighbour;
+                                    shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                                }
+                            }
+                            i++;
+                        }
+                        Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
+
+                        foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
+                        {
+                            if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
+                            {
+                                mapManager.spawnedEnemies.Remove(listEnemy);
+                                break;
+                            }
+                        }
+
+                        SetOrientation(gridLayout.CellToWorld(shortestMove));
+                        transform.position += (gridLayout.CellToWorld(shortestMove) - gridLayout.CellToWorld(enemyCellPosition));
+                        enemyCellPosition = gridLayout.WorldToCell(transform.position);
+                        thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyObject.enemyString);
+                        mapManager.spawnedEnemies.Add(thisEnemyObject);
                     }
                     else
                     {
                         Debug.Log("EnemyB attacked");
                     }
-                    
+
                     break;
             }
-                
+
 
         }
+    }
+
+    public List<Vector3Int> GetNeighbours(Vector3Int origin)
+    {
+        List<Vector3Int> neighbours = new List<Vector3Int>();
+        bool setSkip = false;
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                    continue;
+
+                int modX = origin.x + x;
+                int modY = origin.y + y;
+
+                if (modX < mapManager.mapXMax && modX > mapManager.mapXMin && modY < mapManager.mapYMax && modY > mapManager.mapYMin)
+                {
+
+
+                    if (mapManager.HexCellDistance(mapManager.evenq2cube(origin), mapManager.evenq2cube(new Vector3Int(modX, modY, 0))) <= 1)
+                    {
+                        foreach (EnemyObject fellowEnemy in mapManager.spawnedEnemies)
+                        {
+                            if (fellowEnemy.xCoordinate == modX && fellowEnemy.yCoordinate == modY)
+                                setSkip = true;
+
+                        }
+                        if (!setSkip)
+                        {
+                            neighbours.Add(new Vector3Int(modX, modY, 0));
+                        }
+                        else
+                        {
+                            setSkip = false;
+                        }
+
+                    }
+
+
+                }
+            }
+        }
+
+        return neighbours;
+    }
+
+    private void SetOrientation(Vector3 target)
+    {
+
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(target.x, target.y, 0) - transform.position); ; //Uses quaternion math to determine what rotation is necessary to point at the target then rotates the ship to correct orientation
+
     }
 }
