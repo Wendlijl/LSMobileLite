@@ -275,6 +275,21 @@ public class ManageMap : MonoBehaviour
             }
         }        
     }
+
+    public void HighlightSet(List<Vector3Int> highlightSet, bool setState)
+    {
+        foreach(Vector3Int highlightCell in highlightSet)
+        {
+            if (setState)
+            {
+                highlightWeaponMap.SetTile(highlightCell, highlightTileRed);
+            }
+            else
+            {
+                highlightWeaponMap.SetTile(highlightCell, null);
+            }
+        }
+    }
     public void ResetMap() //this function exists specifically to return the map to a hidden state. Only for debugging at the moment, but maybe there is a mechanical use for this
     {
 

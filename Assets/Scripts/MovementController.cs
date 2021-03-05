@@ -75,7 +75,7 @@ public class MovementController : MonoBehaviour
                 clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
-                Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
+                //Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
                 Debug.Log("Clicked on "+clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
@@ -103,7 +103,7 @@ public class MovementController : MonoBehaviour
                     SetOrientation(gridLayout.CellToWorld(clickCellPosition)); //first, orient the ship correctly for the hex it will be moving to
                     transform.position += (gridLayout.CellToWorld(clickCellPosition) - gridLayout.CellToWorld(playerCellPosition)); //update the player game object transform position to the new coordinates from the clicked cell (look at how to do this smoothly)
                     playerCellPosition = gridLayout.WorldToCell(transform.position); //update the player cell position 
-                    transform.position = gridLayout.CellToWorld(playerCellPosition); //use the updated player cell position to ensure the player game object is centered in the cell
+                    //transform.position = gridLayout.CellToWorld(playerCellPosition); //use the updated player cell position to ensure the player game object is centered in the cell
                     playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);
                     //transform.position = Vector3.Lerp(transform.position,gridLayout.CellToWorld(playerCellPosition),Time.deltaTime); //use the updated player cell position to ensure the player game object is centered in the cell
                     mapManager.UpdateFogOfWar(vision, playerCellPosition); //clear the fog of was from the new position

@@ -46,13 +46,13 @@ public class AbilityController : MonoBehaviour
     void Update()
     {
         //player = GameObject.FindGameObjectWithTag("Player"); //at one point, the player game object was being set every update. I don't think this is necessary, but it may have had some effect.
-        if (laserState && !turnOffAb) //check if the laser has been activated
+        if (Input.GetMouseButtonDown(0) && !turnOffAb) //check if the laser has been activated
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
             target = gridLayout.WorldToCell(ray.origin); //set the position of the target to the position of the mouse pointer in grid coordinates
             clickDistance = Vector3.Distance(gridLayout.CellToWorld(target), gridLayout.CellToWorld(gridLayout.WorldToCell(player.transform.position))); //this is find the distance between the player and the point where they click. It converts multiple times bewteen the grid and world coordinates because it wants the world coordinates of the exact center of the relevant hexs. The easiest way I have found to do this is to first take world coordinates, convert them to grid coordinates, then convert those back to world coordinates
             playerHex = gridLayout.WorldToCell(player.transform.position); //get the current position of the player in grid coordinates
-            if (Input.GetMouseButtonDown(0) && clickDistance<=laserRange*0.32) //if the player clicks the mouse and it is within the set range for the laser then initiate the firing sequence
+            if (laserState && clickDistance<=laserRange*0.32) //if the player clicks the mouse and it is within the set range for the laser then initiate the firing sequence
             {
                 //The purpose of this loop is to identify what hexes within the range above are also identified by the highlighted hexes shown to the player. This is a hack and there must certainly be a better way to do this, but it ultimately comes down to figuring out a better method of measuring distance on the hex grid
                 for (int x = -laserRange; x <= laserRange; x++) //iterate x's

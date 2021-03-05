@@ -13,6 +13,7 @@ public class EnemyShipControl : MonoBehaviour
     private bool laserState; //Boolean to represent whether the laser ability is active
     private bool shotIncoming; //Boolean to track if the laser animation is running
     private bool inRagne; //Boolean to track if this enemy is currently in range of the player 
+    private bool highlightEnabled;
     private float timer; //A timer for tracking the life of the laser shot
     private string thisEnemyName;
     private GameObject player; //Variable to hold an instance of the player game object
@@ -28,6 +29,7 @@ public class EnemyShipControl : MonoBehaviour
         transform.position = gridLayout.CellToWorld(enemyCellPosition); //Take the hex grid position from the last operation, convert it back to world coordinates and set this object's position to those coordinates
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store the player game object
         laserState = player.GetComponent<AbilityController>().laserState; //Access and store the initial state of the laser ability
+        highlightEnabled = false;
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //Access and store a reference to the map manager script
         inRagne = false; //Set the initial state of the Boolean tracking range to the player
         shotIncoming = false; //Set the initial state of the laser animation
@@ -45,9 +47,13 @@ public class EnemyShipControl : MonoBehaviour
         laserState = player.GetComponent<AbilityController>().laserState; //On each frame, set the state of the laser ability
         if (Input.GetMouseButtonDown(0) || shotIncoming) //This operation is initiated by the player clicking the fire button. If the previous loop determined that a laser shot would hit this enemy, then the loop is held open throughout the entire laser animation using the shotIncoming Boolean
         {
-            if (laserState || shotIncoming) //This checks if the laser ability is active when the player clicks the mouse. shotIncoming holds the loop open if an incoming laser is going to hit this enemy
+            if (enemyCellPosition == player.GetComponent<AbilityController>().target || shotIncoming) //This checks if the cell clicked by the player contains this enemy
             {
-                if (enemyCellPosition == player.GetComponent<AbilityController>().target || shotIncoming) //This checks if the cell clicked by the player contains this enemy
+                if (!laserState && !shotIncoming)
+                {
+                    ShowFlats();
+                }
+                else if (laserState || shotIncoming) //This checks if the laser ability is active when the player clicks the mouse. shotIncoming holds the loop open if an incoming laser is going to hit this enemy
                 {
                     foreach (Vector3Int highLightedCell in mapManager.currentHighlightedTiles) //This loops through the list of highlighted cells that the player sees to indicate their laser range. 
                     {
@@ -107,8 +113,8 @@ public class EnemyShipControl : MonoBehaviour
                 case "EnemyA":
                     if (distToPlayer > 3)
                     {
-                        Debug.Log("EnemyA is at " + enemyCellPosition);
-                        Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
+                        //Debug.Log("EnemyA is at " + enemyCellPosition);
+                        //Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
                         List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
@@ -130,7 +136,7 @@ public class EnemyShipControl : MonoBehaviour
                             }
                             i++;
                         }
-                        Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
+                        //Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
 
                         foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
                         {
@@ -149,7 +155,7 @@ public class EnemyShipControl : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("EnemyA attacked");
+                        //Debug.Log("EnemyA attacked");
                     }
 
 
@@ -157,8 +163,8 @@ public class EnemyShipControl : MonoBehaviour
                 case "EnemyB":
                     if (distToPlayer > 1)
                     {
-                        Debug.Log("EnemyB is at " + enemyCellPosition);
-                        Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
+                        //Debug.Log("EnemyB is at " + enemyCellPosition);
+                        //Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
                         List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
@@ -180,7 +186,7 @@ public class EnemyShipControl : MonoBehaviour
                             }
                             i++;
                         }
-                        Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
+                        //Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
 
                         foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
                         {
@@ -199,7 +205,7 @@ public class EnemyShipControl : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("EnemyB attacked");
+                        //Debug.Log("EnemyB attacked");
                     }
 
                     break;
@@ -259,5 +265,94 @@ public class EnemyShipControl : MonoBehaviour
 
         transform.rotation = Quaternion.LookRotation(Vector3.forward, new Vector3(target.x, target.y, 0) - transform.position); ; //Uses quaternion math to determine what rotation is necessary to point at the target then rotates the ship to correct orientation
 
+    }
+
+    public List<Vector3Int> GetFlats(int flatLength)
+    {
+        List<Vector3Int> flats = new List<Vector3Int>();
+        for(int i = 0; i <= flatLength-1; i++)
+        {
+            int modx = 0;
+            Vector3Int tempHexCalc = new Vector3Int(enemyCellPosition.x + i+1, enemyCellPosition.y, enemyCellPosition.z);
+            flats.Add(tempHexCalc);
+            tempHexCalc = new Vector3Int(enemyCellPosition.x - i-1, enemyCellPosition.y, enemyCellPosition.z);
+            flats.Add(tempHexCalc);
+            if (enemyCellPosition.y % 2 == 0)
+            {
+                if (i % 2 == 0)
+                {
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2), enemyCellPosition.y-i-1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y-i-1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2), enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    modx++;
+                }
+                else
+                {
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                }
+                Debug.Log("Y is even");
+            }
+            else
+            {
+                if (i % 2 == 0)
+                {
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2), enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2), enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                }
+                else
+                {
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    flats.Add(tempHexCalc);
+                }
+                Debug.Log("Y is odd");
+            }
+            
+        }
+        foreach(Vector3Int flat in flats)
+        {
+            Debug.Log(flat);
+        }
+
+        return flats;
+    }
+    public void ShowFlats()
+    {
+        List<Vector3Int> flats = new List<Vector3Int>();
+        if (thisEnemyName == "EnemyA")
+        {
+            flats = GetFlats(8);
+        }
+        else if (thisEnemyName == "EnemyB")
+        {
+            flats = GetFlats(1);
+        }
+
+        highlightEnabled = !highlightEnabled;
+
+        mapManager.HighlightSet(flats, highlightEnabled);
     }
 }
