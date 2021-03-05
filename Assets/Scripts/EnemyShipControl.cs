@@ -47,10 +47,17 @@ public class EnemyShipControl : MonoBehaviour
         laserState = player.GetComponent<AbilityController>().laserState; //On each frame, set the state of the laser ability
         if (Input.GetMouseButtonDown(0) || shotIncoming) //This operation is initiated by the player clicking the fire button. If the previous loop determined that a laser shot would hit this enemy, then the loop is held open throughout the entire laser animation using the shotIncoming Boolean
         {
+            if (highlightEnabled && enemyCellPosition != player.GetComponent<AbilityController>().target)
+            {
+                ShowFlats();
+            }
             if (enemyCellPosition == player.GetComponent<AbilityController>().target || shotIncoming) //This checks if the cell clicked by the player contains this enemy
             {
+                
                 if (!laserState && !shotIncoming)
                 {
+                    ShowFlats();
+                    ShowFlats();
                     ShowFlats();
                 }
                 else if (laserState || shotIncoming) //This checks if the laser ability is active when the player clicks the mouse. shotIncoming holds the loop open if an incoming laser is going to hit this enemy
@@ -111,6 +118,8 @@ public class EnemyShipControl : MonoBehaviour
             switch (thisEnemyName)
             {
                 case "EnemyA":
+                    List<Vector3Int> playerFlats = GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition);
+
                     if (distToPlayer > 3)
                     {
                         //Debug.Log("EnemyA is at " + enemyCellPosition);
@@ -267,74 +276,74 @@ public class EnemyShipControl : MonoBehaviour
 
     }
 
-    public List<Vector3Int> GetFlats(int flatLength)
+    public List<Vector3Int> GetFlats(int flatLength, Vector3Int centerPoint)
     {
         List<Vector3Int> flats = new List<Vector3Int>();
         for(int i = 0; i <= flatLength-1; i++)
         {
             int modx = 0;
-            Vector3Int tempHexCalc = new Vector3Int(enemyCellPosition.x + i+1, enemyCellPosition.y, enemyCellPosition.z);
+            Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + i+1, centerPoint.y, centerPoint.z);
             flats.Add(tempHexCalc);
-            tempHexCalc = new Vector3Int(enemyCellPosition.x - i-1, enemyCellPosition.y, enemyCellPosition.z);
+            tempHexCalc = new Vector3Int(centerPoint.x - i-1, centerPoint.y, centerPoint.z);
             flats.Add(tempHexCalc);
-            if (enemyCellPosition.y % 2 == 0)
+            if (centerPoint.y % 2 == 0)
             {
                 if (i % 2 == 0)
                 {
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2), enemyCellPosition.y-i-1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2), centerPoint.y-i-1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y-i-1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y-i-1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2), enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2), centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
                     modx++;
                 }
                 else
                 {
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y - i - 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y - i - 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
                 }
-                Debug.Log("Y is even");
+
             }
             else
             {
                 if (i % 2 == 0)
                 {
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y - i - 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2), enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2), centerPoint.y - i - 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2), enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2), centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
                 }
                 else
                 {
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y - i - 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y - i - 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y - i - 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x+Mathf.FloorToInt(i/2)+1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(enemyCellPosition.x-Mathf.FloorToInt(i/2)-1, enemyCellPosition.y + i + 1, enemyCellPosition.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y + i + 1, centerPoint.z);
                     flats.Add(tempHexCalc);
                 }
-                Debug.Log("Y is odd");
+
             }
             
         }
         foreach(Vector3Int flat in flats)
         {
-            Debug.Log(flat);
+
         }
 
         return flats;
@@ -344,11 +353,11 @@ public class EnemyShipControl : MonoBehaviour
         List<Vector3Int> flats = new List<Vector3Int>();
         if (thisEnemyName == "EnemyA")
         {
-            flats = GetFlats(8);
+            flats = GetFlats(3, enemyCellPosition);
         }
         else if (thisEnemyName == "EnemyB")
         {
-            flats = GetFlats(1);
+            flats = GetFlats(1, enemyCellPosition);
         }
 
         highlightEnabled = !highlightEnabled;
