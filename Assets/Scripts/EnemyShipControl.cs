@@ -57,8 +57,6 @@ public class EnemyShipControl : MonoBehaviour
                 if (!laserState && !shotIncoming)
                 {
                     ShowFlats();
-                    ShowFlats();
-                    ShowFlats();
                 }
                 else if (laserState || shotIncoming) //This checks if the laser ability is active when the player clicks the mouse. shotIncoming holds the loop open if an incoming laser is going to hit this enemy
                 {
