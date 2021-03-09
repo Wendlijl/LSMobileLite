@@ -27,7 +27,7 @@ public class SelectionControls : MonoBehaviour
     public void SubmitSliderSetting()
     {
         //Move the slider based on player input. Bound the slider to min and max values
-        if (upDownMovement < 0 && mainSlider.value<3)
+        if (upDownMovement < 0 && mainSlider.value<4)
         {
             mainSlider.value++;
         }
@@ -72,10 +72,13 @@ public class SelectionControls : MonoBehaviour
                     loadLevelStart();
                     break;
                 case 2:
+                    print("Tutorial Selected");
+                    break;
+                case 3:
                     print("Options Selected");
                     SetOptionsPanelActive();
                     break;
-                case 3:
+                case 4:
                     print("Quit Selected");
                     Quit();
                     break;

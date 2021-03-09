@@ -13,7 +13,7 @@ public class UIControl : MonoBehaviour
     public GameObject hologramMenu; //variable to hold the hologram upgrade menu
     public GameObject pausePanel; //variable to hold the game pause screen
     public GameObject upgradePanel; //variable to hold the upgrade panel
-    public GameObject newGamePanel; //variable to hold the upgrade panel
+    public GameObject newGameMessage; //variable to hold the upgrade panel
 
     private Button landOnPlanet; //contextual button used for landing on planets
     private Button endPlayerTurn; //contextual button used for landing on planets
@@ -41,7 +41,7 @@ public class UIControl : MonoBehaviour
         }
         else
         {
-            newGamePanel.SetActive(true);
+            newGameMessage.SetActive(true);
         }
     }
 
