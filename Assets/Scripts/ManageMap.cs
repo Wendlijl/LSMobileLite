@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using CI.QuickSave;
+using System.IO;
+using UnityEditor;
 //This script is intended to control all aspects of map creation and management
 public class ManageMap : MonoBehaviour
 {
@@ -91,6 +92,32 @@ public class ManageMap : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log(Path.Combine(Application.persistentDataPath, "QuickSave"));
+        string quicksavePath = Path.Combine(Application.persistentDataPath, "QuickSave");
+        string quicksaveFilePath = Path.Combine(quicksavePath, "TutorialFile.json");
+        Debug.Log(Application.dataPath);
+        string dataPath = Application.dataPath;
+        string dataPathTutorial = Path.Combine(dataPath, "TutorialFile.json");
+        if (Directory.Exists(quicksavePath))
+        {
+            if (File.Exists(quicksaveFilePath))
+            {
+                Debug.Log("I found the file!");
+            }
+            else
+            {
+                Debug.Log("Need to move File");
+                FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+            }
+            
+            
+        }
+        else
+        {
+            Debug.Log("Need to make directory then move file");
+            Directory.CreateDirectory(quicksavePath);
+            FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+        }
         //create a dictionary to hold key value pairs for all the background star tiles
         starTileDict = new Dictionary<string, Tile>() {
             { "starTile0", starTile0 },
