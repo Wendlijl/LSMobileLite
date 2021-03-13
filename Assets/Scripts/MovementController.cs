@@ -13,6 +13,7 @@ public class MovementController : MonoBehaviour
     public int moveRange = 1; //variable to control how far the player can move
     public float moveScale = 1; //variable to allow scaling of player movement
     public bool abilityActive; //boolean to indicate when abilities are active
+    public bool movementState;
     public Tilemap fogOfWar; //Get a reference to the overlay tiles
     public Tilemap starField; //Get a reference to the overlay tiles
     public Vector3Int playerCellPosition; //variable to store the cell position of the player
@@ -35,6 +36,7 @@ public class MovementController : MonoBehaviour
 
     void Start()
     {
+        movementState = true;
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //search for and save a reference to the grid layout component
         playerCellPosition = gridLayout.WorldToCell(transform.position); //get a reference to the player cell position in cell coordinates
         transform.position = gridLayout.CellToWorld(playerCellPosition); //center the player game object within it's nearest cell by converting the cell coordinates to world coordinates
@@ -50,7 +52,7 @@ public class MovementController : MonoBehaviour
     void LateUpdate()
     {
         //This update loop is looking for player input and determining if movement is available to the hex indicated
-        if (!abilityActive && (!mapManager.combatActive || mapManager.playerTurn)) //if the ability active flag is true then disable movement
+        if (!abilityActive && (!mapManager.combatActive || mapManager.playerTurn) && movementState) //if the ability active flag is true then disable movement
         {
             //The next two parameters and the following if statement are for keyboard movement. Primary movement is mouse based, but keyboard is kept for an alternate control scheme. Will need to make sure that all functionality is duplicated on the keyboard
             sidewaysMovement = Input.GetAxis("Horizontal");

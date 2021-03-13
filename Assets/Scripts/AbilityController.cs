@@ -6,6 +6,7 @@ public class AbilityController : MonoBehaviour
 {
     public bool laserState; //variable to track the activation state of the laser ability 
     public int laserRange; //variable to set the range of the laser ability
+    public bool weaponState;
     public GameObject player; //variable to store a reference to the player game object
     public Vector3Int target; //variable to store the position vector of the target
     public GameObject laser; //variable to store a reference to the laser game object
@@ -26,6 +27,7 @@ public class AbilityController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weaponState = true;
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //store a reference to the grid layout component
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //store a reference to the map manager
         uiController = GameObject.Find("GameController").GetComponent<UIControl>(); //store a reference to the map manager
@@ -89,7 +91,7 @@ public class AbilityController : MonoBehaviour
 
     public void LaserActive()
     {
-        if (mapManager.playerTurn)
+        if (mapManager.playerTurn && weaponState)
         {
             //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
             if (laserState)
