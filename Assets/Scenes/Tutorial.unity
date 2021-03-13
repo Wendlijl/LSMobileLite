@@ -2702,6 +2702,7 @@ GameObject:
   - component: {fileID: 823535375}
   - component: {fileID: 823535376}
   - component: {fileID: 823535377}
+  - component: {fileID: 823535379}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2889,6 +2890,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &823535379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823535374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2288a50c4b50ee43a2de74d85e01049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &843449675
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,7 +3059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b85556abd314f3f870c18c013fdcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickMode: 1
+  clickMode: 2
   nextClickDelay: 0
   cancelEnabled: 1
   ignoreMenuClicks: 1
@@ -3795,6 +3808,14 @@ GameObject:
   - component: {fileID: 1003538834}
   - component: {fileID: 1003538876}
   - component: {fileID: 1003538877}
+  - component: {fileID: 1003538880}
+  - component: {fileID: 1003538879}
+  - component: {fileID: 1003538878}
+  - component: {fileID: 1003538885}
+  - component: {fileID: 1003538884}
+  - component: {fileID: 1003538883}
+  - component: {fileID: 1003538882}
+  - component: {fileID: 1003538881}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -3886,7 +3907,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 67
     y: 70
-    width: 120.49177
+    width: 119.387695
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -3895,6 +3916,9 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 1003538830}
   commandList:
+  - {fileID: 1003538880}
+  - {fileID: 1003538878}
+  - {fileID: 1003538879}
   - {fileID: 1003538826}
   - {fileID: 1003538825}
   - {fileID: 1003538833}
@@ -3914,11 +3938,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 204.91263, y: 24.835495}
+  scrollPos: {x: 420.0431, y: -220.07329}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 0.6100003
+  zoom: 0.4900004
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -3926,9 +3950,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1003538827}
+  - {fileID: 1003538843}
   selectedCommands:
-  - {fileID: 1003538826}
+  - {fileID: 1003538881}
   variables: []
   description: 
   stepPause: 0
@@ -4138,7 +4162,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196
     y: 178
-    width: 105.73767
+    width: 103.06118
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4226,7 +4250,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -28
     y: 170
-    width: 74.59015
+    width: 72.44896
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4281,7 +4305,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 40.838734
     y: 693.92267
-    width: 99.1803
+    width: 96.938736
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4292,7 +4316,12 @@ MonoBehaviour:
   commandList:
   - {fileID: 1003538838}
   - {fileID: 1003538834}
+  - {fileID: 1003538885}
   - {fileID: 1003538877}
+  - {fileID: 1003538884}
+  - {fileID: 1003538883}
+  - {fileID: 1003538882}
+  - {fileID: 1003538881}
   suppressAllAutoSelections: 0
 --- !u!114 &1003538844
 MonoBehaviour:
@@ -4400,7 +4429,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196.27567
     y: 605.4788
-    width: 112.29505
+    width: 109.183624
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4520,7 +4549,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -115.15278
     y: 608.33594
-    width: 117.21308
+    width: 115.30607
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4643,7 +4672,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.32022
     y: 489.24097
-    width: 99.1803
+    width: 96.938736
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4764,7 +4793,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 171.29893
     y: 382.0071
-    width: 107.377014
+    width: 103.06118
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4884,7 +4913,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -99.278534
     y: 391.58167
-    width: 107.377014
+    width: 105.102
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -5049,7 +5078,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 55.06185
     y: 264.43292
-    width: 97.540955
+    width: 94.89792
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -5065,7 +5094,7 @@ MonoBehaviour:
   suppressAllAutoSelections: 0
 --- !u!114 &1003538876
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5093,7 +5122,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &1003538877
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5104,6 +5133,231 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: 62
+  indentLevel: 0
+  storyText: 'You may have noticed the hex that is highlighted on your tactical map
+    as you move your mouse around. '
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003538878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 65
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 823535374}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetWeaponsState
+  targetMethodText: 'SetWeaponsState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003538879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 64
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 823535374}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetPlanetState
+  targetMethodText: 'SetPlanetState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003538880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 63
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 823535374}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetMovementState
+  targetMethodText: 'SetMovementState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003538881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 70
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 823535374}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetMovementState
+  targetMethodText: 'SetMovementState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003538882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 69
+  indentLevel: 0
+  storyText: If you click on a hex that is within one unit of your ship, you will
+    move there. Go ahead, try moving around a bit. Shouldn't run into anything out
+    here.
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003538883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 68
+  indentLevel: 0
+  storyText: If you're going to be an astrominer, the first thing you'll need to
+    know is how to move your ship. Resources won't come to you after all!
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003538884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 67
+  indentLevel: 0
+  storyText: This just indicates where you're looking when you try to interact with
+    something.
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003538885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 66
   indentLevel: 0
   storyText: "Now let\u2019s run you through the basics so you don\u2019t blow yourself
     of trying to mine your first planet.  "
@@ -5570,6 +5824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserState: 1
   laserRange: 0
+  weaponState: 0
   player: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   laser: {fileID: 8552301256057810996, guid: 023863773ea303040b3df25737e173dc, type: 3}
@@ -5585,6 +5840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d07b143fb51a24f80af2eb7d53cbc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetState: 0
 --- !u!4 &1127402323
 Transform:
   m_ObjectHideFlags: 0
@@ -5615,6 +5871,7 @@ MonoBehaviour:
   moveRange: 1
   moveScale: 0.25
   abilityActive: 0
+  movementState: 0
   fogOfWar: {fileID: 1319825350}
   starField: {fileID: 1710355759}
   playerCellPosition: {x: 0, y: 0, z: 0}
@@ -5632,7 +5889,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 97efad9a5b6e98847acb0665847cd310, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
