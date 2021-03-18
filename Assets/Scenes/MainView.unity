@@ -2092,7 +2092,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.4
+  m_fontSize: 16.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3350,8 +3350,10 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
-  selectedCommands: []
+  selectedBlocks:
+  - {fileID: 1068681574}
+  selectedCommands:
+  - {fileID: 1068681571}
   variables: []
   description: 
   stepPause: 0
@@ -4497,6 +4499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserState: 1
   laserRange: 0
+  weaponState: 0
   player: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   laser: {fileID: 8552301256057810996, guid: 023863773ea303040b3df25737e173dc, type: 3}
@@ -4512,6 +4515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d07b143fb51a24f80af2eb7d53cbc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetState: 0
 --- !u!114 &1326505864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4528,6 +4532,7 @@ MonoBehaviour:
   moveRange: 1
   moveScale: 0.25
   abilityActive: 0
+  movementState: 0
   fogOfWar: {fileID: 620458268}
   starField: {fileID: 1257805224}
   playerCellPosition: {x: 0, y: 0, z: 0}
@@ -4772,6 +4777,7 @@ GameObject:
   - component: {fileID: 1352580153}
   - component: {fileID: 1352580152}
   - component: {fileID: 1352580155}
+  - component: {fileID: 1352580156}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -4959,6 +4965,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1352580156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352580151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bda688ae7822b14b91e2ed4462fedf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseClicked: 0
 --- !u!1 &1380993269
 GameObject:
   m_ObjectHideFlags: 0
@@ -7655,7 +7674,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 17.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -632,19 +632,15 @@ public class ManageMap : MonoBehaviour
 
     public void ClearHighlighting()
     {
-
         //this operation will function almost identically to clearing the fog of war, except that it will highlight the cells within range of the laser. 
-        for (int x = -mapXMin; x <= mapYMax; x++) //iterate through the range of the laser to generate the x coordinates
+        for (int x = mapXMin; x <= mapYMax; x++) //iterate through the range of the laser to generate the x coordinates
         {
-            for (int y = -mapYMin; y <= mapYMax; y++) //iterate through the range of the laser to generate the y coordindates
+            for (int y = mapYMin; y <= mapYMax; y++) //iterate through the range of the laser to generate the y coordindates
             {
-                
                 highlightWeaponMap.SetTile(new Vector3Int(x, y, 0), null); //set the cell at the current coordinates to null
-                
-                
-                
             }
         }
+        Debug.Log("clearedList");
         currentHighlightedTiles.Clear(); //clear the list of highlighted cell coordinates.
     }
 }

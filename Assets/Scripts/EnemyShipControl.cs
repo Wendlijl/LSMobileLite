@@ -9,17 +9,20 @@ public class EnemyShipControl : MonoBehaviour
 
     public Vector3Int enemyCellPosition; //Variable to store the cellPosition of this enemy
     public GameObject explosion; //Variable to hold an instance of the explosion animation
+    public EnemyObject thisEnemyObject; //This variable gets set initially from ManageMap when this object is created
+    public bool highlightEnabled;
 
     private bool laserState; //Boolean to represent whether the laser ability is active
     private bool shotIncoming; //Boolean to track if the laser animation is running
     private bool inRagne; //Boolean to track if this enemy is currently in range of the player 
-    private bool highlightEnabled;
+    private bool inFlats;
+
     private float timer; //A timer for tracking the life of the laser shot
     private string thisEnemyName;
     private GameObject player; //Variable to hold an instance of the player game object
     private GridLayout gridLayout; //Variable to hold an instance of the grid layout
     private ManageMap mapManager; //Variable to hold an instance of the map manager
-    public EnemyObject thisEnemyObject; //This variable gets set initially from ManageMap when this object is created
+    private ClickManager clickManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,12 +34,14 @@ public class EnemyShipControl : MonoBehaviour
         laserState = player.GetComponent<AbilityController>().laserState; //Access and store the initial state of the laser ability
         highlightEnabled = false;
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //Access and store a reference to the map manager script
+        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>(); //Access and store a reference to the click manager script
         inRagne = false; //Set the initial state of the Boolean tracking range to the player
         shotIncoming = false; //Set the initial state of the laser animation
         timer = 0; //Set the initial value for the timer tracking the laser lifespan
         string clone = "(Clone)";
         thisEnemyName = gameObject.name;
         thisEnemyName = thisEnemyName.Replace(clone, "");
+        inFlats = false;
         //thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyName);
     }
 
@@ -45,12 +50,8 @@ public class EnemyShipControl : MonoBehaviour
     {
         //The following Operation is to determine if this enemy should be destroyed
         laserState = player.GetComponent<AbilityController>().laserState; //On each frame, set the state of the laser ability
-        if (Input.GetMouseButtonDown(0) || shotIncoming) //This operation is initiated by the player clicking the fire button. If the previous loop determined that a laser shot would hit this enemy, then the loop is held open throughout the entire laser animation using the shotIncoming Boolean
+        if (clickManager.mouseClicked || shotIncoming) //This operation is initiated by the player clicking the fire button. If the previous loop determined that a laser shot would hit this enemy, then the loop is held open throughout the entire laser animation using the shotIncoming Boolean
         {
-            if (highlightEnabled && enemyCellPosition != player.GetComponent<AbilityController>().target)
-            {
-                ShowFlats();
-            }
             if (enemyCellPosition == player.GetComponent<AbilityController>().target || shotIncoming) //This checks if the cell clicked by the player contains this enemy
             {
                 
@@ -116,9 +117,37 @@ public class EnemyShipControl : MonoBehaviour
             switch (thisEnemyName)
             {
                 case "EnemyA":
-                    List<Vector3Int> playerFlats = GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition);
+                    List<Vector3Int> playerFlats = GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, false);
+                    //mapManager.ClearHighlighting();
+                    //mapManager.HighlightSet(playerFlats, true);
+                    List<Vector3Int> playerEndFlats = GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, true);
+                    Vector3Int nearestEndFlat = playerEndFlats[0];
+                    int distToNearestEndFlat = 999999;
+                    foreach (Vector3Int flat in playerEndFlats)
+                    {
+                        int distToFlat = mapManager.HexCellDistance(mapManager.evenq2cube(enemyCellPosition), mapManager.evenq2cube(flat));
 
-                    if (distToPlayer > 3)
+                        if (distToFlat < distToNearestEndFlat)
+                        {
+                            distToNearestEndFlat = distToFlat;
+                            nearestEndFlat = flat;
+                        }
+                    }
+
+                    foreach (Vector3Int flat in playerFlats)
+                    {
+                        if(flat == enemyCellPosition)
+                        {
+                            inFlats = true;
+                            break;
+                        }
+                        else
+                        {
+                            inFlats = false;
+                        }
+                    }
+                    Debug.Log(inFlats);
+                    if (enemyCellPosition != nearestEndFlat && !inFlats)
                     {
                         //Debug.Log("EnemyA is at " + enemyCellPosition);
                         //Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
@@ -131,14 +160,14 @@ public class EnemyShipControl : MonoBehaviour
                             if (i == 1)
                             {
                                 shortestMove = neighbour;
-                                shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                                shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(nearestEndFlat));
                             }
                             else
                             {
-                                if (mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords) < shortestMoveDist)
+                                if (mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(nearestEndFlat)) < shortestMoveDist)
                                 {
                                     shortestMove = neighbour;
-                                    shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                                    shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(nearestEndFlat));
                                 }
                             }
                             i++;
@@ -274,75 +303,142 @@ public class EnemyShipControl : MonoBehaviour
 
     }
 
-    public List<Vector3Int> GetFlats(int flatLength, Vector3Int centerPoint)
+    public List<Vector3Int> GetFlats(int flatLength, Vector3Int centerPoint, bool player)
     {
         List<Vector3Int> flats = new List<Vector3Int>();
-        for(int i = 0; i <= flatLength-1; i++)
+        if (player)
         {
-            int modx = 0;
-            Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + i+1, centerPoint.y, centerPoint.z);
+            Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + flatLength, centerPoint.y, centerPoint.z);
             flats.Add(tempHexCalc);
-            tempHexCalc = new Vector3Int(centerPoint.x - i-1, centerPoint.y, centerPoint.z);
+            tempHexCalc = new Vector3Int(centerPoint.x - flatLength , centerPoint.y, centerPoint.z);
             flats.Add(tempHexCalc);
             if (centerPoint.y % 2 == 0)
             {
-                if (i % 2 == 0)
+                if (flatLength % 2 == 0)
                 {
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2), centerPoint.y-i-1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength , centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y-i-1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2), centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    modx++;
                 }
                 else
                 {
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y - i - 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y - i - 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2) - 1, centerPoint.y - flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2) - 1, centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
                 }
 
             }
             else
             {
-                if (i % 2 == 0)
+                if (flatLength % 2 == 0)
                 {
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y - i - 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2), centerPoint.y - i - 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2), centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
                 }
                 else
                 {
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y - i - 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2) + 1, centerPoint.y - flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y - i - 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x+Mathf.FloorToInt(i/2)+1, centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2) + 1, centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x-Mathf.FloorToInt(i/2)-1, centerPoint.y + i + 1, centerPoint.z);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
                     flats.Add(tempHexCalc);
                 }
 
             }
-            
+            //mapManager.ClearHighlighting();
+            //mapManager.HighlightSet(flats, true);
         }
-        foreach(Vector3Int flat in flats)
+        else
         {
+            for (int i = 0; i <= flatLength - 1; i++)
+            {
+                Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + i + 1, centerPoint.y, centerPoint.z);
+                flats.Add(tempHexCalc);
+                tempHexCalc = new Vector3Int(centerPoint.x - i - 1, centerPoint.y, centerPoint.z);
+                flats.Add(tempHexCalc);
+                if (centerPoint.y % 2 == 0)
+                {
+                    if (i % 2 == 0)
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2), centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2), centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
+                    else
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
 
+                }
+                else
+                {
+                    if (i % 2 == 0)
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2), centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2), centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
+                    else
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
+
+                }
+
+            }
         }
+        
+        if (player)
+        {
+            foreach (Vector3Int flat in flats)
+            {
+                Debug.Log(flat);
+            }
+        }
+
 
         return flats;
     }
@@ -351,15 +447,33 @@ public class EnemyShipControl : MonoBehaviour
         List<Vector3Int> flats = new List<Vector3Int>();
         if (thisEnemyName == "EnemyA")
         {
-            flats = GetFlats(3, enemyCellPosition);
+            flats = GetFlats(3, enemyCellPosition, false);
         }
         else if (thisEnemyName == "EnemyB")
         {
-            flats = GetFlats(1, enemyCellPosition);
+            flats = GetFlats(1, enemyCellPosition, false);
         }
 
         highlightEnabled = !highlightEnabled;
 
         mapManager.HighlightSet(flats, highlightEnabled);
     }
+
+    public void ShowFlats(bool state)
+    {
+        List<Vector3Int> flats = new List<Vector3Int>();
+        if (thisEnemyName == "EnemyA")
+        {
+            flats = GetFlats(3, enemyCellPosition, false);
+        }
+        else if (thisEnemyName == "EnemyB")
+        {
+            flats = GetFlats(1, enemyCellPosition,false);
+        }
+
+        highlightEnabled = state;
+
+        mapManager.HighlightSet(flats, state);
+    }
+
 }
