@@ -134,9 +134,17 @@ public class EnemyShipControl : MonoBehaviour
                         }
                     }
 
+                    Vector3Int nearestFlat = playerFlats[0];
+                    int distToNearestFlat = 999999;
                     foreach (Vector3Int flat in playerFlats)
                     {
-                        if(flat == enemyCellPosition)
+                        int distToFlat = mapManager.HexCellDistance(mapManager.evenq2cube(enemyCellPosition), mapManager.evenq2cube(flat));
+                        if (distToFlat < distToNearestFlat)
+                        {
+                            distToNearestFlat = distToFlat;
+                            nearestFlat = flat;
+                        }
+                        if (flat == enemyCellPosition)
                         {
                             inFlats = true;
                             break;
@@ -149,6 +157,10 @@ public class EnemyShipControl : MonoBehaviour
                     Debug.Log(inFlats);
                     if (enemyCellPosition != nearestEndFlat && !inFlats)
                     {
+                        if (distToPlayer < 3)
+                        {
+                            nearestEndFlat = nearestFlat;
+                        }
                         //Debug.Log("EnemyA is at " + enemyCellPosition);
                         //Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
                         List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);

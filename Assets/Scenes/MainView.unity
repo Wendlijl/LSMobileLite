@@ -4502,7 +4502,7 @@ MonoBehaviour:
   weaponState: 0
   player: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
-  laser: {fileID: 8552301256057810996, guid: 023863773ea303040b3df25737e173dc, type: 3}
+  laser: {fileID: 7965182630712998912, guid: 0c1a6093f81d3ac44bcbad7e99a49e37, type: 3}
 --- !u!114 &1326505863
 MonoBehaviour:
   m_ObjectHideFlags: 0
