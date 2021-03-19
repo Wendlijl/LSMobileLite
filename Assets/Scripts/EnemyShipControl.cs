@@ -11,6 +11,7 @@ public class EnemyShipControl : MonoBehaviour
     public GameObject explosion; //Variable to hold an instance of the explosion animation
     public EnemyObject thisEnemyObject; //This variable gets set initially from ManageMap when this object is created
     public bool highlightEnabled;
+    public GameObject enemyLaser;
 
     private bool laserState; //Boolean to represent whether the laser ability is active
     private bool shotIncoming; //Boolean to track if the laser animation is running
@@ -73,7 +74,7 @@ public class EnemyShipControl : MonoBehaviour
                     {
                         shotIncoming = true;
                         timer += Time.deltaTime;
-                        if (timer > 0.5)
+                        if (timer > 0.3)
                         {
                             //Once the timer has reached the determined length of the laser lifespan, create an instance of the explosion animation, destroy this game object, and set the shotIncoming and inRange values to false.
                             Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
@@ -204,6 +205,7 @@ public class EnemyShipControl : MonoBehaviour
                     else
                     {
                         //Debug.Log("EnemyA attacked");
+                        Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                     }
 
 
@@ -254,6 +256,7 @@ public class EnemyShipControl : MonoBehaviour
                     else
                     {
                         //Debug.Log("EnemyB attacked");
+                        Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                     }
 
                     break;

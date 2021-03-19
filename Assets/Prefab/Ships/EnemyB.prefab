@@ -167,3 +167,6 @@ MonoBehaviour:
   enemyCellPosition: {x: 0, y: 0, z: 0}
   explosion: {fileID: 7484638331000356443, guid: 02863be06838b004393be1709affcf74,
     type: 3}
+  highlightEnabled: 0
+  enemyLaser: {fileID: 8552301256057810996, guid: 023863773ea303040b3df25737e173dc,
+    type: 3}

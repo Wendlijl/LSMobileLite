@@ -21,7 +21,31 @@ public class UIControl : MonoBehaviour
     private bool isPaused; //boolean used to track if the game is paused 
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
+    private GameObject health1;
+    private GameObject health2;
+    private GameObject health3;
+    private GameObject health4;
+    private GameObject health5;
+    private GameObject health6;
+    private GameObject shield1;
+    private GameObject shield2;
+    private GameObject shield3;
+    private GameObject shield4;
+    private GameObject shield5;
+    private GameObject shield6;
 
+    private GameObject emptyHealth1;
+    private GameObject emptyHealth2;
+    private GameObject emptyHealth3;
+    private GameObject emptyHealth4;
+    private GameObject emptyHealth5;
+    private GameObject emptyHealth6;
+    private GameObject emptyShield1;
+    private GameObject emptyShield2;
+    private GameObject emptyShield3;
+    private GameObject emptyShield4;
+    private GameObject emptyShield5;
+    private GameObject emptyShield6;
 
     private void Awake()
     {
