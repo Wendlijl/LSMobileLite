@@ -21,6 +21,7 @@ public class UIControl : MonoBehaviour
     private bool isPaused; //boolean used to track if the game is paused 
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
+    private PlayerHealthControl playerHealthControl;
     private GameObject health1;
     private GameObject health2;
     private GameObject health3;
@@ -47,17 +48,57 @@ public class UIControl : MonoBehaviour
     private GameObject emptyShield5;
     private GameObject emptyShield6;
 
+    private List<GameObject> healthList = new List<GameObject>();
+    private List<GameObject> emptyHealthList = new List<GameObject>();
+    private List<GameObject> shieldList = new List<GameObject>();
+    private List<GameObject> emptyShieldList = new List<GameObject>();
+
+    private GameObject healthPanel;
+    private GameObject emptyHealthPanel;
+    private GameObject shieldPanel;
+    private GameObject emptyShieldPanel;
+
     private void Awake()
     {
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
         endPlayerTurn = GameObject.Find("EndPlayerTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
+        playerHealthControl = GameObject.Find("Player").GetComponent<PlayerHealthControl>();
+        
+        healthPanel = GameObject.Find("HealthPanel");
+        emptyHealthPanel = GameObject.Find("EmptyHealthPanel");
+        shieldPanel = GameObject.Find("ShieldPanel");
+        emptyShieldPanel = GameObject.Find("EmptyShieldPanel");
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endPlayerTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endEnemyTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         isPaused = false; //set the game pause state to false
         sceneIndex = SceneManager.GetActiveScene().buildIndex; //get a reference to the current scene index
+
+        Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            healthList.Add(child.gameObject);
+        }
+
+        allTransforms = shieldPanel.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            shieldList.Add(child.gameObject);
+        }
+
+        allTransforms = emptyHealthPanel.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            emptyHealthList.Add(child.gameObject);
+        }
+
+        allTransforms = emptyShieldPanel.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            emptyShieldList.Add(child.gameObject);
+        }
 
         if (QuickSaveRoot.Exists(mapManager.saveName))
         {
@@ -132,6 +173,38 @@ public class UIControl : MonoBehaviour
         //upgradePanel.SetActive(false);
         hologramMenu.GetComponent<Animator>().Play("UpgradePanelClose");
 
+    }
+
+    public void SetHealthState(int maxHealth, int currentHealth, int maxShields, int currentShields)
+    {
+        for (int i = 0; i <= 6; i++)
+        {
+            healthList[i].SetActive(false);
+            emptyHealthList[i].SetActive(false);
+            shieldList[i].SetActive(false);
+            emptyShieldList[i].SetActive(false);
+        }
+
+
+        for (int i = 0; i <= maxHealth; i++)
+        {
+            emptyHealthList[i].SetActive(true);
+        }
+
+        for (int i = 0; i <= maxShields; i++)
+        {
+            emptyShieldList[i].SetActive(true);
+        }
+
+        for (int i = 0; i <= currentHealth; i++)
+        {
+            healthList[i].SetActive(true);
+        }
+
+        for (int i = 0; i <= currentShields; i++)
+        {
+            shieldList[i].SetActive(true);
+        }
     }
 
     public void SetEndTurnButtonState()
