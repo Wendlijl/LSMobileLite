@@ -21,32 +21,8 @@ public class UIControl : MonoBehaviour
     private bool isPaused; //boolean used to track if the game is paused 
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
-    private PlayerHealthControl playerHealthControl;
-    private GameObject health1;
-    private GameObject health2;
-    private GameObject health3;
-    private GameObject health4;
-    private GameObject health5;
-    private GameObject health6;
-    private GameObject shield1;
-    private GameObject shield2;
-    private GameObject shield3;
-    private GameObject shield4;
-    private GameObject shield5;
-    private GameObject shield6;
-
-    private GameObject emptyHealth1;
-    private GameObject emptyHealth2;
-    private GameObject emptyHealth3;
-    private GameObject emptyHealth4;
-    private GameObject emptyHealth5;
-    private GameObject emptyHealth6;
-    private GameObject emptyShield1;
-    private GameObject emptyShield2;
-    private GameObject emptyShield3;
-    private GameObject emptyShield4;
-    private GameObject emptyShield5;
-    private GameObject emptyShield6;
+    private AbilityController abilityController;
+    private MovementController movementController;
 
     private List<GameObject> healthList = new List<GameObject>();
     private List<GameObject> emptyHealthList = new List<GameObject>();
@@ -64,7 +40,8 @@ public class UIControl : MonoBehaviour
         endPlayerTurn = GameObject.Find("EndPlayerTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
-        playerHealthControl = GameObject.Find("Player").GetComponent<PlayerHealthControl>();
+        abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
+        movementController = GameObject.Find("Player").GetComponent<MovementController>();
         
         healthPanel = GameObject.Find("HealthPanel");
         emptyHealthPanel = GameObject.Find("EmptyHealthPanel");
@@ -223,6 +200,8 @@ public class UIControl : MonoBehaviour
             {
                 endEnemyTurn.gameObject.SetActive(true);
                 endPlayerTurn.gameObject.SetActive(false);
+                movementController.hasMoved = false;
+                abilityController.abilityUsed = false;
                 mapManager.enemyTurn = true;
                 mapManager.playerTurn = false;
                 mapManager.OrderEnemyTurns();

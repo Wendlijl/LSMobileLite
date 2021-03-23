@@ -7,6 +7,7 @@ public class AbilityController : MonoBehaviour
     public bool laserState; //variable to track the activation state of the laser ability 
     public int laserRange; //variable to set the range of the laser ability
     public bool weaponState;
+    public bool abilityUsed;
     public GameObject player; //variable to store a reference to the player game object
     public Vector3Int target; //variable to store the position vector of the target
     public GameObject laser; //variable to store a reference to the laser game object
@@ -20,6 +21,7 @@ public class AbilityController : MonoBehaviour
     private Vector3Int playerHex; //variable to store the current hex grid coordinates of the player game object
     private GridLayout gridLayout; //variable for storing a reference to the grid layout
     private UIControl uiController;
+    private MovementController movementController;
 
     private float timer;
     private bool turnOffAb;
@@ -32,6 +34,7 @@ public class AbilityController : MonoBehaviour
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //store a reference to the map manager
         uiController = GameObject.Find("GameController").GetComponent<UIControl>(); //store a reference to the map manager
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
+        movementController = player.GetComponent<MovementController>();
         laserRange = 3; //set the initial state of the laser range parameter
         instX = player.transform.position.x; //set the initial x position for instantiated objects
         instY = player.transform.position.y; //set the initial y position for instantiated objects
@@ -81,7 +84,8 @@ public class AbilityController : MonoBehaviour
                 LaserActive();
                 timer = 0;
                 turnOffAb = false;
-                if (mapManager.combatActive)
+                abilityUsed = true;
+                if (mapManager.combatActive && movementController.hasMoved)
                 {
                     uiController.SetEndTurnButtonState();
                 }

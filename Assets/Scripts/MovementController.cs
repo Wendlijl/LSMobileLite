@@ -21,7 +21,7 @@ public class MovementController : MonoBehaviour
     public Vector3 setAngleVector; //variable to hold the player ship directional angle
 
 
-    private bool hasMoved; //variable to check for whether movement has happened yet
+    public bool hasMoved; //variable to check for whether movement has happened yet
     private bool cantMove;
     private float sidewaysMovement; //varaible to define sideways movement of player
     private float upDownMovement; //variable to define vertical movement of player
@@ -33,6 +33,7 @@ public class MovementController : MonoBehaviour
     private Vector3Int clickCellPosition; //variable to hold the cell position of the clicked hex
     private Vector3Int clickCellPositionCubeCoords; //variable to hold the cell position of the clicked hex converted to cube coordinates
     private UIControl uiController;
+    private AbilityController abilityController;
 
     void Start()
     {
@@ -46,6 +47,7 @@ public class MovementController : MonoBehaviour
         abilityActive = false; //set the ability active flag to false
         cantMove = false;
         uiController = GameObject.Find("GameController").GetComponent<UIControl>();
+        abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
 
     }
 
@@ -61,7 +63,7 @@ public class MovementController : MonoBehaviour
             //Determine if the player has moved yet for a given keypress. Since up/down movement does not require any addition definition, that is used as the initiation of all motion
             if (upDownMovement == 0)
             {
-                hasMoved = false;
+                //hasMoved = false;
             }
             else if (upDownMovement != 0 && !hasMoved) //If up or down input is detected and the player has not moved, then call the movement function and set hasMoved to true
             {
@@ -78,7 +80,7 @@ public class MovementController : MonoBehaviour
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
                 //Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-                Debug.Log("Clicked on "+clickCellPosition);
+                //Debug.Log("Clicked on "+clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
                 int i = 1;
@@ -98,10 +100,15 @@ public class MovementController : MonoBehaviour
                     cantMove = true;
                 }
 
+                if (!mapManager.combatActive)
+                {
+                    hasMoved = false;
+                }
 
                 //if (clickDistance < 0.33f) //Each cell is 32 pixels wide, so if the click distance is 32 or less then allow the player to move
-                if (clickDistance <= moveRange && !cantMove) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
+                if (clickDistance <= moveRange && !cantMove && !hasMoved) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
                 {
+                    Debug.Log(hasMoved);
                     SetOrientation(gridLayout.CellToWorld(clickCellPosition)); //first, orient the ship correctly for the hex it will be moving to
                     transform.position += (gridLayout.CellToWorld(clickCellPosition) - gridLayout.CellToWorld(playerCellPosition)); //update the player game object transform position to the new coordinates from the clicked cell (look at how to do this smoothly)
                     playerCellPosition = gridLayout.WorldToCell(transform.position); //update the player cell position 
@@ -109,7 +116,8 @@ public class MovementController : MonoBehaviour
                     playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);
                     //transform.position = Vector3.Lerp(transform.position,gridLayout.CellToWorld(playerCellPosition),Time.deltaTime); //use the updated player cell position to ensure the player game object is centered in the cell
                     mapManager.UpdateFogOfWar(vision, playerCellPosition); //clear the fog of was from the new position
-                    if (mapManager.combatActive)
+                    hasMoved = true;
+                    if (mapManager.combatActive && abilityController.abilityUsed)
                     {
                         uiController.SetEndTurnButtonState();
                     }

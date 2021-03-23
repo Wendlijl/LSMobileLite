@@ -24,6 +24,7 @@ public class EnemyShipControl : MonoBehaviour
     private GridLayout gridLayout; //Variable to hold an instance of the grid layout
     private ManageMap mapManager; //Variable to hold an instance of the map manager
     private ClickManager clickManager;
+    private PlayerHealthControl playerHealthControl;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,6 +37,7 @@ public class EnemyShipControl : MonoBehaviour
         highlightEnabled = false;
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //Access and store a reference to the map manager script
         clickManager = GameObject.Find("GameController").GetComponent<ClickManager>(); //Access and store a reference to the click manager script
+        playerHealthControl = player.GetComponent<PlayerHealthControl>();
         inRagne = false; //Set the initial state of the Boolean tracking range to the player
         shotIncoming = false; //Set the initial state of the laser animation
         timer = 0; //Set the initial value for the timer tracking the laser lifespan
@@ -206,6 +208,7 @@ public class EnemyShipControl : MonoBehaviour
                     {
                         //Debug.Log("EnemyA attacked");
                         Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                        playerHealthControl.PlayerHit();
                     }
 
 
@@ -257,6 +260,7 @@ public class EnemyShipControl : MonoBehaviour
                     {
                         //Debug.Log("EnemyB attacked");
                         Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                        playerHealthControl.PlayerHit();
                     }
 
                     break;

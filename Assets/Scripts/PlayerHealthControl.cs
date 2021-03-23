@@ -21,4 +21,16 @@ public class PlayerHealthControl : MonoBehaviour
         uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
 
+    public void PlayerHit()
+    {
+        if (currentPlayerShields > 0)
+        {
+            currentPlayerShields--;
+        }
+        else
+        {
+            currentPlayerHealth--;
+        }
+        uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+    }
 }
