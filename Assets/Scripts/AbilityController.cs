@@ -6,8 +6,13 @@ public class AbilityController : MonoBehaviour
 {
     public bool laserState; //variable to track the activation state of the laser ability 
     public int laserRange; //variable to set the range of the laser ability
+    public int maxLaserRange; //the maximum current range of the laser
+    public int jumpRange;
     public bool weaponState;
     public bool abilityUsed;
+    public bool jumpState;
+    public bool shieldState;
+    public bool rocketState;
     public GameObject player; //variable to store a reference to the player game object
     public Vector3Int target; //variable to store the position vector of the target
     public GameObject laser; //variable to store a reference to the laser game object
@@ -22,6 +27,8 @@ public class AbilityController : MonoBehaviour
     private GridLayout gridLayout; //variable for storing a reference to the grid layout
     private UIControl uiController;
     private MovementController movementController;
+    private List<Vector3Int> jumpCells;
+    private ClickManager clickManager;
 
     private float timer;
     private bool turnOffAb;
@@ -32,15 +39,20 @@ public class AbilityController : MonoBehaviour
         weaponState = true;
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //store a reference to the grid layout component
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //store a reference to the map manager
+        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>(); //store a reference to the map manager
         uiController = GameObject.Find("GameController").GetComponent<UIControl>(); //store a reference to the map manager
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
         movementController = player.GetComponent<MovementController>();
         laserRange = 3; //set the initial state of the laser range parameter
+        maxLaserRange = 3; //set the initial state of the maximum laser range parameter
+        jumpRange = 5;
         instX = player.transform.position.x; //set the initial x position for instantiated objects
         instY = player.transform.position.y; //set the initial y position for instantiated objects
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
         target = gridLayout.WorldToCell(ray.origin); //set the initial position of the target (i.e. where is the mouse pointing in grid coordinates)
         laserState = false; //set the initial state of the laser ability activation
+        jumpState = false;
+        jumpCells = new List<Vector3Int>();
         //player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
 
         timer = 0.0f;
@@ -74,14 +86,35 @@ public class AbilityController : MonoBehaviour
                         }
                     }
                 }
+            }else if (jumpState)
+            {
+                bool makeJump = false;
+                foreach (Vector3Int cell in jumpCells)
+                {
+                    if(target == cell)
+                    {
+                        makeJump = true;
+                    }
+                }
+                if (makeJump)
+                {
+                    
+                    JumpActive();
+                    abilityUsed = true;
+                    clickManager.WaitForQuarterSec();
+                    movementController.MovePlayer(target, false);
+                }
             }
         }
         if (turnOffAb)
         {
+            
             timer += Time.deltaTime;
             if (timer > 0.5)
             {
                 LaserActive();
+                laserRange = 0;
+                uiController.SetLaserCharge();
                 timer = 0;
                 turnOffAb = false;
                 abilityUsed = true;
@@ -95,7 +128,19 @@ public class AbilityController : MonoBehaviour
 
     public void LaserActive()
     {
-        if (mapManager.playerTurn && weaponState)
+        if (jumpState)
+        {
+            JumpActive();
+        }
+        else if (shieldState)
+        {
+            ShieldActive();
+        }
+        else if (rocketState)
+        {
+            RocketsActive();
+        }
+        if (mapManager.playerTurn && weaponState && !abilityUsed)
         {
             //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
             if (laserState)
@@ -112,4 +157,70 @@ public class AbilityController : MonoBehaviour
             }
         }
     }
+
+    public void ShieldActive()
+    {
+
+    }
+
+    public void RocketsActive()
+    {
+
+    }
+
+    public void JumpActive()
+    {
+        if (laserState)
+        {
+            LaserActive();
+        }
+        else if (shieldState)
+        {
+            ShieldActive();
+        }
+        else if (rocketState)
+        {
+            RocketsActive();
+        }
+
+        if (mapManager.playerTurn && weaponState && !abilityUsed)
+        {
+            jumpState = !jumpState;
+            jumpCells.Clear();
+            player.GetComponent<MovementController>().abilityActive = jumpState;
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); //create a list of any enemies that are currently in the scene
+            
+            for (int x = -jumpRange; x <= jumpRange; x++) //iterate through the range of the laser to generate the x coordinates
+            {
+                for (int y = -jumpRange; y <= jumpRange; y++) //iterate through the range of the laser to generate the y coordindates
+                {
+                    Vector3Int tempCell = movementController.playerCellPosition + new Vector3Int(x, y, 0);
+                    float hexCellDistance = mapManager.HexCellDistance(movementController.playerCellPositionCubeCoords, mapManager.evenq2cube(tempCell));
+                    bool cellOccupied = false;
+                    if (hexCellDistance < jumpRange)
+                    {
+                        foreach (GameObject enemy in enemies)
+                        {
+                            if (tempCell == gridLayout.WorldToCell(enemy.transform.position))
+                            {
+                                cellOccupied = true;
+                            }
+                        }
+                        if (!cellOccupied)
+                        {
+                            jumpCells.Add(tempCell);
+                        }
+                    }
+
+                }
+            }
+
+            mapManager.HighlightSet(jumpCells, jumpState);
+            if (!jumpState)
+            {
+                mapManager.ClearHighlighting();
+            }
+        }
+    }
+
 }

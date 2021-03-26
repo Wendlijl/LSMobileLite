@@ -34,6 +34,7 @@ public class MovementController : MonoBehaviour
     private Vector3Int clickCellPositionCubeCoords; //variable to hold the cell position of the clicked hex converted to cube coordinates
     private UIControl uiController;
     private AbilityController abilityController;
+    private ClickManager clickManager;
 
     void Start()
     {
@@ -42,6 +43,7 @@ public class MovementController : MonoBehaviour
         playerCellPosition = gridLayout.WorldToCell(transform.position); //get a reference to the player cell position in cell coordinates
         transform.position = gridLayout.CellToWorld(playerCellPosition); //center the player game object within it's nearest cell by converting the cell coordinates to world coordinates
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //get a reference to the map manager 
+        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>(); //get a reference to the map manager 
         mapManager.UpdateFogOfWar(vision, playerCellPosition); //run an update fog of war command from the map manager to clear the fog around the player character on scene start
         //rotTrack = 0; //set rotation tracking to 0 (this will likely be depreicated with a new rotation system
         abilityActive = false; //set the ability active flag to false
@@ -106,21 +108,9 @@ public class MovementController : MonoBehaviour
                 }
 
                 //if (clickDistance < 0.33f) //Each cell is 32 pixels wide, so if the click distance is 32 or less then allow the player to move
-                if (clickDistance <= moveRange && !cantMove && !hasMoved) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
+                if (clickDistance <= moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
                 {
-                    Debug.Log(hasMoved);
-                    SetOrientation(gridLayout.CellToWorld(clickCellPosition)); //first, orient the ship correctly for the hex it will be moving to
-                    transform.position += (gridLayout.CellToWorld(clickCellPosition) - gridLayout.CellToWorld(playerCellPosition)); //update the player game object transform position to the new coordinates from the clicked cell (look at how to do this smoothly)
-                    playerCellPosition = gridLayout.WorldToCell(transform.position); //update the player cell position 
-                    //transform.position = gridLayout.CellToWorld(playerCellPosition); //use the updated player cell position to ensure the player game object is centered in the cell
-                    playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);
-                    //transform.position = Vector3.Lerp(transform.position,gridLayout.CellToWorld(playerCellPosition),Time.deltaTime); //use the updated player cell position to ensure the player game object is centered in the cell
-                    mapManager.UpdateFogOfWar(vision, playerCellPosition); //clear the fog of was from the new position
-                    hasMoved = true;
-                    if (mapManager.combatActive && abilityController.abilityUsed)
-                    {
-                        uiController.SetEndTurnButtonState();
-                    }
+                    MovePlayer(clickCellPosition, true);
                 }
             }
         }
@@ -170,6 +160,27 @@ public class MovementController : MonoBehaviour
         playerCellPosition = gridLayout.WorldToCell(transform.position);
         transform.position = gridLayout.CellToWorld(playerCellPosition);
         mapManager.UpdateFogOfWar(vision, playerCellPosition); //A call to the fog of war function is made to update what the player can see
+    }
+
+    public void MovePlayer(Vector3Int moveTarget, bool regularMove)
+    {
+        SetOrientation(gridLayout.CellToWorld(moveTarget)); //first, orient the ship correctly for the hex it will be moving to
+        transform.position += (gridLayout.CellToWorld(moveTarget) - gridLayout.CellToWorld(playerCellPosition)); //update the player game object transform position to the new coordinates from the clicked cell (look at how to do this smoothly)
+        playerCellPosition = gridLayout.WorldToCell(transform.position); //update the player cell position 
+                                                                         //transform.position = gridLayout.CellToWorld(playerCellPosition); //use the updated player cell position to ensure the player game object is centered in the cell
+        playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);
+        //transform.position = Vector3.Lerp(transform.position,gridLayout.CellToWorld(playerCellPosition),Time.deltaTime); //use the updated player cell position to ensure the player game object is centered in the cell
+        mapManager.UpdateFogOfWar(vision, playerCellPosition); //clear the fog of was from the new position
+        if (regularMove)
+        {
+            hasMoved = true;
+            if (mapManager.combatActive && abilityController.abilityUsed)
+            {
+                uiController.SetEndTurnButtonState();
+            }
+        }
+        Debug.Log("has moved is "+hasMoved);
+
     }
 
     private void SetOrientation(Vector3 target)

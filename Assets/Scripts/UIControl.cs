@@ -14,6 +14,9 @@ public class UIControl : MonoBehaviour
     public GameObject pausePanel; //variable to hold the game pause screen
     public GameObject upgradePanel; //variable to hold the upgrade panel
     public GameObject newGameMessage; //variable to hold the upgrade panel
+    public GameObject laserChargeToken1;
+    public GameObject laserChargeToken2;
+    public GameObject laserChargeToken3;
 
     private Button landOnPlanet; //contextual button used for landing on planets
     private Button endPlayerTurn; //contextual button used for landing on planets
@@ -193,6 +196,7 @@ public class UIControl : MonoBehaviour
             mapManager.combatActive = false;
             mapManager.enemyTurn = true;
             mapManager.playerTurn = false;
+            abilityController.laserRange = abilityController.maxLaserRange;
         }
         else
         {
@@ -205,14 +209,48 @@ public class UIControl : MonoBehaviour
                 mapManager.enemyTurn = true;
                 mapManager.playerTurn = false;
                 mapManager.OrderEnemyTurns();
+
             }
             else
             {
+                if (abilityController.laserRange < abilityController.maxLaserRange)
+                {
+                    abilityController.laserRange++;
+                }
                 endEnemyTurn.gameObject.SetActive(false);
                 endPlayerTurn.gameObject.SetActive(true);
                 mapManager.enemyTurn = false;
                 mapManager.playerTurn = true;
+                SetLaserCharge();
+                Debug.Log(abilityController.laserRange);
             }
+        }
+    }
+
+    public void SetLaserCharge()
+    {
+        switch (abilityController.laserRange)
+        {
+            case 0:
+                laserChargeToken1.SetActive(false);
+                laserChargeToken2.SetActive(false);
+                laserChargeToken3.SetActive(false);
+                break;
+            case 1:
+                laserChargeToken1.SetActive(true);
+                laserChargeToken2.SetActive(false);
+                laserChargeToken3.SetActive(false);
+                break;
+            case 2:
+                laserChargeToken1.SetActive(true);
+                laserChargeToken2.SetActive(true);
+                laserChargeToken3.SetActive(false);
+                break;
+            case 3:
+                laserChargeToken1.SetActive(true);
+                laserChargeToken2.SetActive(true);
+                laserChargeToken3.SetActive(true);
+                break;
         }
     }
 

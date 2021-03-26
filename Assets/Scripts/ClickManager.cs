@@ -5,10 +5,14 @@ using UnityEngine;
 public class ClickManager : MonoBehaviour
 {
     public bool mouseClicked;
+    public bool waitForQuarterSec;
+    private float timer;
     // Start is called before the first frame update
     void Start()
     {
+        waitForQuarterSec = false;
         mouseClicked = false;
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -31,5 +35,20 @@ public class ClickManager : MonoBehaviour
             mouseClicked = false;
         }
 
+        if (timer>0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            waitForQuarterSec = false;
+        }
+
+    }
+
+    public void WaitForQuarterSec()
+    {
+        waitForQuarterSec = true;
+        timer = 0.25f;
     }
 }

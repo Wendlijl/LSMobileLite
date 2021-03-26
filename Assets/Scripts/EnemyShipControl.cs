@@ -25,6 +25,7 @@ public class EnemyShipControl : MonoBehaviour
     private ManageMap mapManager; //Variable to hold an instance of the map manager
     private ClickManager clickManager;
     private PlayerHealthControl playerHealthControl;
+    private MovementController movementController;
 
     // Start is called before the first frame update
     void Awake()
@@ -33,6 +34,7 @@ public class EnemyShipControl : MonoBehaviour
         enemyCellPosition = gridLayout.WorldToCell(transform.position); //Get this enemy's cell position and convert it to the nearest hex coordinates. This is the first half of an operation to center this object in it's position in the hex grid 
         transform.position = gridLayout.CellToWorld(enemyCellPosition); //Take the hex grid position from the last operation, convert it back to world coordinates and set this object's position to those coordinates
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store the player game object
+        movementController = player.GetComponent<MovementController>(); //Access and store the ability controller
         laserState = player.GetComponent<AbilityController>().laserState; //Access and store the initial state of the laser ability
         highlightEnabled = false;
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //Access and store a reference to the map manager script
@@ -58,7 +60,7 @@ public class EnemyShipControl : MonoBehaviour
             if (enemyCellPosition == player.GetComponent<AbilityController>().target || shotIncoming) //This checks if the cell clicked by the player contains this enemy
             {
                 
-                if (!laserState && !shotIncoming)
+                if (!laserState && !shotIncoming && !movementController.abilityActive)
                 {
                     ShowFlats();
                 }
@@ -157,7 +159,7 @@ public class EnemyShipControl : MonoBehaviour
                             inFlats = false;
                         }
                     }
-                    Debug.Log(inFlats);
+                    //Debug.Log(inFlats);
                     if (enemyCellPosition != nearestEndFlat && !inFlats)
                     {
                         if (distToPlayer < 3)
