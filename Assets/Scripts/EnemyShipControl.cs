@@ -456,7 +456,7 @@ public class EnemyShipControl : MonoBehaviour
         {
             foreach (Vector3Int flat in flats)
             {
-                Debug.Log(flat);
+                //Debug.Log(flat);
             }
         }
 

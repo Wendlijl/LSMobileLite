@@ -186,7 +186,7 @@ public class ManageMap : MonoBehaviour
             lastHighCell = highCell; //update the last highlighted cell to the currently highlighted cell
         }
 
-        if (player.GetComponent<MovementController>().abilityActive) //check if the laser ability has been activated and apply relevant highlighting if it has
+        if (player.GetComponent<AbilityController>().laserState) //check if the laser ability has been activated and apply relevant highlighting if it has
         {
             UpdateHighlight(player.GetComponent<AbilityController>().laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the function to update the map highlighting
         }

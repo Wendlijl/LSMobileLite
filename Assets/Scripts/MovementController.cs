@@ -82,7 +82,7 @@ public class MovementController : MonoBehaviour
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
                 //Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-                //Debug.Log("Clicked on "+clickCellPosition);
+                Debug.Log("Clicked on "+clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
                 int i = 1;
@@ -179,7 +179,7 @@ public class MovementController : MonoBehaviour
                 uiController.SetEndTurnButtonState();
             }
         }
-        Debug.Log("has moved is "+hasMoved);
+        //Debug.Log("has moved is "+hasMoved);
 
     }
 

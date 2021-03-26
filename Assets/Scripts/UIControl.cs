@@ -17,6 +17,11 @@ public class UIControl : MonoBehaviour
     public GameObject laserChargeToken1;
     public GameObject laserChargeToken2;
     public GameObject laserChargeToken3;
+    public GameObject jumpChargeToken1;
+    public GameObject jumpChargeToken2;
+    public GameObject jumpChargeToken3;
+    public GameObject jumpChargeToken4;
+    public GameObject jumpChargeToken5;
 
     private Button landOnPlanet; //contextual button used for landing on planets
     private Button endPlayerTurn; //contextual button used for landing on planets
@@ -217,12 +222,17 @@ public class UIControl : MonoBehaviour
                 {
                     abilityController.laserRange++;
                 }
+                if (abilityController.jumpRange < abilityController.maxJumpRange)
+                {
+                    abilityController.jumpRange++;
+                }
                 endEnemyTurn.gameObject.SetActive(false);
                 endPlayerTurn.gameObject.SetActive(true);
                 mapManager.enemyTurn = false;
                 mapManager.playerTurn = true;
                 SetLaserCharge();
-                Debug.Log(abilityController.laserRange);
+                SetJumpCharge();
+                //Debug.Log(abilityController.laserRange);
             }
         }
     }
@@ -250,6 +260,54 @@ public class UIControl : MonoBehaviour
                 laserChargeToken1.SetActive(true);
                 laserChargeToken2.SetActive(true);
                 laserChargeToken3.SetActive(true);
+                break;
+        }
+    }
+    public void SetJumpCharge()
+    {
+        switch (abilityController.jumpRange)
+        {
+            case 0:
+                jumpChargeToken1.SetActive(false);
+                jumpChargeToken2.SetActive(false);
+                jumpChargeToken3.SetActive(false);
+                jumpChargeToken4.SetActive(false);
+                jumpChargeToken5.SetActive(false);
+                break;
+            case 1:
+                jumpChargeToken1.SetActive(true);
+                jumpChargeToken2.SetActive(false);
+                jumpChargeToken3.SetActive(false);
+                jumpChargeToken4.SetActive(false);
+                jumpChargeToken5.SetActive(false);
+                break;
+            case 2:
+                jumpChargeToken1.SetActive(true);
+                jumpChargeToken2.SetActive(true);
+                jumpChargeToken3.SetActive(false);
+                jumpChargeToken4.SetActive(false);
+                jumpChargeToken5.SetActive(false);
+                break;
+            case 3:
+                jumpChargeToken1.SetActive(true);
+                jumpChargeToken2.SetActive(true);
+                jumpChargeToken3.SetActive(true);
+                jumpChargeToken4.SetActive(false);
+                jumpChargeToken5.SetActive(false);
+                break;
+            case 4:
+                jumpChargeToken1.SetActive(true);
+                jumpChargeToken2.SetActive(true);
+                jumpChargeToken3.SetActive(true);
+                jumpChargeToken4.SetActive(true);
+                jumpChargeToken5.SetActive(false);
+                break;
+            case 5:
+                jumpChargeToken1.SetActive(true);
+                jumpChargeToken2.SetActive(true);
+                jumpChargeToken3.SetActive(true);
+                jumpChargeToken4.SetActive(true);
+                jumpChargeToken5.SetActive(true);
                 break;
         }
     }

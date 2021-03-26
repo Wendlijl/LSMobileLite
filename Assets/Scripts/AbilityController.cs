@@ -8,6 +8,7 @@ public class AbilityController : MonoBehaviour
     public int laserRange; //variable to set the range of the laser ability
     public int maxLaserRange; //the maximum current range of the laser
     public int jumpRange;
+    public int maxJumpRange;
     public bool weaponState;
     public bool abilityUsed;
     public bool jumpState;
@@ -46,6 +47,7 @@ public class AbilityController : MonoBehaviour
         laserRange = 3; //set the initial state of the laser range parameter
         maxLaserRange = 3; //set the initial state of the maximum laser range parameter
         jumpRange = 5;
+        maxJumpRange = 5;
         instX = player.transform.position.x; //set the initial x position for instantiated objects
         instY = player.transform.position.y; //set the initial y position for instantiated objects
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
@@ -103,6 +105,8 @@ public class AbilityController : MonoBehaviour
                     abilityUsed = true;
                     clickManager.WaitForQuarterSec();
                     movementController.MovePlayer(target, false);
+                    jumpRange = 0;
+                    uiController.SetJumpCharge();
                 }
             }
         }
@@ -197,7 +201,7 @@ public class AbilityController : MonoBehaviour
                     Vector3Int tempCell = movementController.playerCellPosition + new Vector3Int(x, y, 0);
                     float hexCellDistance = mapManager.HexCellDistance(movementController.playerCellPositionCubeCoords, mapManager.evenq2cube(tempCell));
                     bool cellOccupied = false;
-                    if (hexCellDistance < jumpRange)
+                    if (hexCellDistance <= jumpRange)
                     {
                         foreach (GameObject enemy in enemies)
                         {
@@ -216,6 +220,12 @@ public class AbilityController : MonoBehaviour
             }
 
             mapManager.HighlightSet(jumpCells, jumpState);
+            Debug.Log("Jump cell count is " + jumpCells.Count);
+            Debug.Log("jump range is " + jumpRange);
+            foreach (Vector3Int cell in jumpCells)
+            {
+                Debug.Log(cell);
+            }
             if (!jumpState)
             {
                 mapManager.ClearHighlighting();
