@@ -14,9 +14,11 @@ public class AbilityController : MonoBehaviour
     public bool jumpState;
     public bool shieldState;
     public bool rocketState;
+    public int rocketRange;
     public GameObject player; //variable to store a reference to the player game object
     public Vector3Int target; //variable to store the position vector of the target
     public GameObject laser; //variable to store a reference to the laser game object
+    public GameObject rocket;
 
     private float instX; //varaible to store the x position of the location where projectile abilities will be instantiated 
     private float instY; //varaible to store the y position of the location where projectile abilities will be instantiated
@@ -30,6 +32,7 @@ public class AbilityController : MonoBehaviour
     private MovementController movementController;
     private List<Vector3Int> jumpCells;
     private ClickManager clickManager;
+    private List<Vector3Int> playerFlats;
 
     private float timer;
     private bool turnOffAb;
@@ -55,8 +58,9 @@ public class AbilityController : MonoBehaviour
         laserState = false; //set the initial state of the laser ability activation
         jumpState = false;
         jumpCells = new List<Vector3Int>();
+        rocketRange = 3;
         //player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
-
+        playerFlats = new List<Vector3Int>();
         timer = 0.0f;
         turnOffAb = false;
     }
@@ -107,6 +111,20 @@ public class AbilityController : MonoBehaviour
                     movementController.MovePlayer(target, false);
                     jumpRange = 0;
                     uiController.SetJumpCharge();
+                }
+            }else if (rocketState)
+            {
+                bool inRange = false;
+                foreach(Vector3Int flat in playerFlats)
+                {
+                    if (target == flat)
+                    {
+                        inRange = true;
+                    }
+                }
+                if (inRange)
+                {
+                    Instantiate(rocket, player.transform.position, Quaternion.identity);
                 }
             }
         }
@@ -169,7 +187,23 @@ public class AbilityController : MonoBehaviour
 
     public void RocketsActive()
     {
-
+        if (jumpState)
+        {
+            JumpActive();
+        }
+        else if (shieldState)
+        {
+            ShieldActive();
+        }
+        else if (laserState)
+        {
+            LaserActive();
+        }
+        playerFlats.Clear();
+        rocketState = !rocketState;
+        player.GetComponent<MovementController>().abilityActive = rocketState;
+        playerFlats = mapManager.GetFlats(rocketRange, playerHex, false);
+        mapManager.HighlightSet(playerFlats, rocketState);
     }
 
     public void JumpActive()

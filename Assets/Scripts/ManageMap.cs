@@ -640,7 +640,195 @@ public class ManageMap : MonoBehaviour
                 highlightWeaponMap.SetTile(new Vector3Int(x, y, 0), null); //set the cell at the current coordinates to null
             }
         }
-        Debug.Log("clearedList");
+        Debug.Log("cleared highlighted list");
         currentHighlightedTiles.Clear(); //clear the list of highlighted cell coordinates.
+    }
+
+    public List<Vector3Int> GetFlats(int flatLength, Vector3Int centerPoint, bool player)
+    {
+        List<Vector3Int> flats = new List<Vector3Int>();
+        if (player)
+        {
+            Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + flatLength, centerPoint.y, centerPoint.z);
+            flats.Add(tempHexCalc);
+            tempHexCalc = new Vector3Int(centerPoint.x - flatLength, centerPoint.y, centerPoint.z);
+            flats.Add(tempHexCalc);
+            if (centerPoint.y % 2 == 0)
+            {
+                if (flatLength % 2 == 0)
+                {
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                }
+                else
+                {
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2) - 1, centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2) - 1, centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                }
+
+            }
+            else
+            {
+                if (flatLength % 2 == 0)
+                {
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                }
+                else
+                {
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2) + 1, centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2) + 1, centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
+                    flats.Add(tempHexCalc);
+                }
+
+            }
+            //mapManager.ClearHighlighting();
+            //mapManager.HighlightSet(flats, true);
+        }
+        else
+        {
+            for (int i = 0; i <= flatLength - 1; i++)
+            {
+                Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + i + 1, centerPoint.y, centerPoint.z);
+                flats.Add(tempHexCalc);
+                tempHexCalc = new Vector3Int(centerPoint.x - i - 1, centerPoint.y, centerPoint.z);
+                flats.Add(tempHexCalc);
+                if (centerPoint.y % 2 == 0)
+                {
+                    if (i % 2 == 0)
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2), centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2), centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
+                    else
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
+
+                }
+                else
+                {
+                    if (i % 2 == 0)
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2), centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2), centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
+                    else
+                    {
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
+                        flats.Add(tempHexCalc);
+                    }
+
+                }
+
+            }
+        }
+
+        if (player)
+        {
+            foreach (Vector3Int flat in flats)
+            {
+                //Debug.Log(flat);
+            }
+        }
+
+
+        return flats;
+    }
+
+    public void ShowFlats(string objectName, Vector3Int cellPosition, GameObject givenObject)
+    {
+        List<Vector3Int> flats = new List<Vector3Int>();
+        if (objectName == "EnemyA")
+        {
+            flats = GetFlats(3, cellPosition, false);
+            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
+            HighlightSet(flats, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+        }
+        else if (objectName == "EnemyB")
+        {
+            flats = GetFlats(1, cellPosition, false);
+            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
+            HighlightSet(flats, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+        }
+        else if (objectName == "Player")
+        {
+            
+        }
+
+        
+
+        
+    }
+
+    public void ShowFlats(string objectName, Vector3Int cellPosition, GameObject givenObject, bool state)
+    {
+        List<Vector3Int> flats = new List<Vector3Int>();
+        if (objectName == "EnemyA")
+        {
+            flats = GetFlats(3, cellPosition, false);
+            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
+        }
+        else if (objectName == "EnemyB")
+        {
+            flats = GetFlats(1, cellPosition, false);
+            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
+        }
+        else if (objectName == "Player")
+        {
+
+        }
+
+        
+
+        HighlightSet(flats, state);
     }
 }

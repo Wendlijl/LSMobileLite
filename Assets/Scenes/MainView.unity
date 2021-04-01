@@ -6647,9 +6647,11 @@ MonoBehaviour:
   jumpState: 0
   shieldState: 0
   rocketState: 0
+  rocketRange: 0
   player: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   laser: {fileID: 7965182630712998912, guid: 0c1a6093f81d3ac44bcbad7e99a49e37, type: 3}
+  rocket: {fileID: 4474107532894675224, guid: e7998f0d0a9db7d4698f5089bcb3e16f, type: 3}
 --- !u!114 &1326505863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10446,7 +10448,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1939976681}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1326505862}
+        m_MethodName: RocketsActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1939976681
 MonoBehaviour:
   m_ObjectHideFlags: 0

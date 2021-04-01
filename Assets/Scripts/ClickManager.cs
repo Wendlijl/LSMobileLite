@@ -7,9 +7,11 @@ public class ClickManager : MonoBehaviour
     public bool mouseClicked;
     public bool waitForQuarterSec;
     private float timer;
+    private ManageMap mapManager;
     // Start is called before the first frame update
     void Start()
     {
+        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
         waitForQuarterSec = false;
         mouseClicked = false;
         timer = 0;
@@ -25,7 +27,7 @@ public class ClickManager : MonoBehaviour
             {
                 if (enemy.GetComponent<EnemyShipControl>().highlightEnabled)
                 {
-                    enemy.GetComponent<EnemyShipControl>().ShowFlats(false);
+                    mapManager.ShowFlats(enemy.GetComponent<EnemyShipControl>().thisEnemyName, enemy.GetComponent<EnemyShipControl>().enemyCellPosition, enemy, false);
                 }
             }
             mouseClicked = true;

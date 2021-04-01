@@ -19,7 +19,7 @@ public class EnemyShipControl : MonoBehaviour
     private bool inFlats;
 
     private float timer; //A timer for tracking the life of the laser shot
-    private string thisEnemyName;
+    public string thisEnemyName;
     private GameObject player; //Variable to hold an instance of the player game object
     private GridLayout gridLayout; //Variable to hold an instance of the grid layout
     private ManageMap mapManager; //Variable to hold an instance of the map manager
@@ -62,7 +62,7 @@ public class EnemyShipControl : MonoBehaviour
                 
                 if (!laserState && !shotIncoming && !movementController.abilityActive)
                 {
-                    ShowFlats();
+                    mapManager.ShowFlats(thisEnemyName, enemyCellPosition, gameObject);
                 }
                 else if (laserState || shotIncoming) //This checks if the laser ability is active when the player clicks the mouse. shotIncoming holds the loop open if an incoming laser is going to hit this enemy
                 {
@@ -81,16 +81,7 @@ public class EnemyShipControl : MonoBehaviour
                         if (timer > 0.3)
                         {
                             //Once the timer has reached the determined length of the laser lifespan, create an instance of the explosion animation, destroy this game object, and set the shotIncoming and inRange values to false.
-                            Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
-                            //The following foreach loop is designed to remove dead enemies from the list of living enemies that gets written to the save file. This prevents killed enemies from spawning again when the game is loaded.
-                            foreach (EnemyObject listEnemy in mapManager.spawnedEnemies) {
-                                if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
-                                {
-                                    mapManager.spawnedEnemies.Remove(listEnemy);
-                                    break;
-                                }
-                            }
-                            Destroy(gameObject);
+                            DestroySelf(true);
                             shotIncoming = false;
                             inRagne = false;
                         }
@@ -100,9 +91,22 @@ public class EnemyShipControl : MonoBehaviour
         }
     }
 
-    public void DestroySelf()
+    public void DestroySelf(bool makeExplosion)
     {
-        //this method just anticipates needing to destory the enemy from another game script somewhere at some point
+        //this method just allows the enemy to be destroyed from another game
+        if (makeExplosion)
+        {
+            Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
+        }
+        //The following foreach loop is designed to remove dead enemies from the list of living enemies that gets written to the save file. This prevents killed enemies from spawning again when the game is loaded.
+        foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
+        {
+            if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
+            {
+                mapManager.spawnedEnemies.Remove(listEnemy);
+                break;
+            }
+        }
         Destroy(gameObject);
     }
 
@@ -122,10 +126,10 @@ public class EnemyShipControl : MonoBehaviour
             switch (thisEnemyName)
             {
                 case "EnemyA":
-                    List<Vector3Int> playerFlats = GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, false);
+                    List<Vector3Int> playerFlats = mapManager.GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, false);
                     //mapManager.ClearHighlighting();
                     //mapManager.HighlightSet(playerFlats, true);
-                    List<Vector3Int> playerEndFlats = GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, true);
+                    List<Vector3Int> playerEndFlats = mapManager.GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, true);
                     Vector3Int nearestEndFlat = playerEndFlats[0];
                     int distToNearestEndFlat = 999999;
                     foreach (Vector3Int flat in playerEndFlats)
@@ -274,7 +278,7 @@ public class EnemyShipControl : MonoBehaviour
 
     public List<Vector3Int> GetNeighbours(Vector3Int origin)
     {
-        List<Vector3Int> neighbours = new List<Vector3Int>();
+        List<Vector3Int> openNeighbours = new List<Vector3Int>();
         bool setSkip = false;
         for (int x = -1; x <= 1; x++)
         {
@@ -295,12 +299,15 @@ public class EnemyShipControl : MonoBehaviour
                         foreach (EnemyObject fellowEnemy in mapManager.spawnedEnemies)
                         {
                             if (fellowEnemy.xCoordinate == modX && fellowEnemy.yCoordinate == modY)
+                            {
                                 setSkip = true;
+                            }
+                                
 
                         }
                         if (!setSkip)
                         {
-                            neighbours.Add(new Vector3Int(modX, modY, 0));
+                            openNeighbours.Add(new Vector3Int(modX, modY, 0));
                         }
                         else
                         {
@@ -314,7 +321,7 @@ public class EnemyShipControl : MonoBehaviour
             }
         }
 
-        return neighbours;
+        return openNeighbours;
     }
 
     private void SetOrientation(Vector3 target)
@@ -324,177 +331,5 @@ public class EnemyShipControl : MonoBehaviour
 
     }
 
-    public List<Vector3Int> GetFlats(int flatLength, Vector3Int centerPoint, bool player)
-    {
-        List<Vector3Int> flats = new List<Vector3Int>();
-        if (player)
-        {
-            Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + flatLength, centerPoint.y, centerPoint.z);
-            flats.Add(tempHexCalc);
-            tempHexCalc = new Vector3Int(centerPoint.x - flatLength , centerPoint.y, centerPoint.z);
-            flats.Add(tempHexCalc);
-            if (centerPoint.y % 2 == 0)
-            {
-                if (flatLength % 2 == 0)
-                {
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength , centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                }
-                else
-                {
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2) - 1, centerPoint.y - flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2) - 1, centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                }
-
-            }
-            else
-            {
-                if (flatLength % 2 == 0)
-                {
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                }
-                else
-                {
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2) + 1, centerPoint.y - flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y - flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(flatLength / 2) + 1, centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                    tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(flatLength / 2), centerPoint.y + flatLength, centerPoint.z);
-                    flats.Add(tempHexCalc);
-                }
-
-            }
-            //mapManager.ClearHighlighting();
-            //mapManager.HighlightSet(flats, true);
-        }
-        else
-        {
-            for (int i = 0; i <= flatLength - 1; i++)
-            {
-                Vector3Int tempHexCalc = new Vector3Int(centerPoint.x + i + 1, centerPoint.y, centerPoint.z);
-                flats.Add(tempHexCalc);
-                tempHexCalc = new Vector3Int(centerPoint.x - i - 1, centerPoint.y, centerPoint.z);
-                flats.Add(tempHexCalc);
-                if (centerPoint.y % 2 == 0)
-                {
-                    if (i % 2 == 0)
-                    {
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2), centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2), centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                    }
-                    else
-                    {
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                    }
-
-                }
-                else
-                {
-                    if (i % 2 == 0)
-                    {
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2), centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2), centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                    }
-                    else
-                    {
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y - i - 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x + Mathf.FloorToInt(i / 2) + 1, centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                        tempHexCalc = new Vector3Int(centerPoint.x - Mathf.FloorToInt(i / 2) - 1, centerPoint.y + i + 1, centerPoint.z);
-                        flats.Add(tempHexCalc);
-                    }
-
-                }
-
-            }
-        }
-        
-        if (player)
-        {
-            foreach (Vector3Int flat in flats)
-            {
-                //Debug.Log(flat);
-            }
-        }
-
-
-        return flats;
-    }
-    public void ShowFlats()
-    {
-        List<Vector3Int> flats = new List<Vector3Int>();
-        if (thisEnemyName == "EnemyA")
-        {
-            flats = GetFlats(3, enemyCellPosition, false);
-        }
-        else if (thisEnemyName == "EnemyB")
-        {
-            flats = GetFlats(1, enemyCellPosition, false);
-        }
-
-        highlightEnabled = !highlightEnabled;
-
-        mapManager.HighlightSet(flats, highlightEnabled);
-    }
-
-    public void ShowFlats(bool state)
-    {
-        List<Vector3Int> flats = new List<Vector3Int>();
-        if (thisEnemyName == "EnemyA")
-        {
-            flats = GetFlats(3, enemyCellPosition, false);
-        }
-        else if (thisEnemyName == "EnemyB")
-        {
-            flats = GetFlats(1, enemyCellPosition,false);
-        }
-
-        highlightEnabled = state;
-
-        mapManager.HighlightSet(flats, state);
-    }
 
 }
