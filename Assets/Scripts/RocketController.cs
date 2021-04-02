@@ -10,10 +10,8 @@ public class RocketController : MonoBehaviour
     public int turnsAlive;
     public int turnDelay;
 
-    private float timer; //Variable to hold the timer tracking the life of the laser animation
     private Quaternion targetRotation; //Variable to hold the intended rotation of this game object
     private GridLayout gridLayout; //Variable to hold a reference to the grid layout
-    private Rigidbody2D rb2d;
     private ManageMap mapManager;
 
     // Start is called before the first frame update
@@ -23,9 +21,7 @@ public class RocketController : MonoBehaviour
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Access and store a reference to the grid layout
         target = gridLayout.CellToWorld(player.GetComponent<AbilityController>().target);
-        timer = 0; //set the initial value of the timer that tracks the life of the laser animation
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
-        turnsAlive = 1;
+        turnsAlive = 0;
         turnDelay = 1;
         SetRotation(); //Call the function that will orient this object in the direction of the target. 
 
@@ -34,7 +30,6 @@ public class RocketController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime; //Increment the timer tracking the life of the laser shot
         if (turnsAlive > turnDelay) //If the timer exceeds the lifespan of the laser animation, destroy this object
         {
             Detonate(transform.position);
@@ -43,10 +38,6 @@ public class RocketController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Vector3 moveTarget = transform.position - target;
-        //rb2d.MovePosition(transform.position - moveTarget*Time.deltaTime*2);
-        //rb2d.MovePosition(transform.position - moveTarget);
-        //transform.position -= moveTarget * Time.deltaTime * 2;
         transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * 2);
     }
 

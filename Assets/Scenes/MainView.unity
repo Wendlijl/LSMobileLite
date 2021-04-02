@@ -1288,16 +1288,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 421232445}
-  - {fileID: 1723548533}
-  - {fileID: 588419816}
-  - {fileID: 940648179}
-  - {fileID: 1491995019}
-  - {fileID: 1360203135}
-  - {fileID: 985593638}
-  - {fileID: 570972948}
-  - {fileID: 1391418990}
-  - {fileID: 1257125871}
+  - {fileID: 492146653}
+  - {fileID: 1847787638}
   m_Father: {fileID: 886972417}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1485,7 +1477,7 @@ GameObject:
   - component: {fileID: 421232447}
   - component: {fileID: 421232446}
   m_Layer: 5
-  m_Name: LaserChargeTokenEmpty1
+  m_Name: JumpChargeTokenEmpty1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1502,7 +1494,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
+  m_Father: {fileID: 492146653}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.63, y: 0.57}
@@ -1630,7 +1622,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1352580153}
-        m_MethodName: SetEndTurnButtonState
+        m_MethodName: beginButtonStateCoroutine
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1677,6 +1669,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461860001}
   m_CullTransparentMesh: 0
+--- !u!1 &492146652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 492146653}
+  m_Layer: 5
+  m_Name: EmptyJumpCharge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &492146653
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492146652}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 421232445}
+  - {fileID: 588419816}
+  - {fileID: 1491995019}
+  - {fileID: 985593638}
+  - {fileID: 1391418990}
+  m_Father: {fileID: 372883028}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &518108355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,6 +1914,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520828792}
   m_CullTransparentMesh: 0
+--- !u!1 &526691862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 526691863}
+  m_Layer: 5
+  m_Name: FullLaserCharge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &526691863
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526691862}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1177651685}
+  - {fileID: 2081013151}
+  - {fileID: 2117820187}
+  m_Father: {fileID: 1233524616}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &529752946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2365,7 +2435,7 @@ GameObject:
   - component: {fileID: 570972950}
   - component: {fileID: 570972949}
   m_Layer: 5
-  m_Name: LaserChargeToken4
+  m_Name: JumpChargeToken4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2382,8 +2452,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 7
+  m_Father: {fileID: 1847787638}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.675, y: 0.57}
   m_AnchorMax: {x: 0.685, y: 0.72}
@@ -2439,7 +2509,7 @@ GameObject:
   - component: {fileID: 588419818}
   - component: {fileID: 588419817}
   m_Layer: 5
-  m_Name: LaserChargeTokenEmpty2
+  m_Name: JumpChargeTokenEmpty2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2456,8 +2526,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 2
+  m_Father: {fileID: 492146653}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.645, y: 0.57}
   m_AnchorMax: {x: 0.655, y: 0.72}
@@ -3243,8 +3313,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1233524616}
-  m_RootOrder: 4
+  m_Father: {fileID: 1554336981}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.42, y: 0.57}
   m_AnchorMax: {x: 0.43, y: 0.72}
@@ -4021,7 +4091,7 @@ GameObject:
   - component: {fileID: 940648181}
   - component: {fileID: 940648180}
   m_Layer: 5
-  m_Name: LaserChargeToken2
+  m_Name: JumpChargeToken2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4038,8 +4108,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 3
+  m_Father: {fileID: 1847787638}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.645, y: 0.57}
   m_AnchorMax: {x: 0.655, y: 0.72}
@@ -4245,7 +4315,7 @@ GameObject:
   - component: {fileID: 985593640}
   - component: {fileID: 985593639}
   m_Layer: 5
-  m_Name: LaserChargeTokenEmpty4
+  m_Name: JumpChargeTokenEmpty4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4262,8 +4332,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 6
+  m_Father: {fileID: 492146653}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.675, y: 0.57}
   m_AnchorMax: {x: 0.685, y: 0.72}
@@ -5817,8 +5887,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1233524616}
-  m_RootOrder: 1
+  m_Father: {fileID: 526691863}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.39, y: 0.57}
   m_AnchorMax: {x: 0.4, y: 0.72}
@@ -6044,12 +6114,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1712882351}
-  - {fileID: 1177651685}
-  - {fileID: 1484050458}
-  - {fileID: 2081013151}
-  - {fileID: 781480859}
-  - {fileID: 2117820187}
+  - {fileID: 1554336981}
+  - {fileID: 526691863}
   m_Father: {fileID: 886972417}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6107,7 +6173,7 @@ GameObject:
   - component: {fileID: 1257125873}
   - component: {fileID: 1257125872}
   m_Layer: 5
-  m_Name: LaserChargeToken5
+  m_Name: JumpChargeToken5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6124,8 +6190,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 9
+  m_Father: {fileID: 1847787638}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.69, y: 0.57}
   m_AnchorMax: {x: 0.7, y: 0.72}
@@ -7021,14 +7087,6 @@ MonoBehaviour:
   pausePanel: {fileID: 985119669}
   upgradePanel: {fileID: 0}
   newGameMessage: {fileID: 1068681562}
-  laserChargeToken1: {fileID: 1177651684}
-  laserChargeToken2: {fileID: 2081013150}
-  laserChargeToken3: {fileID: 2117820186}
-  jumpChargeToken1: {fileID: 1723548532}
-  jumpChargeToken2: {fileID: 940648178}
-  jumpChargeToken3: {fileID: 1360203134}
-  jumpChargeToken4: {fileID: 570972947}
-  jumpChargeToken5: {fileID: 1257125870}
 --- !u!4 &1352580154
 Transform:
   m_ObjectHideFlags: 0
@@ -7165,7 +7223,7 @@ GameObject:
   - component: {fileID: 1360203137}
   - component: {fileID: 1360203136}
   m_Layer: 5
-  m_Name: LaserChargeToken3
+  m_Name: JumpChargeToken3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7182,8 +7240,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 5
+  m_Father: {fileID: 1847787638}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.66, y: 0.57}
   m_AnchorMax: {x: 0.67, y: 0.72}
@@ -7476,7 +7534,7 @@ GameObject:
   - component: {fileID: 1391418992}
   - component: {fileID: 1391418991}
   m_Layer: 5
-  m_Name: LaserChargeTokenEmpty5
+  m_Name: JumpChargeTokenEmpty5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7493,8 +7551,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 8
+  m_Father: {fileID: 492146653}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.69, y: 0.57}
   m_AnchorMax: {x: 0.7, y: 0.72}
@@ -7851,7 +7909,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1352580153}
-        m_MethodName: SetEndTurnButtonState
+        m_MethodName: beginButtonStateCoroutine
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8052,8 +8110,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1233524616}
-  m_RootOrder: 2
+  m_Father: {fileID: 1554336981}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.405, y: 0.57}
   m_AnchorMax: {x: 0.415, y: 0.72}
@@ -8109,7 +8167,7 @@ GameObject:
   - component: {fileID: 1491995021}
   - component: {fileID: 1491995020}
   m_Layer: 5
-  m_Name: LaserChargeTokenEmpty3
+  m_Name: JumpChargeTokenEmpty3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8126,8 +8184,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 4
+  m_Father: {fileID: 492146653}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.66, y: 0.57}
   m_AnchorMax: {x: 0.67, y: 0.72}
@@ -8484,6 +8542,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543512594}
   m_CullTransparentMesh: 0
+--- !u!1 &1554336980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1554336981}
+  m_Layer: 5
+  m_Name: EmptyLaserCharge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1554336981
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554336980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1712882351}
+  - {fileID: 1484050458}
+  - {fileID: 781480859}
+  m_Father: {fileID: 1233524616}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1559429308
 GameObject:
   m_ObjectHideFlags: 0
@@ -8962,7 +9058,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1233524616}
+  m_Father: {fileID: 1554336981}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.39, y: 0.57}
@@ -9161,7 +9257,7 @@ GameObject:
   - component: {fileID: 1723548535}
   - component: {fileID: 1723548534}
   m_Layer: 5
-  m_Name: LaserChargeToken1
+  m_Name: JumpChargeToken1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9178,8 +9274,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 372883028}
-  m_RootOrder: 1
+  m_Father: {fileID: 1847787638}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.63, y: 0.57}
   m_AnchorMax: {x: 0.64, y: 0.72}
@@ -9713,6 +9809,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816063654}
   m_CullTransparentMesh: 0
+--- !u!1 &1847787637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847787638}
+  m_Layer: 5
+  m_Name: FullJumpCharge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1847787638
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847787637}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1723548533}
+  - {fileID: 940648179}
+  - {fileID: 1360203135}
+  - {fileID: 570972948}
+  - {fileID: 1257125871}
+  m_Father: {fileID: 372883028}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1871116800
 GameObject:
   m_ObjectHideFlags: 0
@@ -10795,8 +10931,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1233524616}
-  m_RootOrder: 3
+  m_Father: {fileID: 526691863}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.405, y: 0.57}
   m_AnchorMax: {x: 0.415, y: 0.72}
@@ -11071,8 +11207,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1233524616}
-  m_RootOrder: 5
+  m_Father: {fileID: 526691863}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.42, y: 0.57}
   m_AnchorMax: {x: 0.43, y: 0.72}

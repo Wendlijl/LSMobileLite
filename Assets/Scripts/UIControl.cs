@@ -14,14 +14,6 @@ public class UIControl : MonoBehaviour
     public GameObject pausePanel; //variable to hold the game pause screen
     public GameObject upgradePanel; //variable to hold the upgrade panel
     public GameObject newGameMessage; //variable to hold the upgrade panel
-    public GameObject laserChargeToken1;
-    public GameObject laserChargeToken2;
-    public GameObject laserChargeToken3;
-    public GameObject jumpChargeToken1;
-    public GameObject jumpChargeToken2;
-    public GameObject jumpChargeToken3;
-    public GameObject jumpChargeToken4;
-    public GameObject jumpChargeToken5;
 
     private Button landOnPlanet; //contextual button used for landing on planets
     private Button endPlayerTurn; //contextual button used for landing on planets
@@ -31,6 +23,17 @@ public class UIControl : MonoBehaviour
     private ManageMap mapManager;
     private AbilityController abilityController;
     private MovementController movementController;
+
+    private GameObject laserHolder;
+    private GameObject emptyLaserHolder;
+    private GameObject jumpHolder;
+    private GameObject emptyJumpHolder;
+
+    private List<GameObject> laserList = new List<GameObject>();
+    private List<GameObject> emptyLaserList = new List<GameObject>();
+    private List<GameObject> jumpList = new List<GameObject>();
+    private List<GameObject> emptyJumpList = new List<GameObject>();
+
 
     private List<GameObject> healthList = new List<GameObject>();
     private List<GameObject> emptyHealthList = new List<GameObject>();
@@ -55,11 +58,18 @@ public class UIControl : MonoBehaviour
         emptyHealthPanel = GameObject.Find("EmptyHealthPanel");
         shieldPanel = GameObject.Find("ShieldPanel");
         emptyShieldPanel = GameObject.Find("EmptyShieldPanel");
+
+        emptyLaserHolder = GameObject.Find("EmptyLaserCharge");
+        laserHolder = GameObject.Find("FullLaserCharge");
+        emptyJumpHolder = GameObject.Find("EmptyJumpCharge");
+        jumpHolder = GameObject.Find("FullJumpCharge");
+        
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endPlayerTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endEnemyTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         isPaused = false; //set the game pause state to false
         sceneIndex = SceneManager.GetActiveScene().buildIndex; //get a reference to the current scene index
+        
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
@@ -85,6 +95,28 @@ public class UIControl : MonoBehaviour
             emptyShieldList.Add(child.gameObject);
         }
 
+        allTransforms = emptyLaserHolder.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            emptyLaserList.Add(child.gameObject);
+        }
+        allTransforms = laserHolder.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            laserList.Add(child.gameObject);
+        }
+        allTransforms = emptyJumpHolder.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            emptyJumpList.Add(child.gameObject);
+        }
+        allTransforms = jumpHolder.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allTransforms)
+        {
+            jumpList.Add(child.gameObject);
+        }
+
+
         if (QuickSaveRoot.Exists(mapManager.saveName))
         {
             //Do nothing
@@ -97,6 +129,7 @@ public class UIControl : MonoBehaviour
 
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Escape) && !isPaused) //listen for the escape key to be pressed and then activate the pause screen if it is not active
         {
             Pause();
@@ -192,7 +225,47 @@ public class UIControl : MonoBehaviour
         }
     }
 
-    public void SetEndTurnButtonState()
+    public void SetLaserCharge(int currentCharge, int maxCharge)
+    {
+        Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
+        for (int i = 0; i <= 3; i++)
+        {
+            laserList[i].SetActive(false);
+            emptyLaserList[i].SetActive(false);
+        }
+        for (int i = 0; i <= maxCharge; i++)
+        {
+            emptyLaserList[i].SetActive(true);
+        }
+        for (int i = 0; i <= currentCharge; i++)
+        {
+            laserList[i].SetActive(true);
+        }
+    }
+    public void SetJumpCharge(int currentCharge, int maxCharge)
+    {
+        Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
+        for (int i = 0; i <= 5; i++)
+        {
+            jumpList[i].SetActive(false);
+            emptyJumpList[i].SetActive(false);
+        }
+        for (int i = 0; i <= maxCharge; i++)
+        {
+            emptyJumpList[i].SetActive(true);
+        }
+        for (int i = 0; i <= currentCharge; i++)
+        {
+            jumpList[i].SetActive(true);
+        }
+    }
+
+    public void beginButtonStateCoroutine()
+    {
+        StartCoroutine("SetEndTurnButtonState");
+    }
+
+    private IEnumerator SetEndTurnButtonState()
     {
         if (mapManager.spawnedEnemies.Count <= 0)
         {
@@ -202,11 +275,19 @@ public class UIControl : MonoBehaviour
             mapManager.enemyTurn = true;
             mapManager.playerTurn = false;
             abilityController.laserRange = abilityController.maxLaserRange;
+            yield return null;
         }
         else
         {
             if (mapManager.playerTurn)
             {
+                GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
+                foreach (GameObject rocket in rockets)
+                {
+                    rocket.GetComponent<RocketController>().turnsAlive++;
+
+                }
+                yield return new WaitForSeconds(0.25f);
                 endEnemyTurn.gameObject.SetActive(true);
                 endPlayerTurn.gameObject.SetActive(false);
                 movementController.hasMoved = false;
@@ -218,11 +299,6 @@ public class UIControl : MonoBehaviour
             }
             else
             {
-                GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
-                foreach(GameObject rocket in rockets)
-                {
-                    rocket.GetComponent<RocketController>().turnsAlive++;
-                }
                 if (abilityController.laserRange < abilityController.maxLaserRange)
                 {
                     abilityController.laserRange++;
@@ -235,85 +311,11 @@ public class UIControl : MonoBehaviour
                 endPlayerTurn.gameObject.SetActive(true);
                 mapManager.enemyTurn = false;
                 mapManager.playerTurn = true;
-                SetLaserCharge();
-                SetJumpCharge();
+                SetLaserCharge(abilityController.laserRange,abilityController.maxLaserRange);
+                SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
                 //Debug.Log(abilityController.laserRange);
+                yield return null;
             }
-        }
-    }
-
-    public void SetLaserCharge()
-    {
-        switch (abilityController.laserRange)
-        {
-            case 0:
-                laserChargeToken1.SetActive(false);
-                laserChargeToken2.SetActive(false);
-                laserChargeToken3.SetActive(false);
-                break;
-            case 1:
-                laserChargeToken1.SetActive(true);
-                laserChargeToken2.SetActive(false);
-                laserChargeToken3.SetActive(false);
-                break;
-            case 2:
-                laserChargeToken1.SetActive(true);
-                laserChargeToken2.SetActive(true);
-                laserChargeToken3.SetActive(false);
-                break;
-            case 3:
-                laserChargeToken1.SetActive(true);
-                laserChargeToken2.SetActive(true);
-                laserChargeToken3.SetActive(true);
-                break;
-        }
-    }
-    public void SetJumpCharge()
-    {
-        switch (abilityController.jumpRange)
-        {
-            case 0:
-                jumpChargeToken1.SetActive(false);
-                jumpChargeToken2.SetActive(false);
-                jumpChargeToken3.SetActive(false);
-                jumpChargeToken4.SetActive(false);
-                jumpChargeToken5.SetActive(false);
-                break;
-            case 1:
-                jumpChargeToken1.SetActive(true);
-                jumpChargeToken2.SetActive(false);
-                jumpChargeToken3.SetActive(false);
-                jumpChargeToken4.SetActive(false);
-                jumpChargeToken5.SetActive(false);
-                break;
-            case 2:
-                jumpChargeToken1.SetActive(true);
-                jumpChargeToken2.SetActive(true);
-                jumpChargeToken3.SetActive(false);
-                jumpChargeToken4.SetActive(false);
-                jumpChargeToken5.SetActive(false);
-                break;
-            case 3:
-                jumpChargeToken1.SetActive(true);
-                jumpChargeToken2.SetActive(true);
-                jumpChargeToken3.SetActive(true);
-                jumpChargeToken4.SetActive(false);
-                jumpChargeToken5.SetActive(false);
-                break;
-            case 4:
-                jumpChargeToken1.SetActive(true);
-                jumpChargeToken2.SetActive(true);
-                jumpChargeToken3.SetActive(true);
-                jumpChargeToken4.SetActive(true);
-                jumpChargeToken5.SetActive(false);
-                break;
-            case 5:
-                jumpChargeToken1.SetActive(true);
-                jumpChargeToken2.SetActive(true);
-                jumpChargeToken3.SetActive(true);
-                jumpChargeToken4.SetActive(true);
-                jumpChargeToken5.SetActive(true);
-                break;
         }
     }
 
@@ -345,5 +347,4 @@ public class UIControl : MonoBehaviour
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
     }
-
 }

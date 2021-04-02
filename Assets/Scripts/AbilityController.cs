@@ -49,8 +49,8 @@ public class AbilityController : MonoBehaviour
         movementController = player.GetComponent<MovementController>();
         laserRange = 3; //set the initial state of the laser range parameter
         maxLaserRange = 3; //set the initial state of the maximum laser range parameter
-        jumpRange = 5;
-        maxJumpRange = 5;
+        jumpRange = 3;
+        maxJumpRange = 3;
         instX = player.transform.position.x; //set the initial x position for instantiated objects
         instY = player.transform.position.y; //set the initial y position for instantiated objects
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
@@ -63,6 +63,8 @@ public class AbilityController : MonoBehaviour
         playerFlats = new List<Vector3Int>();
         timer = 0.0f;
         turnOffAb = false;
+        uiController.SetLaserCharge(laserRange, maxLaserRange);
+        uiController.SetJumpCharge(jumpRange, maxJumpRange);
     }
 
     // Update is called once per frame
@@ -110,7 +112,7 @@ public class AbilityController : MonoBehaviour
                     clickManager.WaitForQuarterSec();
                     movementController.MovePlayer(target, false);
                     jumpRange = 0;
-                    uiController.SetJumpCharge();
+                    uiController.SetJumpCharge(jumpRange,maxJumpRange);
                 }
             }else if (rocketState)
             {
@@ -136,13 +138,13 @@ public class AbilityController : MonoBehaviour
             {
                 LaserActive();
                 laserRange = 0;
-                uiController.SetLaserCharge();
+                uiController.SetLaserCharge(laserRange,maxLaserRange);
                 timer = 0;
                 turnOffAb = false;
                 abilityUsed = true;
                 if (mapManager.combatActive && movementController.hasMoved)
                 {
-                    uiController.SetEndTurnButtonState();
+                    uiController.beginButtonStateCoroutine();
                 }
             }
         }

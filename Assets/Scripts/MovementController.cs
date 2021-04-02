@@ -176,7 +176,7 @@ public class MovementController : MonoBehaviour
             hasMoved = true;
             if (mapManager.combatActive && abilityController.abilityUsed)
             {
-                uiController.SetEndTurnButtonState();
+                uiController.beginButtonStateCoroutine();
             }
         }
         //Debug.Log("has moved is "+hasMoved);

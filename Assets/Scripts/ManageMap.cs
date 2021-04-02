@@ -196,7 +196,7 @@ public class ManageMap : MonoBehaviour
         {
             Debug.Log("Combat Active");
             combatActive = true;
-            uiController.SetEndTurnButtonState();
+            uiController.beginButtonStateCoroutine();
             uiController.DeactivateLandOnPlanet();
         }
     }
@@ -627,7 +627,7 @@ public class ManageMap : MonoBehaviour
         {
             enemy.GetComponent<EnemyShipControl>().TakeTurn();
         }
-        uiController.SetEndTurnButtonState();
+        uiController.beginButtonStateCoroutine();
     }
 
     public void ClearHighlighting()
