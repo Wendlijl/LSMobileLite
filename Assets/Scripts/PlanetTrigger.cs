@@ -20,7 +20,7 @@ public class PlanetTrigger : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!gameControllerMap.combatActive && planetState)
+        if (!gameControllerMap.combatActive && planetState && collision.gameObject.tag=="Planet")
         {
             gameControllerUI.ActivateLandOnPlanet(); //When over a planet, display the "Land" contextutal prompt
             switch (collision.name) //Determine what planet scene to load based on the name of the game object returned from the collision

@@ -91,6 +91,14 @@ public class EnemyShipControl : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Rocket")
+        {
+            collision.gameObject.GetComponent<RocketController>().Detonate(transform.position);
+        }
+    }
+
     public void DestroySelf(bool makeExplosion)
     {
         //this method just allows the enemy to be destroyed from another game

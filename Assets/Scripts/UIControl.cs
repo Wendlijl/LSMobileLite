@@ -218,6 +218,11 @@ public class UIControl : MonoBehaviour
             }
             else
             {
+                GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
+                foreach(GameObject rocket in rockets)
+                {
+                    rocket.GetComponent<RocketController>().turnsAlive++;
+                }
                 if (abilityController.laserRange < abilityController.maxLaserRange)
                 {
                     abilityController.laserRange++;

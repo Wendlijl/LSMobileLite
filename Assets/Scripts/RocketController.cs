@@ -7,6 +7,8 @@ public class RocketController : MonoBehaviour
     public Vector3 target; //Variable to hold the target position
     public GameObject player; //Variable to hold the player game object
     public GameObject rocketExplosion;
+    public int turnsAlive;
+    public int turnDelay;
 
     private float timer; //Variable to hold the timer tracking the life of the laser animation
     private Quaternion targetRotation; //Variable to hold the intended rotation of this game object
@@ -23,8 +25,8 @@ public class RocketController : MonoBehaviour
         target = gridLayout.CellToWorld(player.GetComponent<AbilityController>().target);
         timer = 0; //set the initial value of the timer that tracks the life of the laser animation
         rb2d = gameObject.GetComponent<Rigidbody2D>();
-        Debug.Log("The target is "+target);
-
+        turnsAlive = 1;
+        turnDelay = 1;
         SetRotation(); //Call the function that will orient this object in the direction of the target. 
 
     }
@@ -33,21 +35,26 @@ public class RocketController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime; //Increment the timer tracking the life of the laser shot
-        if (timer > 2) //If the timer exceeds the lifespan of the laser animation, destroy this object
+        if (turnsAlive > turnDelay) //If the timer exceeds the lifespan of the laser animation, destroy this object
         {
-            Instantiate(rocketExplosion, transform.position, Quaternion.identity) ;
-            GetNeighbours(gridLayout.WorldToCell(transform.position));
-            Destroy(gameObject);
+            Detonate(transform.position);
         }
     }
 
     private void FixedUpdate()
     {
-        Vector3 moveTarget = transform.position - target;
+        //Vector3 moveTarget = transform.position - target;
         //rb2d.MovePosition(transform.position - moveTarget*Time.deltaTime*2);
         //rb2d.MovePosition(transform.position - moveTarget);
         //transform.position -= moveTarget * Time.deltaTime * 2;
         transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * 2);
+    }
+
+    public void Detonate(Vector3 origin)
+    {
+        Instantiate(rocketExplosion, origin, Quaternion.identity);
+        GetNeighbours(gridLayout.WorldToCell(origin));
+        Destroy(gameObject);
     }
 
     //The following function sets the rotation of this object based on the intended target and this objects orientation at the time the function is called 

@@ -110,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
 --- !u!50 &1329423406233646461
 Rigidbody2D:
@@ -170,3 +170,4 @@ MonoBehaviour:
   highlightEnabled: 0
   enemyLaser: {fileID: 8552301256057810996, guid: 023863773ea303040b3df25737e173dc,
     type: 3}
+  thisEnemyName: 
