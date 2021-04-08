@@ -7,22 +7,26 @@ public class PlanetTrigger : MonoBehaviour
 {
     //This script is designed to control the contextual prompt associated with interacting with planets on the hex grid 
     public bool planetState;
-    private UIControl gameControllerUI; //variable to store a reference to the UIControl script 
-    private ManageMap gameControllerMap; //variable to store a reference to the UIControl script 
+    private GameObject gameController;
+    private UIControl uiController; //variable to store a reference to the UIControl script 
+    private TurnManager turnManager; //variable to store a reference to the TurnManager script 
+    private ManageMap mapManager; //variable to store a reference to the ManageMap script 
     private string planetName;
     
     //private int loadingIndex; //variable to set what scense should be loaded when landing on a planet
     private void Start()
     {
         planetState = true;
-        gameControllerUI = GameObject.Find("GameController").GetComponent<UIControl>(); //get a reference to the UIControl script
-        gameControllerMap = GameObject.Find("GameController").GetComponent<ManageMap>(); //get a reference to the UIControl script
+        gameController = GameObject.Find("GameController");
+        uiController = gameController.GetComponent<UIControl>(); //get a reference to the UIControl script
+        turnManager = gameController.GetComponent<TurnManager>(); //get a reference to the UIControl script
+        mapManager = gameController.GetComponent<ManageMap>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!gameControllerMap.combatActive && planetState && collision.gameObject.tag=="Planet")
+        if (!turnManager.combatActive && planetState && collision.gameObject.tag=="Planet")
         {
-            gameControllerUI.ActivateLandOnPlanet(); //When over a planet, display the "Land" contextutal prompt
+            uiController.ActivateLandOnPlanet(); //When over a planet, display the "Land" contextutal prompt
             switch (collision.name) //Determine what planet scene to load based on the name of the game object returned from the collision
             {
                 case "Planet1(Clone)":
@@ -87,12 +91,12 @@ public class PlanetTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        gameControllerUI.DeactivateLandOnPlanet(); //when no longer over a planet object, turn off the contextual prompt
+        uiController.DeactivateLandOnPlanet(); //when no longer over a planet object, turn off the contextual prompt
     }
 
     public void landButton()
     {
         Debug.Log(planetName);
-        gameControllerMap.GenericSpawnEnemies();
+        mapManager.GenericSpawnEnemies();
     }
 }

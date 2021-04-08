@@ -39,6 +39,7 @@ public class TurnManager : MonoBehaviour
             //Debug.Log("Combat is active");
             firstTurn = true;
             combatActive = true;
+            uiController.DeactivateLandOnPlanet();
             UpdateTurn();
         }
         else if(mapManager.spawnedEnemies.Count <= 0 && combatActive)

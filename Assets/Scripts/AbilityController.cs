@@ -13,8 +13,10 @@ public class AbilityController : MonoBehaviour
     public bool abilityUsed;
     public bool jumpState;
     public bool shieldState;
+    public bool shieldBoostRecharge;
     public bool rocketState;
     public int rocketRange;
+    public int rocketReloadTime;
     public bool abilityActive;
     public GameObject player; //variable to store a reference to the player game object
     public Vector3Int target; //variable to store the position vector of the target
@@ -185,7 +187,7 @@ public class AbilityController : MonoBehaviour
             RocketsActive();
         }
         //Debug.Log(abilityUsed);
-        if (turnManager.playerTurn && weaponState && !abilityUsed && mapManager.combatActive)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive)
         {
             //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
             if (laserState)
@@ -215,7 +217,22 @@ public class AbilityController : MonoBehaviour
 
     public void ShieldActive()
     {
+        if (jumpState)
+        {
+            JumpActive();
+        }
+        else if (shieldState)
+        {
+            ShieldActive();
+        }
+        else if (laserState)
+        {
+            LaserActive();
+        }
+        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive)
+        {
 
+        }
     }
 
     public void RocketsActive()
@@ -233,7 +250,7 @@ public class AbilityController : MonoBehaviour
         {
             LaserActive();
         }
-        if (turnManager.playerTurn && weaponState && !abilityUsed && mapManager.combatActive) 
+        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive) 
         {
             playerFlats.Clear();
             rocketState = !rocketState;
@@ -261,7 +278,7 @@ public class AbilityController : MonoBehaviour
             RocketsActive();
         }
 
-        if (turnManager.playerTurn && weaponState && !abilityUsed && mapManager.combatActive)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive)
         {
             jumpState = !jumpState;
             abilityActive = jumpState;

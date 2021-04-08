@@ -14,9 +14,6 @@ public class ManageMap : MonoBehaviour
     public int mapYMin;
     public int maxEnemies;
     public int enemiesInList;
-    public bool enemyTurn;
-    public bool playerTurn;
-    public bool combatActive;
 
     public string saveName;//variable for inputing the save file name
 
@@ -167,9 +164,6 @@ public class ManageMap : MonoBehaviour
         currentHighlightedTiles = new List<Vector3Int>(); //create a list to hold the tiles currently highlighted by the laser range
         playerState = GameObject.Find("Player").GetComponent<MovementController>(); //get a reference to the player game object
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //get a reference to the grid layout 
-        enemyTurn = true;
-        playerTurn = false;
-        combatActive = false;
         uiController = GameObject.Find("GameController").GetComponent<UIControl>();
         GenerateMap(); //call the function to generate the map.
     }
@@ -187,27 +181,6 @@ public class ManageMap : MonoBehaviour
         }
 
         enemiesInList = spawnedEnemies.Count;
-
-        if (spawnedEnemies.Count > 0 && !combatActive)
-        {
-            //Debug.Log("Combat Active");
-            combatActive = true;
-            uiController.SetEndTurnButtonState();
-            uiController.DeactivateLandOnPlanet();
-        }
-        else if(spawnedEnemies.Count <= 0 && combatActive)
-        {
-            combatActive = false;
-            abilityController.abilityUsed = false;
-            uiController.SetEndTurnButtonState();
-            //uiController.beginButtonStateCoroutine();
-            enemyTurn = true;
-            playerTurn = false;
-            //abilityController.laserRange = abilityController.maxLaserRange;
-            //abilityController.jumpRange = abilityController.maxJumpRange;
-            //uiController.SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
-            //uiController.SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
-        }
     }
 
     public Vector3Int evenq2cube(Vector3Int evenqCoords)

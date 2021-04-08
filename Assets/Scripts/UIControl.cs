@@ -153,7 +153,10 @@ public class UIControl : MonoBehaviour
     public void ActivateLandOnPlanet() 
     {
         //this function will enable the landing button game object when called
-        landOnPlanet.gameObject.SetActive(true);
+        if (!turnManager.combatActive)
+        {
+            landOnPlanet.gameObject.SetActive(true);
+        }
     }
     
     public void DeactivateLandOnPlanet()

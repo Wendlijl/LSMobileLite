@@ -94,6 +94,7 @@ public class RocketController : MonoBehaviour
     {
         
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        Vector3Int playerPos = player.GetComponent<MovementController>().playerCellPosition;
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
@@ -113,6 +114,10 @@ public class RocketController : MonoBehaviour
                             {
                                 enemy.GetComponent<EnemyShipControl>().DestroySelf(true);
                             }
+                        }
+                        if(playerPos.x ==modX && playerPos.y == modY)
+                        {
+                            player.GetComponent<PlayerHealthControl>().PlayerHit();
                         }
                     }
                 }
