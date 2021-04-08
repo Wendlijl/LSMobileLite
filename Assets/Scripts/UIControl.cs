@@ -16,7 +16,7 @@ public class UIControl : MonoBehaviour
     public GameObject newGameMessage; //variable to hold the upgrade panel
 
     private Button landOnPlanet; //contextual button used for landing on planets
-    private Button endPlayerTurn; //contextual button used for landing on planets
+    private GameObject endPlayerTurn; //contextual button used for landing on planets
     private Button endEnemyTurn; //contextual button used for landing on planets
     private bool isPaused; //boolean used to track if the game is paused 
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
@@ -46,10 +46,15 @@ public class UIControl : MonoBehaviour
     private GameObject shieldPanel;
     private GameObject emptyShieldPanel;
 
+    private Slider rocketSlider;
+    private GameObject rocketReloadingImage;
+    private Slider shieldSlider;
+    private GameObject shieldRechargingingImage;
+
     private void Awake()
     {
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
-        endPlayerTurn = GameObject.Find("EndPlayerTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
+        endPlayerTurn = GameObject.Find("PlayerButtonBackground"); //get a reference to the planet landing button
         endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
         turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
@@ -67,11 +72,18 @@ public class UIControl : MonoBehaviour
         jumpHolder = GameObject.Find("FullJumpCharge");
         
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
-        endPlayerTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
+        endPlayerTurn.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endEnemyTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         isPaused = false; //set the game pause state to false
         sceneIndex = SceneManager.GetActiveScene().buildIndex; //get a reference to the current scene index
-        
+
+        rocketSlider = GameObject.Find("RocketReloadMeter").GetComponent<Slider>();
+        rocketReloadingImage = GameObject.Find("RocketReloadingImage");
+        shieldSlider = GameObject.Find("ShieldBoostRechargeMeter").GetComponent<Slider>();
+        shieldRechargingingImage = GameObject.Find("ShieldRechargingImage");
+
+        rocketReloadingImage.SetActive(false);
+        shieldRechargingingImage.SetActive(false);
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
@@ -264,6 +276,26 @@ public class UIControl : MonoBehaviour
             jumpList[i].SetActive(true);
         }
     }
+    
+    public void SetRocketReloadState(int currentRocketReloadAmount, int rocketReloadTime)
+    {
+        rocketSlider.maxValue = rocketReloadTime;
+        rocketSlider.value = currentRocketReloadAmount;
+        if (currentRocketReloadAmount < rocketReloadTime)
+        {
+            rocketReloadingImage.SetActive(true);
+        }
+        else
+        {
+            rocketReloadingImage.SetActive(false);
+        }
+    }
+
+    public void SetShieldBoostRechargeState(int currentShieldBoostCharge, int shieldBoostRechargeTime)
+    {
+        shieldSlider.maxValue = shieldBoostRechargeTime;
+        shieldSlider.value = currentShieldBoostCharge;
+    }
 
     public void beginButtonStateCoroutine()
     {
@@ -287,17 +319,17 @@ public class UIControl : MonoBehaviour
             {
                 endEnemyTurn.gameObject.SetActive(false);
                 endPlayerTurn.gameObject.SetActive(true);
-                SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
-                SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
 
             }
             else
             {
                 endEnemyTurn.gameObject.SetActive(true);
                 endPlayerTurn.gameObject.SetActive(false);
-                SetLaserCharge(abilityController.laserRange,abilityController.maxLaserRange);
-                SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
             }
+            SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
+            SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
+            SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, abilityController.shieldBoostRechargeTime);
+            SetRocketReloadState(abilityController.currentRocketReloadAmount, abilityController.rocketReloadTime);
         }
     }
 

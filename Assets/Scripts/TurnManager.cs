@@ -73,6 +73,10 @@ public class TurnManager : MonoBehaviour
                 {
                     abilityController.jumpRange++;
                 }
+                if (abilityController.currentRocketReloadAmount < abilityController.rocketReloadTime)
+                {
+                    abilityController.currentRocketReloadAmount++;
+                }
 
                 GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
                 foreach (GameObject rocket in rockets)

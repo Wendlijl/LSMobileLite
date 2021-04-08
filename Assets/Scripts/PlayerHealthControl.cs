@@ -10,10 +10,12 @@ public class PlayerHealthControl : MonoBehaviour
     public int currentPlayerShields;
 
     private UIControl uiControl;
+    private AbilityController abilityController;
     // Start is called before the first frame update
     void Start()
     {
         uiControl = GameObject.Find("GameController").GetComponent<UIControl>();
+        abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
         maxPlayerHealth = 3;
         currentPlayerHealth = 3;
         maxPlayerShields = 2;
@@ -54,12 +56,26 @@ public class PlayerHealthControl : MonoBehaviour
         }        
     }
 
-    public void IncreaseShields(int shieldIncrease)
+    public void IncreaseShields(int shieldIncrease, bool sheildOverboost)
     {
-        if (currentPlayerShields < maxPlayerShields)
+        if (sheildOverboost)
         {
-            currentPlayerShields = currentPlayerShields + shieldIncrease;
-            uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
-        }            
+            if (currentPlayerShields < 6)
+            {
+                currentPlayerShields = currentPlayerShields + shieldIncrease;
+                uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+                abilityController.abilityUsed = true;
+            }
+        }
+        else
+        {
+            if (currentPlayerShields < maxPlayerShields)
+            {
+                abilityController.abilityUsed = true;
+                currentPlayerShields = currentPlayerShields + shieldIncrease;
+                uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+            }
+        }
+       
     }
 }

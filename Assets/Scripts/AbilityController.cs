@@ -13,10 +13,13 @@ public class AbilityController : MonoBehaviour
     public bool abilityUsed;
     public bool jumpState;
     public bool shieldState;
-    public bool shieldBoostRecharge;
+    public int shieldBoostRechargeTime;
+    public int currentShieldBoostCharge;
     public bool rocketState;
+    public bool shieldOverboost;
     public int rocketRange;
     public int rocketReloadTime;
+    public int currentRocketReloadAmount;
     public bool abilityActive;
     public GameObject player; //variable to store a reference to the player game object
     public Vector3Int target; //variable to store the position vector of the target
@@ -37,6 +40,7 @@ public class AbilityController : MonoBehaviour
     private ClickManager clickManager;
     private List<Vector3Int> playerFlats;
     private TurnManager turnManager;
+    private PlayerHealthControl playerHealthControl;
 
     private float timer;
     private bool turnOffAb;
@@ -51,6 +55,7 @@ public class AbilityController : MonoBehaviour
         uiController = GameObject.Find("GameController").GetComponent<UIControl>();
         turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
+        playerHealthControl = player.GetComponent<PlayerHealthControl>();
         movementController = player.GetComponent<MovementController>();
         laserRange = 3; //set the initial state of the laser range parameter
         maxLaserRange = 3; //set the initial state of the maximum laser range parameter
@@ -64,13 +69,19 @@ public class AbilityController : MonoBehaviour
         jumpState = false;
         jumpCells = new List<Vector3Int>();
         rocketRange = 3;
-        //player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
+        rocketReloadTime = 3;
+        currentRocketReloadAmount = 3;
         playerFlats = new List<Vector3Int>();
         timer = 0.0f;
         turnOffAb = false;
         abilityActive = false;
         uiController.SetLaserCharge(laserRange, maxLaserRange);
         uiController.SetJumpCharge(jumpRange, maxJumpRange);
+        shieldOverboost = false;
+        shieldBoostRechargeTime = 5;
+        currentShieldBoostCharge = 5;
+        uiController.SetShieldBoostRechargeState(currentShieldBoostCharge, shieldBoostRechargeTime);
+        uiController.SetRocketReloadState(currentRocketReloadAmount, rocketReloadTime);
     }
 
     // Update is called once per frame
@@ -139,6 +150,7 @@ public class AbilityController : MonoBehaviour
                 }
                 if (inRange)
                 {
+                    currentRocketReloadAmount = 0;
                     Instantiate(rocket, player.transform.position, Quaternion.identity);
                     turnManager.UpdateTurn();
                 }
@@ -221,9 +233,9 @@ public class AbilityController : MonoBehaviour
         {
             JumpActive();
         }
-        else if (shieldState)
+        else if (rocketState)
         {
-            ShieldActive();
+            RocketsActive();
         }
         else if (laserState)
         {
@@ -231,7 +243,8 @@ public class AbilityController : MonoBehaviour
         }
         if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive)
         {
-
+            //abilityUsed = true; set in PlayerHealthControl based on whether ability triggers
+            playerHealthControl.IncreaseShields(1, shieldOverboost);
         }
     }
 
@@ -250,7 +263,7 @@ public class AbilityController : MonoBehaviour
         {
             LaserActive();
         }
-        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive) 
+        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive && (currentRocketReloadAmount >= rocketReloadTime||rocketState)) 
         {
             playerFlats.Clear();
             rocketState = !rocketState;
