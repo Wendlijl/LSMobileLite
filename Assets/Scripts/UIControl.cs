@@ -23,6 +23,7 @@ public class UIControl : MonoBehaviour
     private ManageMap mapManager;
     private AbilityController abilityController;
     private MovementController movementController;
+    private TurnManager turnManager;
 
     private GameObject laserHolder;
     private GameObject emptyLaserHolder;
@@ -51,6 +52,7 @@ public class UIControl : MonoBehaviour
         endPlayerTurn = GameObject.Find("EndPlayerTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
+        turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
         abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
         movementController = GameObject.Find("Player").GetComponent<MovementController>();
         
@@ -227,7 +229,7 @@ public class UIControl : MonoBehaviour
 
     public void SetLaserCharge(int currentCharge, int maxCharge)
     {
-        Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
+        //Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
         for (int i = 0; i <= 3; i++)
         {
             laserList[i].SetActive(false);
@@ -244,7 +246,7 @@ public class UIControl : MonoBehaviour
     }
     public void SetJumpCharge(int currentCharge, int maxCharge)
     {
-        Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
+        //Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
         for (int i = 0; i <= 5; i++)
         {
             jumpList[i].SetActive(false);
@@ -262,59 +264,36 @@ public class UIControl : MonoBehaviour
 
     public void beginButtonStateCoroutine()
     {
-        StartCoroutine("SetEndTurnButtonState");
+        StartCoroutine("SetEndTurnButtonStateCo");
     }
 
-    private IEnumerator SetEndTurnButtonState()
+    private IEnumerator SetEndTurnButtonStateCo()
     {
-        if (mapManager.spawnedEnemies.Count <= 0)
+        yield return null;
+    }
+    public void SetEndTurnButtonState()
+    {
+        if (!turnManager.combatActive)
         {
             endEnemyTurn.gameObject.SetActive(false);
             endPlayerTurn.gameObject.SetActive(false);
-            mapManager.combatActive = false;
-            mapManager.enemyTurn = true;
-            mapManager.playerTurn = false;
-            abilityController.laserRange = abilityController.maxLaserRange;
-            yield return null;
         }
         else
         {
-            if (mapManager.playerTurn)
+            if (turnManager.playerTurn)
             {
-                GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
-                foreach (GameObject rocket in rockets)
-                {
-                    rocket.GetComponent<RocketController>().turnsAlive++;
-
-                }
-                yield return new WaitForSeconds(0.25f);
-                endEnemyTurn.gameObject.SetActive(true);
-                endPlayerTurn.gameObject.SetActive(false);
-                movementController.hasMoved = false;
-                abilityController.abilityUsed = false;
-                mapManager.enemyTurn = true;
-                mapManager.playerTurn = false;
-                mapManager.OrderEnemyTurns();
+                endEnemyTurn.gameObject.SetActive(false);
+                endPlayerTurn.gameObject.SetActive(true);
+                SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
+                SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
 
             }
             else
             {
-                if (abilityController.laserRange < abilityController.maxLaserRange)
-                {
-                    abilityController.laserRange++;
-                }
-                if (abilityController.jumpRange < abilityController.maxJumpRange)
-                {
-                    abilityController.jumpRange++;
-                }
-                endEnemyTurn.gameObject.SetActive(false);
-                endPlayerTurn.gameObject.SetActive(true);
-                mapManager.enemyTurn = false;
-                mapManager.playerTurn = true;
+                endEnemyTurn.gameObject.SetActive(true);
+                endPlayerTurn.gameObject.SetActive(false);
                 SetLaserCharge(abilityController.laserRange,abilityController.maxLaserRange);
                 SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
-                //Debug.Log(abilityController.laserRange);
-                yield return null;
             }
         }
     }

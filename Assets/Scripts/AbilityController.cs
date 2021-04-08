@@ -15,6 +15,7 @@ public class AbilityController : MonoBehaviour
     public bool shieldState;
     public bool rocketState;
     public int rocketRange;
+    public bool abilityActive;
     public GameObject player; //variable to store a reference to the player game object
     public Vector3Int target; //variable to store the position vector of the target
     public GameObject laser; //variable to store a reference to the laser game object
@@ -33,6 +34,7 @@ public class AbilityController : MonoBehaviour
     private List<Vector3Int> jumpCells;
     private ClickManager clickManager;
     private List<Vector3Int> playerFlats;
+    private TurnManager turnManager;
 
     private float timer;
     private bool turnOffAb;
@@ -43,8 +45,9 @@ public class AbilityController : MonoBehaviour
         weaponState = true;
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //store a reference to the grid layout component
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //store a reference to the map manager
-        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>(); //store a reference to the map manager
-        uiController = GameObject.Find("GameController").GetComponent<UIControl>(); //store a reference to the map manager
+        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>();
+        uiController = GameObject.Find("GameController").GetComponent<UIControl>();
+        turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
         movementController = player.GetComponent<MovementController>();
         laserRange = 3; //set the initial state of the laser range parameter
@@ -63,6 +66,7 @@ public class AbilityController : MonoBehaviour
         playerFlats = new List<Vector3Int>();
         timer = 0.0f;
         turnOffAb = false;
+        abilityActive = false;
         uiController.SetLaserCharge(laserRange, maxLaserRange);
         uiController.SetJumpCharge(jumpRange, maxJumpRange);
     }
@@ -108,11 +112,19 @@ public class AbilityController : MonoBehaviour
                 {
                     
                     JumpActive();
+                    //Debug.Log("set true at Ab con 112");
                     abilityUsed = true;
                     clickManager.WaitForQuarterSec();
                     movementController.MovePlayer(target, false);
                     jumpRange = 0;
                     uiController.SetJumpCharge(jumpRange,maxJumpRange);
+                    if (turnManager.combatActive)
+                    {
+                        movementController.hasMoved = true;
+                        uiController.SetEndTurnButtonState();
+                    }
+                    turnManager.UpdateTurn();
+                    Debug.Log("AC 124");
                 }
             }else if (rocketState)
             {
@@ -127,6 +139,8 @@ public class AbilityController : MonoBehaviour
                 if (inRange)
                 {
                     Instantiate(rocket, player.transform.position, Quaternion.identity);
+                    turnManager.UpdateTurn();
+                    Debug.Log("AC 140");
                 }
             }
         }
@@ -136,15 +150,23 @@ public class AbilityController : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > 0.5)
             {
+                //Debug.Log("Timer");
                 LaserActive();
-                laserRange = 0;
-                uiController.SetLaserCharge(laserRange,maxLaserRange);
+                if (turnManager.combatActive)
+                {
+                    
+                    laserRange = 0;
+                    uiController.SetLaserCharge(laserRange, maxLaserRange);
+                }
                 timer = 0;
                 turnOffAb = false;
+                //Debug.Log("set true at Ab con 156");
                 abilityUsed = true;
-                if (mapManager.combatActive && movementController.hasMoved)
+                turnManager.UpdateTurn();
+                Debug.Log("AC 160");
+                if (turnManager.combatActive && movementController.hasMoved)
                 {
-                    uiController.beginButtonStateCoroutine();
+                    uiController.SetEndTurnButtonState();
                 }
             }
         }
@@ -152,6 +174,7 @@ public class AbilityController : MonoBehaviour
 
     public void LaserActive()
     {
+        //Debug.Log("Laser");
         if (jumpState)
         {
             JumpActive();
@@ -164,21 +187,35 @@ public class AbilityController : MonoBehaviour
         {
             RocketsActive();
         }
-        if (mapManager.playerTurn && weaponState && !abilityUsed)
+        //Debug.Log(abilityUsed);
+        if (turnManager.playerTurn && weaponState && !abilityUsed)
         {
             //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
             if (laserState)
             {
                 laserState = false; //the laser state was true, so set it false
-                player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
-                mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the method that will update the map display to disable the range display
+                abilityActive = laserState;
+                //player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
+                Debug.Log("Laser State was true now false" + laserState);
+                mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to disable the range display
             }
             else
             {
                 laserState = true; //the laser state was false, so set it true
-                player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
-                mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the method that will update the map display to enable the range display
+                abilityActive = laserState;
+                //player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
+                Debug.Log("Laser State was false now true" + laserState);
+                mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to enable the range display
             }
+        }else if (!turnManager.combatActive)
+        {
+            //mapManager.ClearHighlighting();
+            laserState = false; //the laser state was true, so set it false
+            abilityActive = laserState;
+            //player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
+            mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to disable the range display
+            Debug.Log("Maybe here?");
+        
         }
     }
 
@@ -189,6 +226,7 @@ public class AbilityController : MonoBehaviour
 
     public void RocketsActive()
     {
+        //Debug.Log("Rockets");
         if (jumpState)
         {
             JumpActive();
@@ -201,15 +239,21 @@ public class AbilityController : MonoBehaviour
         {
             LaserActive();
         }
-        playerFlats.Clear();
-        rocketState = !rocketState;
-        player.GetComponent<MovementController>().abilityActive = rocketState;
-        playerFlats = mapManager.GetFlats(rocketRange, playerHex, false);
-        mapManager.HighlightSet(playerFlats, rocketState);
+        if (turnManager.playerTurn && weaponState && !abilityUsed)
+        {
+            playerFlats.Clear();
+            rocketState = !rocketState;
+            //player.GetComponent<MovementController>().abilityActive = rocketState;
+            abilityActive = rocketState;
+            playerFlats = mapManager.GetFlats(rocketRange, playerHex, false);
+            mapManager.HighlightSet(playerFlats, rocketState);
+        }
+        
     }
 
     public void JumpActive()
     {
+        //Debug.Log("Jump");
         if (laserState)
         {
             LaserActive();
@@ -223,11 +267,12 @@ public class AbilityController : MonoBehaviour
             RocketsActive();
         }
 
-        if (mapManager.playerTurn && weaponState && !abilityUsed)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && !movementController.hasMoved)
         {
             jumpState = !jumpState;
+            abilityActive = jumpState;
             jumpCells.Clear();
-            player.GetComponent<MovementController>().abilityActive = jumpState;
+            //player.GetComponent<MovementController>().abilityActive = jumpState;
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); //create a list of any enemies that are currently in the scene
             
             for (int x = -jumpRange; x <= jumpRange; x++) //iterate through the range of the laser to generate the x coordinates
@@ -256,12 +301,12 @@ public class AbilityController : MonoBehaviour
             }
 
             mapManager.HighlightSet(jumpCells, jumpState);
-            Debug.Log("Jump cell count is " + jumpCells.Count);
-            Debug.Log("jump range is " + jumpRange);
-            foreach (Vector3Int cell in jumpCells)
-            {
-                Debug.Log(cell);
-            }
+            //Debug.Log("Jump cell count is " + jumpCells.Count);
+            //Debug.Log("jump range is " + jumpRange);
+            //foreach (Vector3Int cell in jumpCells)
+            //{
+            //    Debug.Log(cell);
+            //}
             if (!jumpState)
             {
                 mapManager.ClearHighlighting();

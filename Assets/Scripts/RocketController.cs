@@ -13,16 +13,28 @@ public class RocketController : MonoBehaviour
     private Quaternion targetRotation; //Variable to hold the intended rotation of this game object
     private GridLayout gridLayout; //Variable to hold a reference to the grid layout
     private ManageMap mapManager;
+    private AbilityController abilityController;
+    private MovementController movementController;
+    private UIControl uiController;
+    private TurnManager turnManager;
+    private GameObject gameController;
+    private bool alreadyUsed;
 
     // Start is called before the first frame update
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store a reference to the player game object
-        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
+        gameController = GameObject.Find("GameController"); //Access and store a reference to the player game object
+        abilityController = player.GetComponent<AbilityController>();
+        movementController = player.GetComponent<MovementController>();
+        mapManager = gameController.GetComponent<ManageMap>();
+        uiController = gameController.GetComponent<UIControl>();
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Access and store a reference to the grid layout
+        turnManager = gameController.GetComponent<TurnManager>();
         target = gridLayout.CellToWorld(player.GetComponent<AbilityController>().target);
         turnsAlive = 0;
         turnDelay = 1;
+        alreadyUsed = false;
         SetRotation(); //Call the function that will orient this object in the direction of the target. 
 
     }
@@ -39,10 +51,33 @@ public class RocketController : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * 2);
+        if(transform.position == target && abilityController.rocketState &&!alreadyUsed)
+        {
+            alreadyUsed = true;
+            abilityController.RocketsActive();
+            //Debug.Log("set true at rocket 55");
+            abilityController.abilityUsed = true;
+            turnManager.UpdateTurn();
+            if(turnManager.combatActive && movementController.hasMoved)
+            {
+                uiController.SetEndTurnButtonState();
+            }
+        }
     }
 
     public void Detonate(Vector3 origin)
     {
+        if (abilityController.rocketState)
+        {
+            abilityController.RocketsActive();
+            //Debug.Log("set true at rocket 69");
+            abilityController.abilityUsed = true;
+            turnManager.UpdateTurn();
+            if (turnManager.combatActive && movementController.hasMoved)
+            {
+                uiController.SetEndTurnButtonState();
+            }
+        }
         Instantiate(rocketExplosion, origin, Quaternion.identity);
         GetNeighbours(gridLayout.WorldToCell(origin));
         Destroy(gameObject);

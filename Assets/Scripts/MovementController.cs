@@ -35,6 +35,7 @@ public class MovementController : MonoBehaviour
     private UIControl uiController;
     private AbilityController abilityController;
     private ClickManager clickManager;
+    private TurnManager turnManager;
 
     void Start()
     {
@@ -49,6 +50,7 @@ public class MovementController : MonoBehaviour
         abilityActive = false; //set the ability active flag to false
         cantMove = false;
         uiController = GameObject.Find("GameController").GetComponent<UIControl>();
+        turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
         abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
 
     }
@@ -56,7 +58,7 @@ public class MovementController : MonoBehaviour
     void LateUpdate()
     {
         //This update loop is looking for player input and determining if movement is available to the hex indicated
-        if (!abilityActive && (!mapManager.combatActive || mapManager.playerTurn) && movementState) //if the ability active flag is true then disable movement
+        if (!abilityController.abilityActive && (!turnManager.combatActive || turnManager.playerTurn) && movementState) //if the ability active flag is true then disable movement
         {
             //The next two parameters and the following if statement are for keyboard movement. Primary movement is mouse based, but keyboard is kept for an alternate control scheme. Will need to make sure that all functionality is duplicated on the keyboard
             sidewaysMovement = Input.GetAxis("Horizontal");
@@ -82,7 +84,7 @@ public class MovementController : MonoBehaviour
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
                 //Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-                Debug.Log("Clicked on "+clickCellPosition);
+                //Debug.Log("Clicked on "+clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
                 int i = 1;
@@ -102,7 +104,7 @@ public class MovementController : MonoBehaviour
                     cantMove = true;
                 }
 
-                if (!mapManager.combatActive)
+                if (!turnManager.combatActive)
                 {
                     hasMoved = false;
                 }
@@ -111,6 +113,8 @@ public class MovementController : MonoBehaviour
                 if (clickDistance <= moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
                 {
                     MovePlayer(clickCellPosition, true);
+                    turnManager.UpdateTurn();
+                    Debug.Log("MC 116");
                 }
             }
         }
@@ -174,9 +178,9 @@ public class MovementController : MonoBehaviour
         if (regularMove)
         {
             hasMoved = true;
-            if (mapManager.combatActive && abilityController.abilityUsed)
+            if (turnManager.combatActive && abilityController.abilityUsed)
             {
-                uiController.beginButtonStateCoroutine();
+                uiController.SetEndTurnButtonState();
             }
         }
         //Debug.Log("has moved is "+hasMoved);

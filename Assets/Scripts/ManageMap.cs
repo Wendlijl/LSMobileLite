@@ -87,7 +87,7 @@ public class ManageMap : MonoBehaviour
     private Vector3 loadedPlayerTile; //variable to hold a reference to the player grid position saved in memory
     private Vector3 highCell; //variable to hold the coordinates of the currently highlighted grid cell
     private Vector3 lastHighCell; //variable to hold the coordinates of the previously highlighted grid cell. 
-
+    private AbilityController abilityController;
     private UIControl uiController;
 
     void Awake()
@@ -159,7 +159,7 @@ public class ManageMap : MonoBehaviour
         lastHighCell = new Vector3(0, 0, 0); //set the inital value of the last cell highlighted by the mouse pointer
 
         player = GameObject.FindGameObjectWithTag("Player"); //get a reference to the player game object
-
+        abilityController = player.GetComponent<AbilityController>();
         mapTiles = new List<MapTile>(); //create a list to hold the map tiles
         revealedTiles = new List<MapTile>(); //create a list to hold the revealed tiles
         revealedTilesRaw = new List<Vector3Int>(); //create a list to hold the unedited revealed tile coordinates (this list will have duplicates)
@@ -186,18 +186,27 @@ public class ManageMap : MonoBehaviour
             lastHighCell = highCell; //update the last highlighted cell to the currently highlighted cell
         }
 
-        if (player.GetComponent<AbilityController>().laserState) //check if the laser ability has been activated and apply relevant highlighting if it has
-        {
-            UpdateHighlight(player.GetComponent<AbilityController>().laserRange, player.GetComponent<MovementController>().playerCellPosition, player.GetComponent<MovementController>().abilityActive); //call the function to update the map highlighting
-        }
         enemiesInList = spawnedEnemies.Count;
 
         if (spawnedEnemies.Count > 0 && !combatActive)
         {
-            Debug.Log("Combat Active");
+            //Debug.Log("Combat Active");
             combatActive = true;
-            uiController.beginButtonStateCoroutine();
+            uiController.SetEndTurnButtonState();
             uiController.DeactivateLandOnPlanet();
+        }
+        else if(spawnedEnemies.Count <= 0 && combatActive)
+        {
+            combatActive = false;
+            abilityController.abilityUsed = false;
+            uiController.SetEndTurnButtonState();
+            //uiController.beginButtonStateCoroutine();
+            enemyTurn = true;
+            playerTurn = false;
+            //abilityController.laserRange = abilityController.maxLaserRange;
+            //abilityController.jumpRange = abilityController.maxJumpRange;
+            //uiController.SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
+            //uiController.SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
         }
     }
 
@@ -291,12 +300,13 @@ public class ManageMap : MonoBehaviour
                     {
                         highlightWeaponMap.SetTile(playerCellPosition + new Vector3Int(x, y, 0), highlightTileRed); //change the cell at the current coordinates to the highlighted tile
                         currentHighlightedTiles.Add(playerCellPosition + new Vector3Int(x, y, 0)); //add the coordinates of this tile to the list of tiles currently highlighted
-
+                        Debug.Log("Enabling Highlighting"+ playerCellPosition + new Vector3Int(x, y, 0));
                     }
                     else //if the laser is not active, then disable the highlighted cells
                     {
                         highlightWeaponMap.SetTile(playerCellPosition + new Vector3Int(x, y, 0), null); //set the cell at the current coordinates to null
                         currentHighlightedTiles.Clear(); //clear the list of highlighted cell coordinates. This does not need to be done every single time. Maybe move this out of the loop to save processing power?
+                        Debug.Log("disabling highlighting");
                     }
                 }
             }
@@ -599,7 +609,7 @@ public class ManageMap : MonoBehaviour
     public void GenericSpawnEnemies() //this function is intended to be the most basic application of the spawn enemies function to be used for testing
     {
         List<int> allowedEnemies = new List<int>() { 0, 1};
-        SpawnEnemies(17, true, allowedEnemies);
+        SpawnEnemies(2, true, allowedEnemies);
     }
 
     public List<PlanetObject> UndiscoveredPlanets( List<PlanetObject> spawnedPlanets, List<Vector3Int> revealedTilesUnique)
@@ -627,7 +637,7 @@ public class ManageMap : MonoBehaviour
         {
             enemy.GetComponent<EnemyShipControl>().TakeTurn();
         }
-        uiController.beginButtonStateCoroutine();
+        uiController.SetEndTurnButtonState();
     }
 
     public void ClearHighlighting()
@@ -640,7 +650,7 @@ public class ManageMap : MonoBehaviour
                 highlightWeaponMap.SetTile(new Vector3Int(x, y, 0), null); //set the cell at the current coordinates to null
             }
         }
-        Debug.Log("cleared highlighted list");
+        //Debug.Log("cleared highlighted list");
         currentHighlightedTiles.Clear(); //clear the list of highlighted cell coordinates.
     }
 
