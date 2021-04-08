@@ -188,7 +188,7 @@ public class AbilityController : MonoBehaviour
             RocketsActive();
         }
         //Debug.Log(abilityUsed);
-        if (turnManager.playerTurn && weaponState && !abilityUsed)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && mapManager.combatActive)
         {
             //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
             if (laserState)
@@ -239,7 +239,7 @@ public class AbilityController : MonoBehaviour
         {
             LaserActive();
         }
-        if (turnManager.playerTurn && weaponState && !abilityUsed)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && mapManager.combatActive) 
         {
             playerFlats.Clear();
             rocketState = !rocketState;
@@ -267,7 +267,7 @@ public class AbilityController : MonoBehaviour
             RocketsActive();
         }
 
-        if (turnManager.playerTurn && weaponState && !abilityUsed && !movementController.hasMoved)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && mapManager.combatActive)
         {
             jumpState = !jumpState;
             abilityActive = jumpState;

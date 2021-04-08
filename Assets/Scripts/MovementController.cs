@@ -113,6 +113,7 @@ public class MovementController : MonoBehaviour
                 if (clickDistance <= moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
                 {
                     MovePlayer(clickCellPosition, true);
+                    abilityController.jumpRange--;
                     turnManager.UpdateTurn();
                     Debug.Log("MC 116");
                 }
