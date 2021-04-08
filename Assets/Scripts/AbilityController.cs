@@ -124,7 +124,6 @@ public class AbilityController : MonoBehaviour
                         uiController.SetEndTurnButtonState();
                     }
                     turnManager.UpdateTurn();
-                    Debug.Log("AC 124");
                 }
             }else if (rocketState)
             {
@@ -140,7 +139,6 @@ public class AbilityController : MonoBehaviour
                 {
                     Instantiate(rocket, player.transform.position, Quaternion.identity);
                     turnManager.UpdateTurn();
-                    Debug.Log("AC 140");
                 }
             }
         }
@@ -163,7 +161,6 @@ public class AbilityController : MonoBehaviour
                 //Debug.Log("set true at Ab con 156");
                 abilityUsed = true;
                 turnManager.UpdateTurn();
-                Debug.Log("AC 160");
                 if (turnManager.combatActive && movementController.hasMoved)
                 {
                     uiController.SetEndTurnButtonState();
@@ -196,7 +193,6 @@ public class AbilityController : MonoBehaviour
                 laserState = false; //the laser state was true, so set it false
                 abilityActive = laserState;
                 //player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
-                Debug.Log("Laser State was true now false" + laserState);
                 mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to disable the range display
             }
             else
@@ -204,7 +200,6 @@ public class AbilityController : MonoBehaviour
                 laserState = true; //the laser state was false, so set it true
                 abilityActive = laserState;
                 //player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
-                Debug.Log("Laser State was false now true" + laserState);
                 mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to enable the range display
             }
         }else if (!turnManager.combatActive)
@@ -214,7 +209,6 @@ public class AbilityController : MonoBehaviour
             abilityActive = laserState;
             //player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
             mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to disable the range display
-            Debug.Log("Maybe here?");
         
         }
     }

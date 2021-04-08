@@ -15,6 +15,7 @@ public class TurnManager : MonoBehaviour
     private AbilityController abilityController;
     private MovementController movementController;
     private UIControl uiController;
+    private PlayerHealthControl playerHealthControl;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class TurnManager : MonoBehaviour
         uiController = gameController.GetComponent<UIControl>();
         abilityController = player.GetComponent<AbilityController>();
         movementController = player.GetComponent<MovementController>();
+        playerHealthControl = player.GetComponent<PlayerHealthControl>();
 
         firstTurn = false;
         combatActive = false;
@@ -108,6 +110,7 @@ public class TurnManager : MonoBehaviour
             uiController.SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
             movementController.hasMoved = false;
             abilityController.abilityUsed = false;
+            playerHealthControl.RestoreShields();
         }
 
         uiController.SetEndTurnButtonState();
