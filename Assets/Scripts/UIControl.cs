@@ -201,15 +201,18 @@ public class UIControl : MonoBehaviour
 
     public void SetUpgradePanelState()
     {
-        if (upgradeHologramActive)
+        if (!turnManager.combatActive)
         {
-            upgradeHologramActive = false;
-            hologramMenu.GetComponent<Animator>().Play("UpgradePanelClose");
-        }
-        else
-        {
-            upgradeHologramActive = true;
-            hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
+            if (upgradeHologramActive)
+            {
+                upgradeHologramActive = false;
+                hologramMenu.GetComponent<Animator>().Play("UpgradePanelClose");
+            }
+            else
+            {
+                upgradeHologramActive = true;
+                hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
+            }
         }
     }
 
