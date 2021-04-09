@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using CI.QuickSave;
+using TMPro;
 
 public class UIControl : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class UIControl : MonoBehaviour
     public GameObject pausePanel; //variable to hold the game pause screen
     public GameObject upgradePanel; //variable to hold the upgrade panel
     public GameObject newGameMessage; //variable to hold the upgrade panel
-
+    
+    private TMP_Text resourceTextDisplay;
     private Button landOnPlanet; //contextual button used for landing on planets
     private GameObject endPlayerTurn; //contextual button used for landing on planets
     private Button endEnemyTurn; //contextual button used for landing on planets
@@ -71,7 +73,9 @@ public class UIControl : MonoBehaviour
         laserHolder = GameObject.Find("FullLaserCharge");
         emptyJumpHolder = GameObject.Find("EmptyJumpCharge");
         jumpHolder = GameObject.Find("FullJumpCharge");
-        
+
+        resourceTextDisplay = GameObject.Find("ResourceCountText (TMP)").GetComponent<TMP_Text>();
+
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endPlayerTurn.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endEnemyTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
@@ -376,5 +380,24 @@ public class UIControl : MonoBehaviour
         //this function controls the quit 
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
+    }
+
+    public void SetResourceCount(int resources, bool addToCurrent)
+    {
+        if (addToCurrent)
+        {
+            int currentResources;
+            bool success = int.TryParse(resourceTextDisplay.text, out currentResources);
+            if (success)
+            {
+                int newResourceValue = currentResources + resources;
+                resourceTextDisplay.text = newResourceValue.ToString();
+            }
+        }
+        else
+        {
+            resourceTextDisplay.text = resources.ToString();
+        }
+        
     }
 }
