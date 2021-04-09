@@ -77,6 +77,10 @@ public class TurnManager : MonoBehaviour
                 {
                     abilityController.currentRocketReloadAmount++;
                 }
+                if (abilityController.currentShieldBoostCharge < abilityController.shieldBoostRechargeTime)
+                {
+                    abilityController.currentShieldBoostCharge++;
+                }
 
                 GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
                 foreach (GameObject rocket in rockets)
@@ -111,8 +115,12 @@ public class TurnManager : MonoBehaviour
             //Debug.Log("Reset all combat stats");
             abilityController.laserRange = abilityController.maxLaserRange;
             abilityController.jumpRange = abilityController.maxJumpRange;
+            abilityController.currentRocketReloadAmount = abilityController.rocketReloadTime;
+            abilityController.currentShieldBoostCharge = abilityController.shieldBoostRechargeTime;
             uiController.SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
             uiController.SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
+            uiController.SetRocketReloadState(abilityController.currentRocketReloadAmount, abilityController.rocketReloadTime);
+            uiController.SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, abilityController.shieldBoostRechargeTime);
             movementController.hasMoved = false;
             abilityController.abilityUsed = false;
             playerHealthControl.RestoreShields();

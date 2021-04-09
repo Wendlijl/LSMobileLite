@@ -19,6 +19,7 @@ public class UIControl : MonoBehaviour
     private GameObject endPlayerTurn; //contextual button used for landing on planets
     private Button endEnemyTurn; //contextual button used for landing on planets
     private bool isPaused; //boolean used to track if the game is paused 
+    private bool upgradeHologramActive;
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
     private AbilityController abilityController;
@@ -84,6 +85,8 @@ public class UIControl : MonoBehaviour
 
         rocketReloadingImage.SetActive(false);
         shieldRechargingingImage.SetActive(false);
+
+        upgradeHologramActive = false;
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
@@ -196,19 +199,20 @@ public class UIControl : MonoBehaviour
         pausePanel.SetActive(false);
     }
 
-    public void SetUpgradePanelActive()
+    public void SetUpgradePanelState()
     {
-        //this function will enable the upgrade panel when called 
-        //upgradePanel.SetActive(true);
-        hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
+        if (upgradeHologramActive)
+        {
+            upgradeHologramActive = false;
+            hologramMenu.GetComponent<Animator>().Play("UpgradePanelClose");
+        }
+        else
+        {
+            upgradeHologramActive = true;
+            hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
+        }
     }
-    public void SetUpgradePanelInActive()
-    {
-        //this function will disable the upgrade panel when called 
-        //upgradePanel.SetActive(false);
-        hologramMenu.GetComponent<Animator>().Play("UpgradePanelClose");
 
-    }
 
     public void SetHealthState(int maxHealth, int currentHealth, int maxShields, int currentShields)
     {
@@ -295,6 +299,15 @@ public class UIControl : MonoBehaviour
     {
         shieldSlider.maxValue = shieldBoostRechargeTime;
         shieldSlider.value = currentShieldBoostCharge;
+
+        if (currentShieldBoostCharge < shieldBoostRechargeTime)
+        {
+            shieldRechargingingImage.SetActive(true);
+        }
+        else
+        {
+            shieldRechargingingImage.SetActive(false);
+        }
     }
 
     public void beginButtonStateCoroutine()

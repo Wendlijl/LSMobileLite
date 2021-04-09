@@ -241,10 +241,12 @@ public class AbilityController : MonoBehaviour
         {
             LaserActive();
         }
-        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive &&(currentShieldBoostCharge>=shieldBoostRechargeTime||shieldState))
         {
             //abilityUsed = true; set in PlayerHealthControl based on whether ability triggers
             playerHealthControl.IncreaseShields(1, shieldOverboost);
+            currentShieldBoostCharge = 0;
+            uiController.SetShieldBoostRechargeState(currentShieldBoostCharge, shieldBoostRechargeTime);
         }
     }
 
