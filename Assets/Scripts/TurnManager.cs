@@ -71,7 +71,11 @@ public class TurnManager : MonoBehaviour
                 }
                 if (abilityController.jumpRange < abilityController.maxJumpRange)
                 {
-                    abilityController.jumpRange++;
+                    abilityController.jumpRange+=2;
+                    if (abilityController.jumpRange > abilityController.maxJumpRange)
+                    {
+                        abilityController.jumpRange = abilityController.maxJumpRange;
+                    }
                 }
                 if (abilityController.currentRocketReloadAmount < abilityController.rocketReloadTime)
                 {
