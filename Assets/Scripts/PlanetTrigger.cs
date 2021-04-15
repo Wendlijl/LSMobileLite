@@ -14,6 +14,7 @@ public class PlanetTrigger : MonoBehaviour
     private TurnManager turnManager; //variable to store a reference to the TurnManager script 
     private ManageMap mapManager; //variable to store a reference to the ManageMap script 
     private string planetName;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
     
     
     //private int loadingIndex; //variable to set what scense should be loaded when landing on a planet
@@ -26,7 +27,8 @@ public class PlanetTrigger : MonoBehaviour
         uiController = gameController.GetComponent<UIControl>(); //get a reference to the UIControl script
         turnManager = gameController.GetComponent<TurnManager>(); //get a reference to the UIControl script
         mapManager = gameController.GetComponent<ManageMap>();
-        uiController.SetResourceCount(totalResourceCount, false);
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
+        //uiController.SetResourceCount(totalResourceCount, false);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -115,7 +117,6 @@ public class PlanetTrigger : MonoBehaviour
     {
         Debug.Log(planetName);
         mapManager.GenericSpawnEnemies();
-        totalResourceCount += planetResourceAmount;
-        uiController.SetResourceCount(totalResourceCount, false);
+        resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
     }
 }

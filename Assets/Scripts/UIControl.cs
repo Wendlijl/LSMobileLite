@@ -54,6 +54,24 @@ public class UIControl : MonoBehaviour
     private Slider shieldSlider;
     private GameObject shieldRechargingingImage;
 
+    private GameObject masterUpgradeLayoutGroup;
+    private GameObject healthUpgradeObject;
+    private GameObject shieldUpgradeObject;
+    private GameObject laserRangeUpgradeObject;
+    private GameObject laserRechargeUpgradeObject;
+    private GameObject rocketRangeUpgradeObject;
+    private GameObject rocketReloadUpgradeObject;
+    private GameObject rocketYieldUpgradeObject;
+    private GameObject jumpRangeUpgradeObject;
+    private GameObject jumpRechargeUpgradeObject;
+    private GameObject shieldBoostUpgradeObject;
+    private GameObject shieldBoostRechargeUpgradeObject;
+    private GameObject shieldOverboostUpgradeObject;
+    private GameObject healthRepairObject;
+    private GameObject spareUpgradeObject;
+
+
+
     private void Awake()
     {
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
@@ -146,6 +164,25 @@ public class UIControl : MonoBehaviour
         {
             newGameMessage.SetActive(true);
         }
+
+
+        masterUpgradeLayoutGroup = GameObject.Find("MasterUpgradeHorizontalLayoutGroup");
+        healthUpgradeObject = GameObject.Find("HealthUpgradeObject");
+        shieldUpgradeObject = GameObject.Find("ShieldUpgradeObject");
+        laserRangeUpgradeObject = GameObject.Find("LaserRangeUpgradeObject");
+        laserRechargeUpgradeObject = GameObject.Find("LaserRechargeUpgradeObject");
+        rocketRangeUpgradeObject = GameObject.Find("RocketRangeUpgradeObject");
+        rocketReloadUpgradeObject = GameObject.Find("RocketReloadUpgradeObject");
+        rocketYieldUpgradeObject = GameObject.Find("RocketYieldUpgradeObject");
+        jumpRangeUpgradeObject = GameObject.Find("JumpRangeUpgradeObject");
+        jumpRechargeUpgradeObject = GameObject.Find("JumpRechargeUpgradeObject");
+        shieldBoostUpgradeObject = GameObject.Find("ShieldBoostUpgradeObject");
+        shieldBoostRechargeUpgradeObject = GameObject.Find("ShieldBoostRechargeUpgradeObject");
+        shieldOverboostUpgradeObject = GameObject.Find("ShieldOverboostUpgradeObject");
+        healthRepairObject = GameObject.Find("HealthRepairObject");
+        spareUpgradeObject = GameObject.Find("SpareUpgradeObject");
+
+        masterUpgradeLayoutGroup.SetActive(false);
     }
 
     void Update()
@@ -211,13 +248,21 @@ public class UIControl : MonoBehaviour
             {
                 upgradeHologramActive = false;
                 hologramMenu.GetComponent<Animator>().Play("UpgradePanelClose");
+                masterUpgradeLayoutGroup.SetActive(false);
             }
             else
             {
                 upgradeHologramActive = true;
                 hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
+                StartCoroutine("SetButtonsActive");
             }
         }
+    }
+
+    private IEnumerator SetButtonsActive()
+    {
+        yield return new WaitForSeconds(0.36f);
+        masterUpgradeLayoutGroup.SetActive(true);
     }
 
 
@@ -382,22 +427,29 @@ public class UIControl : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void SetResourceCount(int resources, bool addToCurrent)
+    //public void SetResourceCount(int resources, bool addToCurrent)
+    public void SetResourceCount(int resources)
     {
-        if (addToCurrent)
-        {
-            int currentResources;
-            bool success = int.TryParse(resourceTextDisplay.text, out currentResources);
-            if (success)
-            {
-                int newResourceValue = currentResources + resources;
-                resourceTextDisplay.text = newResourceValue.ToString();
-            }
-        }
-        else
-        {
-            resourceTextDisplay.text = resources.ToString();
-        }
-        
+        resourceTextDisplay.text = resources.ToString();
+    }
+
+    public void SetUpgradeButtons()
+    {
+        healthUpgradeObject.SetActive(true);
+        shieldUpgradeObject.SetActive(true);
+        laserRangeUpgradeObject.SetActive(true);
+        laserRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = 100.ToString();
+
+        laserRechargeUpgradeObject.SetActive(true);
+        rocketRangeUpgradeObject.SetActive(true);
+        rocketReloadUpgradeObject.SetActive(false);
+        rocketYieldUpgradeObject.SetActive(false);
+        jumpRangeUpgradeObject.SetActive(true);
+        jumpRechargeUpgradeObject.SetActive(false);
+        shieldBoostUpgradeObject.SetActive(true);
+        shieldBoostRechargeUpgradeObject.SetActive(false);
+        shieldOverboostUpgradeObject.SetActive(false);
+        healthRepairObject.SetActive(true);
+        spareUpgradeObject.SetActive(false);
     }
 }
