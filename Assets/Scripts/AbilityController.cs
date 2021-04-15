@@ -22,6 +22,7 @@ public class AbilityController : MonoBehaviour
     public int currentRocketReloadAmount;
     public bool abilityActive;
     public GameObject player; //variable to store a reference to the player game object
+    private GameObject gameController;
     public Vector3Int target; //variable to store the position vector of the target
     public GameObject laser; //variable to store a reference to the laser game object
     public GameObject rocket;
@@ -41,6 +42,7 @@ public class AbilityController : MonoBehaviour
     private List<Vector3Int> playerFlats;
     private TurnManager turnManager;
     private PlayerHealthControl playerHealthControl;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
 
     private float timer;
     private bool turnOffAb;
@@ -49,16 +51,18 @@ public class AbilityController : MonoBehaviour
     void Start()
     {
         weaponState = true;
+        gameController = GameObject.Find("GameController");
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //store a reference to the grid layout component
-        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //store a reference to the map manager
-        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>();
-        uiController = GameObject.Find("GameController").GetComponent<UIControl>();
-        turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
+        mapManager = gameController.GetComponent<ManageMap>(); //store a reference to the map manager
+        clickManager = gameController.GetComponent<ClickManager>();
+        uiController = gameController.GetComponent<UIControl>();
+        turnManager = gameController.GetComponent<TurnManager>();
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
         movementController = player.GetComponent<MovementController>();
         laserRange = 3; //set the initial state of the laser range parameter
-        maxLaserRange = 3; //set the initial state of the maximum laser range parameter
+        maxLaserRange = resourceAndUpgradeManager.CurrentMaxLaserRange; //set the initial state of the maximum laser range parameter
         jumpRange = 3;
         maxJumpRange = 3;
         instX = player.transform.position.x; //set the initial x position for instantiated objects

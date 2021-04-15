@@ -39,7 +39,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int  currentMaxHealth = 3;
     private int  currentMaxShields = 2;
 
-    private int laserRangeUpgradeCost=100;
+    private int laserRangeUpgradeCost=200;
     private int laserRechargeUpgradeCost=100;
     private int rocketRangeUpgradeCost=100;
     private int rocketReloadUpgradeCost=100;
@@ -111,6 +111,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
         gameController = GameObject.Find("GameController");
         uiController = gameController.GetComponent<UIControl>();
+        uiController.SetResourceCount(resources);
         
     }
 
@@ -130,11 +131,14 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeLaserRange()
     {
-        if (resources > laserRangeUpgradeCost && currentMaxLaserRange < 6)
+        if (resources >= laserRangeUpgradeCost && currentMaxLaserRange < 6)
         {
             resources -= laserRangeUpgradeCost;
             currentMaxLaserRange += 1;
             laserRangeUpgradeCost *= 3;
+            uiController.SetResourceCount(resources);
+            uiController.SetUpgradeButtons();
+            abilityController.maxLaserRange = currentMaxLaserRange;
             if (currentMaxLaserRange >= 6)
             {
                 //Send command to UI control to remove button

@@ -26,7 +26,10 @@ public class UIControl : MonoBehaviour
     private ManageMap mapManager;
     private AbilityController abilityController;
     private MovementController movementController;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private TurnManager turnManager;
+    private GameObject gameController;
+    private GameObject player;
 
     private GameObject laserHolder;
     private GameObject emptyLaserHolder;
@@ -77,10 +80,13 @@ public class UIControl : MonoBehaviour
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
         endPlayerTurn = GameObject.Find("PlayerButtonBackground"); //get a reference to the planet landing button
         endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
-        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
-        turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
-        abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
-        movementController = GameObject.Find("Player").GetComponent<MovementController>();
+        gameController = GameObject.Find("GameController");
+        mapManager = gameController.GetComponent<ManageMap>();
+        turnManager = gameController.GetComponent<TurnManager>();
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
+        player = GameObject.Find("Player");
+        abilityController = player.GetComponent<AbilityController>();
+        movementController = player.GetComponent<MovementController>();
         
         healthPanel = GameObject.Find("HealthPanel");
         emptyHealthPanel = GameObject.Find("EmptyHealthPanel");
@@ -301,7 +307,7 @@ public class UIControl : MonoBehaviour
     public void SetLaserCharge(int currentCharge, int maxCharge)
     {
         //Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
-        for (int i = 0; i <= 3; i++)
+        for (int i = 0; i <= 6; i++)
         {
             laserList[i].SetActive(false);
             emptyLaserList[i].SetActive(false);
@@ -438,7 +444,7 @@ public class UIControl : MonoBehaviour
         healthUpgradeObject.SetActive(true);
         shieldUpgradeObject.SetActive(true);
         laserRangeUpgradeObject.SetActive(true);
-        laserRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = 100.ToString();
+        laserRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.LaserRangeUpgradeCost.ToString();
 
         laserRechargeUpgradeObject.SetActive(true);
         rocketRangeUpgradeObject.SetActive(true);

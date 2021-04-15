@@ -582,7 +582,7 @@ public class ManageMap : MonoBehaviour
     public void GenericSpawnEnemies() //this function is intended to be the most basic application of the spawn enemies function to be used for testing
     {
         List<int> allowedEnemies = new List<int>() { 0, 1};
-        SpawnEnemies(20, true, allowedEnemies);
+        SpawnEnemies(2, true, allowedEnemies);
     }
 
     public List<PlanetObject> UndiscoveredPlanets( List<PlanetObject> spawnedPlanets, List<Vector3Int> revealedTilesUnique)
