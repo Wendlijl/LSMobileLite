@@ -136,7 +136,8 @@ public class AbilityController : MonoBehaviour
                     abilityUsed = true;
                     clickManager.WaitForQuarterSec();
                     movementController.MovePlayer(target, false);
-                    jumpRange = 0;
+                    //jumpRange = 0;
+                    jumpRange -= (int)clickDistance;
                     uiController.SetJumpCharge(jumpRange,maxJumpRange);
                     if (turnManager.combatActive)
                     {
@@ -174,7 +175,8 @@ public class AbilityController : MonoBehaviour
                 if (turnManager.combatActive)
                 {
                     
-                    laserRange = 0;
+                    //laserRange = 0;
+                    laserRange -= (int)clickDistance;
                     uiController.SetLaserCharge(laserRange, maxLaserRange);
                 }
                 timer = 0;

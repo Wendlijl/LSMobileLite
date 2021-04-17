@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
             //Debug.Log("Combat is inactive");
             combatActive = false;
             UpdateTurn();
-            Debug.Log("TM 45");
+            //Debug.Log("TM 45");
         }
     }
 

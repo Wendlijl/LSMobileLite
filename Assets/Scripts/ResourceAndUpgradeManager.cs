@@ -24,7 +24,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int baseHealth = 3;
     private int baseShields = 2;
 
-    private int resources = 0;
+    private int resources = 10000;
 
     private int  currentMaxLaserRange = 3;
     private int  currentMaxLaserRecharge = 1;

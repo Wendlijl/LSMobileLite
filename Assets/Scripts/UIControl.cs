@@ -32,10 +32,10 @@ public class UIControl : MonoBehaviour
     private GameObject gameController;
     private GameObject player;
 
-    private GameObject laserHolder;
-    private GameObject emptyLaserHolder;
-    private GameObject jumpHolder;
-    private GameObject emptyJumpHolder;
+    private GameObject laserChargeHolder;
+    private GameObject emptyLaserChargeHolder;
+    private GameObject jumpChargeHolder;
+    private GameObject emptyJumpChargeHolder;
 
     private List<GameObject> laserList = new List<GameObject>();
     private List<GameObject> emptyLaserList = new List<GameObject>();
@@ -95,10 +95,10 @@ public class UIControl : MonoBehaviour
         shieldPanel = GameObject.Find("ShieldPanel");
         emptyShieldPanel = GameObject.Find("EmptyShieldPanel");
 
-        emptyLaserHolder = GameObject.Find("EmptyLaserCharge");
-        laserHolder = GameObject.Find("FullLaserCharge");
-        emptyJumpHolder = GameObject.Find("EmptyJumpCharge");
-        jumpHolder = GameObject.Find("FullJumpCharge");
+        emptyLaserChargeHolder = GameObject.Find("EmptyLaserCharge");
+        laserChargeHolder = GameObject.Find("FullLaserCharge");
+        emptyJumpChargeHolder = GameObject.Find("EmptyJumpCharge");
+        jumpChargeHolder = GameObject.Find("FullJumpCharge");
 
         resourceTextDisplay = GameObject.Find("ResourceCountText (TMP)").GetComponent<TMP_Text>();
 
@@ -142,22 +142,22 @@ public class UIControl : MonoBehaviour
             emptyShieldList.Add(child.gameObject);
         }
 
-        allTransforms = emptyLaserHolder.GetComponentsInChildren<Transform>();
+        allTransforms = emptyLaserChargeHolder.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
         {
             emptyLaserList.Add(child.gameObject);
         }
-        allTransforms = laserHolder.GetComponentsInChildren<Transform>();
+        allTransforms = laserChargeHolder.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
         {
             laserList.Add(child.gameObject);
         }
-        allTransforms = emptyJumpHolder.GetComponentsInChildren<Transform>();
+        allTransforms = emptyJumpChargeHolder.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
         {
             emptyJumpList.Add(child.gameObject);
         }
-        allTransforms = jumpHolder.GetComponentsInChildren<Transform>();
+        allTransforms = jumpChargeHolder.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
         {
             jumpList.Add(child.gameObject);
