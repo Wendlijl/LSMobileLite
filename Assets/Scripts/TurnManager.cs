@@ -95,7 +95,7 @@ public class TurnManager : MonoBehaviour
                 playerTurn = false;
                 enemyTurn = true;
                 //Debug.Log("Update UI. Reset player controls");
-                Debug.Log("TM 74");
+                //Debug.Log("TM 74");
                 //
                 movementController.hasMoved = false;
                 abilityController.abilityUsed = false;
@@ -138,7 +138,7 @@ public class TurnManager : MonoBehaviour
         abilityController.abilityUsed = true;
         movementController.hasMoved = true;
         UpdateTurn();
-        Debug.Log("TM 102");
+        //Debug.Log("TM 102");
     }
 
     public void OrderEnemyTurns()

@@ -28,6 +28,7 @@ public class UIControl : MonoBehaviour
     private MovementController movementController;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private TurnManager turnManager;
+    private PlayerHealthControl playerHealthControl;
     private GameObject gameController;
     private GameObject player;
 
@@ -87,6 +88,7 @@ public class UIControl : MonoBehaviour
         player = GameObject.Find("Player");
         abilityController = player.GetComponent<AbilityController>();
         movementController = player.GetComponent<MovementController>();
+        playerHealthControl = player.GetComponent<PlayerHealthControl>();
         
         healthPanel = GameObject.Find("HealthPanel");
         emptyHealthPanel = GameObject.Find("EmptyHealthPanel");
@@ -441,21 +443,124 @@ public class UIControl : MonoBehaviour
 
     public void SetUpgradeButtons()
     {
-        healthUpgradeObject.SetActive(true);
-        shieldUpgradeObject.SetActive(true);
-        laserRangeUpgradeObject.SetActive(true);
-        laserRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.LaserRangeUpgradeCost.ToString();
 
-        laserRechargeUpgradeObject.SetActive(true);
-        rocketRangeUpgradeObject.SetActive(true);
-        rocketReloadUpgradeObject.SetActive(false);
-        rocketYieldUpgradeObject.SetActive(false);
-        jumpRangeUpgradeObject.SetActive(true);
-        jumpRechargeUpgradeObject.SetActive(false);
-        shieldBoostUpgradeObject.SetActive(true);
-        shieldBoostRechargeUpgradeObject.SetActive(false);
-        shieldOverboostUpgradeObject.SetActive(false);
-        healthRepairObject.SetActive(true);
+        healthUpgradeObject.SetActive((resourceAndUpgradeManager.CurrentMaxHealth < 6) ? true : false);
+        shieldUpgradeObject.SetActive((resourceAndUpgradeManager.CurrentMaxShields < 6) ? true : false);
+
+        laserRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxLaserRange < 6 ? true : false);
+        laserRechargeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxLaserRecharge < 3 ? true : false);
+
+        if (resourceAndUpgradeManager.RocketsInstalled)
+        {
+            rocketRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxRocketRange < 6 ? true : false);
+            rocketReloadUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxRocketReload > 2 ? true : false);
+            rocketYieldUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxRocketYield < 3 ? true : false);
+            TMP_Text[] rocketText = rocketRangeUpgradeObject.GetComponentsInChildren<TMP_Text>();
+            foreach (TMP_Text thisText in rocketText)
+            {
+                if (thisText.text == "Install Rockets")
+                {
+                    thisText.text = "+1 Rocket Range";
+                }
+            }
+        }
+        else
+        {
+            rocketRangeUpgradeObject.SetActive(true);
+            
+            TMP_Text[] rocketText = rocketRangeUpgradeObject.GetComponentsInChildren<TMP_Text>();
+            foreach(TMP_Text thisText in rocketText)
+            {
+                if(thisText.text=="+1 Rocket Range")
+                {
+                    thisText.text = "Install Rockets";
+                }
+            }
+            
+            rocketReloadUpgradeObject.SetActive(false);
+            rocketYieldUpgradeObject.SetActive(false);
+        }
+
+        if (resourceAndUpgradeManager.JumpDriveInstalled)
+        {
+            TMP_Text[] jumpText = jumpRangeUpgradeObject.GetComponentsInChildren<TMP_Text>();
+            foreach (TMP_Text thisText in jumpText)
+            {
+                if (thisText.text == "Install Jump Drive")
+                {
+                    thisText.text = "+1 Jump Range";
+                }
+            }
+            jumpRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxJumpRange < 6 ? true : false);
+            jumpRechargeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxJumpRecharge < 3 ? true : false);
+        }
+        else
+        {
+            TMP_Text[] jumpText = jumpRangeUpgradeObject.GetComponentsInChildren<TMP_Text>();
+            foreach (TMP_Text thisText in jumpText)
+            {
+                if (thisText.text == "+1 Jump Range")
+                {
+                    thisText.text = "Install Jump Drive";
+                }
+            }
+            jumpRangeUpgradeObject.SetActive(true);
+            jumpRechargeUpgradeObject.SetActive(false);
+        }
+
+        if (resourceAndUpgradeManager.ShieldBoostInstalled)
+        {
+            TMP_Text[] shieldBoostText = shieldBoostUpgradeObject.GetComponentsInChildren<TMP_Text>();
+            foreach (TMP_Text thisText in shieldBoostText)
+            {
+                if (thisText.text == "Install Shield Boost")
+                {
+                    thisText.text = "+1 Shield Boost";
+                }
+            }
+            shieldBoostUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxShieldBoost < 3 ? true : false);
+            shieldBoostRechargeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxShieldBoostRecharge > 2 ? true : false);
+            shieldOverboostUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentShieldOverboostActive ? false : true);
+        }
+        else
+        {
+            TMP_Text[] shieldBoostText = shieldBoostUpgradeObject.GetComponentsInChildren<TMP_Text>();
+            foreach (TMP_Text thisText in shieldBoostText)
+            {
+                if (thisText.text == "+1 Shield Boost")
+                {
+                    thisText.text = "Install Shield Boost";
+                }
+            }
+
+            shieldBoostUpgradeObject.SetActive(true);
+            shieldBoostRechargeUpgradeObject.SetActive(false);
+            shieldOverboostUpgradeObject.SetActive(false);
+        }
+
+
+        healthRepairObject.SetActive((playerHealthControl.currentPlayerHealth < resourceAndUpgradeManager.CurrentMaxHealth ? true : false));
+        
         spareUpgradeObject.SetActive(false);
+
+
+        healthUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.HealthMaxUpgradeCost.ToString();
+        shieldUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldMaxUpgradeCost.ToString();
+
+        laserRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.LaserRangeUpgradeCost.ToString();
+        laserRechargeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.LaserRechargeUpgradeCost.ToString();
+
+        rocketRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.RocketRangeUpgradeCost.ToString();
+        rocketReloadUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.RocketReloadUpgradeCost.ToString();
+        rocketYieldUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.RocketYieldUpgradeCost.ToString();
+
+        jumpRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.JumpRangeUpgradeCost.ToString();
+        jumpRechargeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.JumpRechargeUpgradeCost.ToString();
+
+        shieldBoostUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldBoostUpgradeCost.ToString();
+        shieldBoostRechargeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldRechargeUpgradeCost.ToString();
+        shieldOverboostUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldOverboostUpgradeCost.ToString();
+
+        healthRepairObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.HealthRepairCost.ToString();
     }
 }

@@ -34,7 +34,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int  currentMaxJumpRange = 3;
     private int  currentMaxJumpRecharge = 2;
     private int  currentMaxShieldBoost = 1;
-    private bool currentMaxShieldOverboost = false;
+    private bool currentShieldOverboostActive = false;
     private int  currentMaxShieldBoostRecharge = 5;
     private int  currentMaxHealth = 3;
     private int  currentMaxShields = 2;
@@ -51,6 +51,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int shieldRechargeUpgradeCost=100;
     private int shieldMaxUpgradeCost=100;
     private int healthMaxUpgradeCost=100;
+    private int healthRepairCost = 100;
 
     private bool rocketsInstalled=false;
     private bool jumpDriveInstalled=false;
@@ -71,7 +72,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     public int BaseLaserRecharge { get{return baseLaserRecharge; }}
 
     public int CurrentMaxShields { get { return currentMaxShields; } }
-    public bool CurrentMaxShieldOverboost { get { return currentMaxShieldOverboost; } }
+    public bool CurrentShieldOverboostActive { get { return currentShieldOverboostActive; } }
     public int CurrentMaxShieldBoostRecharge { get { return currentMaxShieldBoostRecharge; } }
     public int CurrentMaxHealth { get { return currentMaxHealth; } }
     public int CurrentMaxShieldBoost { get { return currentMaxShieldBoost; } }
@@ -95,6 +96,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     public int ShieldRechargeUpgradeCost { get { return shieldRechargeUpgradeCost; }}
     public int ShieldMaxUpgradeCost { get { return shieldMaxUpgradeCost; }}
     public int HealthMaxUpgradeCost { get { return healthMaxUpgradeCost; }}
+    public int HealthRepairCost { get { return healthRepairCost; }}
 
     public bool RocketsInstalled { get { return rocketsInstalled; } }
     public bool JumpDriveInstalled { get { return jumpDriveInstalled; } }
@@ -128,6 +130,20 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         uiController.SetResourceCount(resources);
     }
 
+    public void UpgradeHealth()
+    {
+
+    }
+
+    public void UpgradeShields()
+    {
+
+    }
+
+    public void RepairHealth()
+    {
+
+    }
 
     public void UpgradeLaserRange()
     {
@@ -139,12 +155,51 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
             abilityController.maxLaserRange = currentMaxLaserRange;
-            if (currentMaxLaserRange >= 6)
-            {
-                //Send command to UI control to remove button
-            }
         }
     }
 
+    public void UpgradeLaserRecharge()
+    {
 
+    }
+
+    public void UpgradeRocketRange()
+    {
+
+    }
+
+    public void UpgradeRocketReload()
+    {
+        
+    }
+
+    public void UpgradeRocketYield()
+    {
+
+    }
+
+    public void UpgradeShieldBoost()
+    {
+
+    }
+
+    public void UpgradeShieldBoostRecharge()
+    {
+
+    }
+
+    public void UpgradeShieldOverboost()
+    {
+
+    }
+
+    public void UpgradeJumpRange()
+    {
+
+    }
+
+    public void UpgradeJumpRecharge()
+    {
+
+    }
 }

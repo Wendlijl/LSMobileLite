@@ -115,7 +115,7 @@ public class MovementController : MonoBehaviour
                     MovePlayer(clickCellPosition, true);
                     abilityController.jumpRange--;
                     turnManager.UpdateTurn();
-                    Debug.Log("MC 116");
+                    //Debug.Log("MC 116");
                 }
             }
         }
