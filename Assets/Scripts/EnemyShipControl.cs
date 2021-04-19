@@ -17,15 +17,18 @@ public class EnemyShipControl : MonoBehaviour
     private bool shotIncoming; //Boolean to track if the laser animation is running
     private bool inRagne; //Boolean to track if this enemy is currently in range of the player 
     private bool inFlats;
+    private bool runAway;
 
     private float timer; //A timer for tracking the life of the laser shot
     public string thisEnemyName;
     private GameObject player; //Variable to hold an instance of the player game object
+    private GameObject gameController;
     private GridLayout gridLayout; //Variable to hold an instance of the grid layout
     private ManageMap mapManager; //Variable to hold an instance of the map manager
     private ClickManager clickManager;
     private PlayerHealthControl playerHealthControl;
     private AbilityController abilityController;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -34,11 +37,13 @@ public class EnemyShipControl : MonoBehaviour
         enemyCellPosition = gridLayout.WorldToCell(transform.position); //Get this enemy's cell position and convert it to the nearest hex coordinates. This is the first half of an operation to center this object in it's position in the hex grid 
         transform.position = gridLayout.CellToWorld(enemyCellPosition); //Take the hex grid position from the last operation, convert it back to world coordinates and set this object's position to those coordinates
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store the player game object
+        gameController = GameObject.Find("GameController");
         abilityController = player.GetComponent<AbilityController>(); //Access and store the ability controller
         laserState = player.GetComponent<AbilityController>().laserState; //Access and store the initial state of the laser ability
         highlightEnabled = false;
-        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //Access and store a reference to the map manager script
-        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>(); //Access and store a reference to the click manager script
+        mapManager = gameController.GetComponent<ManageMap>(); //Access and store a reference to the map manager script
+        clickManager = gameController.GetComponent<ClickManager>(); //Access and store a reference to the click manager script
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
         inRagne = false; //Set the initial state of the Boolean tracking range to the player
         shotIncoming = false; //Set the initial state of the laser animation
@@ -122,21 +127,29 @@ public class EnemyShipControl : MonoBehaviour
     {
         if (!shotIncoming)
         {
-            //Debug.Log(enemyCellPosition);
-            //Debug.Log(mapManager.evenq2cube(enemyCellPosition));
-            //Debug.Log(player.gameObject.GetComponent<MovementController>().playerCellPosition);
-            //Debug.Log(mapManager.evenq2cube(player.gameObject.GetComponent<MovementController>().playerCellPosition));
-            //enemyCellPosition
-
             int distToPlayer = mapManager.HexCellDistance(mapManager.evenq2cube(enemyCellPosition), mapManager.evenq2cube(player.gameObject.GetComponent<MovementController>().playerCellPosition));
+            GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
+            foreach(GameObject rocket in rockets)
+            {
+                int distToRocket = mapManager.HexCellDistance(mapManager.evenq2cube(enemyCellPosition), mapManager.evenq2cube(gridLayout.WorldToCell(rocket.transform.position)));
+                Debug.Log(thisEnemyName +" is "+ distToRocket+" hexes from a rocket");
+                if (distToRocket < resourceAndUpgradeManager.CurrentMaxRocketYield+2)
+                {
+                    Debug.Log(thisEnemyName + " needs to get out of here!");
+                    runAway = true;
+                }
+            }
+
+            if (rockets.Length <= 0)
+            {
+                runAway = false;
+            }
 
 
             switch (thisEnemyName)
             {
                 case "EnemyA":
                     List<Vector3Int> playerFlats = mapManager.GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, false);
-                    //mapManager.ClearHighlighting();
-                    //mapManager.HighlightSet(playerFlats, true);
                     List<Vector3Int> playerEndFlats = mapManager.GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, true);
                     Vector3Int nearestEndFlat = playerEndFlats[0];
                     int distToNearestEndFlat = 999999;
@@ -171,18 +184,17 @@ public class EnemyShipControl : MonoBehaviour
                             inFlats = false;
                         }
                     }
-                    //Debug.Log(inFlats);
-                    if (enemyCellPosition != nearestEndFlat && !inFlats)
+                    if (enemyCellPosition != nearestEndFlat && !inFlats ||runAway)
                     {
                         if (distToPlayer < 3)
                         {
                             nearestEndFlat = nearestFlat;
                         }
-                        //Debug.Log("EnemyA is at " + enemyCellPosition);
-                        //Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
                         List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
+                        Vector3Int furthestFromRocket = new Vector3Int(0, 0, 0);
+                        int furthestFromRocketdist = 100;
                         int i = 1;
                         foreach (Vector3Int neighbour in neighbours)
                         {
@@ -190,6 +202,12 @@ public class EnemyShipControl : MonoBehaviour
                             {
                                 shortestMove = neighbour;
                                 shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(nearestEndFlat));
+
+                                if (rockets.Length > 0)
+                                {
+                                    furthestFromRocket = neighbour;
+                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                }
                             }
                             else
                             {
@@ -198,11 +216,15 @@ public class EnemyShipControl : MonoBehaviour
                                     shortestMove = neighbour;
                                     shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(nearestEndFlat));
                                 }
+                                if (rockets.Length>0 && mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)))>furthestFromRocketdist)
+                                {
+                                    furthestFromRocket = neighbour;
+                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                }
+
                             }
                             i++;
                         }
-                        //Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
-
                         foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
                         {
                             if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
@@ -212,15 +234,22 @@ public class EnemyShipControl : MonoBehaviour
                             }
                         }
 
-                        SetOrientation(gridLayout.CellToWorld(shortestMove));
-                        transform.position += (gridLayout.CellToWorld(shortestMove) - gridLayout.CellToWorld(enemyCellPosition));
+                        if (runAway)
+                        {
+                            SetOrientation(gridLayout.CellToWorld(furthestFromRocket));
+                            transform.position += (gridLayout.CellToWorld(furthestFromRocket) - gridLayout.CellToWorld(enemyCellPosition));
+                        }
+                        else
+                        {
+                            SetOrientation(gridLayout.CellToWorld(shortestMove));
+                            transform.position += (gridLayout.CellToWorld(shortestMove) - gridLayout.CellToWorld(enemyCellPosition));
+                        }
                         enemyCellPosition = gridLayout.WorldToCell(transform.position);
                         thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyObject.enemyString);
                         mapManager.spawnedEnemies.Add(thisEnemyObject);
                     }
                     else
                     {
-                        //Debug.Log("EnemyA attacked");
                         Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                         playerHealthControl.PlayerHit();
                     }
@@ -228,13 +257,13 @@ public class EnemyShipControl : MonoBehaviour
 
                     break;
                 case "EnemyB":
-                    if (distToPlayer > 1)
+                    if (distToPlayer > 1||runAway)
                     {
-                        //Debug.Log("EnemyB is at " + enemyCellPosition);
-                        //Debug.Log("Player is at " + player.gameObject.GetComponent<MovementController>().playerCellPosition);
                         List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
+                        Vector3Int furthestFromRocket = new Vector3Int(0, 0, 0);
+                        int furthestFromRocketdist = 100;
                         int i = 1;
                         foreach (Vector3Int neighbour in neighbours)
                         {
@@ -242,6 +271,12 @@ public class EnemyShipControl : MonoBehaviour
                             {
                                 shortestMove = neighbour;
                                 shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+
+                                if (rockets.Length > 0)
+                                {
+                                    furthestFromRocket = neighbour;
+                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                }
                             }
                             else
                             {
@@ -250,10 +285,14 @@ public class EnemyShipControl : MonoBehaviour
                                     shortestMove = neighbour;
                                     shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
                                 }
+                                if (rockets.Length > 0 && mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position))) > furthestFromRocketdist)
+                                {
+                                    furthestFromRocket = neighbour;
+                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                }
                             }
                             i++;
                         }
-                        //Debug.Log("Shortest move is " + shortestMove + " at a distance of " + shortestMoveDist);
 
                         foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
                         {
@@ -264,15 +303,22 @@ public class EnemyShipControl : MonoBehaviour
                             }
                         }
 
-                        SetOrientation(gridLayout.CellToWorld(shortestMove));
-                        transform.position += (gridLayout.CellToWorld(shortestMove) - gridLayout.CellToWorld(enemyCellPosition));
+                        if (runAway)
+                        {
+                            SetOrientation(gridLayout.CellToWorld(furthestFromRocket));
+                            transform.position += (gridLayout.CellToWorld(furthestFromRocket) - gridLayout.CellToWorld(enemyCellPosition));
+                        }
+                        else
+                        {
+                            SetOrientation(gridLayout.CellToWorld(shortestMove));
+                            transform.position += (gridLayout.CellToWorld(shortestMove) - gridLayout.CellToWorld(enemyCellPosition));
+                        }
                         enemyCellPosition = gridLayout.WorldToCell(transform.position);
                         thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyObject.enemyString);
                         mapManager.spawnedEnemies.Add(thisEnemyObject);
                     }
                     else
                     {
-                        //Debug.Log("EnemyB attacked");
                         Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                         playerHealthControl.PlayerHit();
                     }

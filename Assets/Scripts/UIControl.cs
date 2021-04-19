@@ -326,7 +326,7 @@ public class UIControl : MonoBehaviour
     public void SetJumpCharge(int currentCharge, int maxCharge)
     {
         //Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
-        for (int i = 0; i <= 5; i++)
+        for (int i = 0; i <= 6; i++)
         {
             jumpList[i].SetActive(false);
             emptyJumpList[i].SetActive(false);
