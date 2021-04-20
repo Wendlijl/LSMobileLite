@@ -64,7 +64,7 @@ public class AbilityController : MonoBehaviour
         laserRange = 3; //set the initial state of the laser range parameter
         maxLaserRange = resourceAndUpgradeManager.CurrentMaxLaserRange; //set the initial state of the maximum laser range parameter
         jumpRange = 3;
-        maxJumpRange = 3;
+        maxJumpRange = resourceAndUpgradeManager.CurrentMaxJumpRange;
         instX = player.transform.position.x; //set the initial x position for instantiated objects
         instY = player.transform.position.y; //set the initial y position for instantiated objects
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
@@ -253,7 +253,7 @@ public class AbilityController : MonoBehaviour
         if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive &&(currentShieldBoostCharge>=shieldBoostRechargeTime||shieldState))
         {
             //abilityUsed = true; set in PlayerHealthControl based on whether ability triggers
-            playerHealthControl.IncreaseShields(1, shieldOverboost);
+            playerHealthControl.IncreaseShields(resourceAndUpgradeManager.CurrentMaxShieldBoost, shieldOverboost);
             currentShieldBoostCharge = 0;
             uiController.SetShieldBoostRechargeState(currentShieldBoostCharge, shieldBoostRechargeTime);
         }

@@ -210,7 +210,25 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeShieldBoost()
     {
-
+        if (shieldBoostInstalled)
+        {
+            if (resources >= shieldBoostUpgradeCost && currentMaxShieldBoost < 3)
+            {
+                resources -= shieldBoostUpgradeCost;
+                currentMaxShieldBoost += 1;
+                shieldBoostUpgradeCost *= 3;
+                uiController.SetResourceCount(Resources);
+                uiController.SetUpgradeButtons();
+            }
+        }
+        else
+        {
+            resources -= shieldBoostUpgradeCost;
+            shieldBoostInstalled = true;
+            shieldBoostUpgradeCost = 100;
+            uiController.SetResourceCount(Resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeShieldBoostRecharge()
@@ -225,7 +243,26 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeJumpRange()
     {
-
+        if (jumpDriveInstalled)
+        {
+            if (resources >= jumpRangeUpgradeCost && currentMaxJumpRange < 6)
+            {
+                resources -= jumpRangeUpgradeCost;
+                currentMaxJumpRange += 1;
+                jumpRangeUpgradeCost *= 3;
+                abilityController.maxJumpRange = currentMaxJumpRange;
+                uiController.SetResourceCount(Resources);
+                uiController.SetUpgradeButtons();
+            }
+        }
+        else
+        {
+            resources -= jumpRangeUpgradeCost;
+            jumpDriveInstalled = true;
+            jumpRangeUpgradeCost = 100;
+            uiController.SetResourceCount(Resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeJumpRecharge()

@@ -74,6 +74,10 @@ public class UIControl : MonoBehaviour
     private GameObject healthRepairObject;
     private GameObject spareUpgradeObject;
 
+    private GameObject rocketButtonHolder;
+    private GameObject shieldButtonHolder;
+    private GameObject jumpButtonHolder;
+
 
 
     private void Awake()
@@ -191,6 +195,14 @@ public class UIControl : MonoBehaviour
         spareUpgradeObject = GameObject.Find("SpareUpgradeObject");
 
         masterUpgradeLayoutGroup.SetActive(false);
+
+        rocketButtonHolder = GameObject.Find("RocketButtonHolder");
+        shieldButtonHolder = GameObject.Find("ShieldButtonHolder");
+        jumpButtonHolder = GameObject.Find("JumpButtonHolder");
+
+        rocketButtonHolder.SetActive(resourceAndUpgradeManager.RocketsInstalled);
+        shieldButtonHolder.SetActive(resourceAndUpgradeManager.ShieldBoostInstalled);
+        jumpButtonHolder.SetActive(resourceAndUpgradeManager.JumpDriveInstalled);
     }
 
     void Update()
@@ -308,6 +320,8 @@ public class UIControl : MonoBehaviour
 
     public void SetLaserCharge(int currentCharge, int maxCharge)
     {
+        currentCharge = (currentCharge > 6) ? 6:currentCharge;
+        maxCharge = (maxCharge > 6) ? 6: maxCharge;
         //Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
         for (int i = 0; i <= 6; i++)
         {
@@ -452,6 +466,8 @@ public class UIControl : MonoBehaviour
 
         if (resourceAndUpgradeManager.RocketsInstalled)
         {
+            rocketButtonHolder.SetActive(resourceAndUpgradeManager.RocketsInstalled);
+
             rocketRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxRocketRange < 6 ? true : false);
             rocketReloadUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxRocketReload > 2 ? true : false);
             rocketYieldUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxRocketYield < 3 ? true : false);
@@ -483,6 +499,7 @@ public class UIControl : MonoBehaviour
 
         if (resourceAndUpgradeManager.JumpDriveInstalled)
         {
+            jumpButtonHolder.SetActive(resourceAndUpgradeManager.JumpDriveInstalled);
             TMP_Text[] jumpText = jumpRangeUpgradeObject.GetComponentsInChildren<TMP_Text>();
             foreach (TMP_Text thisText in jumpText)
             {
@@ -510,6 +527,8 @@ public class UIControl : MonoBehaviour
 
         if (resourceAndUpgradeManager.ShieldBoostInstalled)
         {
+            shieldButtonHolder.SetActive(resourceAndUpgradeManager.ShieldBoostInstalled);
+
             TMP_Text[] shieldBoostText = shieldBoostUpgradeObject.GetComponentsInChildren<TMP_Text>();
             foreach (TMP_Text thisText in shieldBoostText)
             {

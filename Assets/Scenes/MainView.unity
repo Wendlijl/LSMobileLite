@@ -1738,8 +1738,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeRocketReload
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5460,8 +5460,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeRocketRange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6028,8 +6028,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeShieldBoost
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6195,8 +6195,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeJumpRecharge
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9620,8 +9620,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeShieldOverboost
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12830,8 +12830,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeJumpRange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15175,8 +15175,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeRocketYield
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15305,8 +15305,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeShieldBoostRecharge
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16642,8 +16642,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: RepairHealth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

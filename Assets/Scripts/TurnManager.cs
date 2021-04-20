@@ -130,6 +130,7 @@ public class TurnManager : MonoBehaviour
             movementController.hasMoved = false;
             abilityController.abilityUsed = false;
             playerHealthControl.RestoreShields();
+            mapManager.ClearHighlighting();
         }
 
         uiController.SetEndTurnButtonState();
