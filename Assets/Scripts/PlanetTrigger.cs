@@ -40,67 +40,67 @@ public class PlanetTrigger : MonoBehaviour
                 case "Planet1(Clone)":
                     Debug.Log("Planet1");
                     planetName = "Planet1";
-                    planetResourceAmount = 100;
+                    planetResourceAmount = Random.Range(100,200);
                     //loadingIndex = 2;
                     break;
                 case "Planet2(Clone)":
                     Debug.Log("Planet2");
                     planetName = "Planet2";
-                    planetResourceAmount = 200;
+                    planetResourceAmount = Random.Range(150, 250);
                     //loadingIndex = 3;
                     break;
                 case "Planet3(Clone)":
                     Debug.Log("Planet3");
                     planetName = "Planet3";
-                    planetResourceAmount = 300;
+                    planetResourceAmount = Random.Range(150, 300);
                     //loadingIndex = 4;
                     break;
                 case "Planet4(Clone)":
                     Debug.Log("Planet4");
                     planetName = "Planet4";
-                    planetResourceAmount = 400;
+                    planetResourceAmount = Random.Range(200, 400);
                     //loadingIndex = 4;
                     break;
                 case "Planet5(Clone)":
                     Debug.Log("Planet5");
                     planetName = "Planet5";
-                    planetResourceAmount = 500;
+                    planetResourceAmount = Random.Range(250, 500);
                     //loadingIndex = 4;
                     break;
                 case "Planet6(Clone)":
                     Debug.Log("Planet6");
                     planetName = "Planet6";
-                    planetResourceAmount = 600;
+                    planetResourceAmount = Random.Range(250, 550);
                     //loadingIndex = 4;
                     break;
                 case "Planet7(Clone)":
                     Debug.Log("Planet7");
                     planetName = "Planet7";
-                    planetResourceAmount = 700;
+                    planetResourceAmount = Random.Range(350, 600);
                     //loadingIndex = 4;
                     break;
                 case "Planet8(Clone)":
                     Debug.Log("Planet8");
                     planetName = "Planet8";
-                    planetResourceAmount = 800;
+                    planetResourceAmount = Random.Range(350, 800);
                     //loadingIndex = 4;
                     break;
                 case "Planet9(Clone)":
                     Debug.Log("Planet9");
                     planetName = "Planet9";
-                    planetResourceAmount = 900;
+                    planetResourceAmount = Random.Range(350, 850);
                     //loadingIndex = 4;
                     break;
                 case "Planet10(Clone)":
                     Debug.Log("Planet10");
                     planetName = "Planet10";
-                    planetResourceAmount = 1000;
+                    planetResourceAmount = Random.Range(800, 1000);
                     //loadingIndex = 4;
                     break;
                 case "Planet0(Clone)":
                     Debug.Log("Planet0");
                     planetName = "Planet0";
-                    planetResourceAmount = 1100;
+                    planetResourceAmount = Random.Range(100, 800);
                     //loadingIndex = 4;
                     break;
             }
