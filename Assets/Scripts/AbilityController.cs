@@ -72,7 +72,7 @@ public class AbilityController : MonoBehaviour
         laserState = false; //set the initial state of the laser ability activation
         jumpState = false;
         jumpCells = new List<Vector3Int>();
-        rocketRange = 3;
+        rocketRange = resourceAndUpgradeManager.CurrentMaxRocketRange;
         rocketReloadTime = 3;
         currentRocketReloadAmount = 3;
         playerFlats = new List<Vector3Int>();

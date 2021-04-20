@@ -16,6 +16,7 @@ public class TurnManager : MonoBehaviour
     private MovementController movementController;
     private UIControl uiController;
     private PlayerHealthControl playerHealthControl;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class TurnManager : MonoBehaviour
         player = GameObject.Find("Player");
         mapManager = gameController.GetComponent<ManageMap>();
         uiController = gameController.GetComponent<UIControl>();
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         abilityController = player.GetComponent<AbilityController>();
         movementController = player.GetComponent<MovementController>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
@@ -67,7 +69,7 @@ public class TurnManager : MonoBehaviour
             {
                 if (abilityController.laserRange < abilityController.maxLaserRange)
                 {
-                    abilityController.laserRange++;
+                    abilityController.laserRange+= resourceAndUpgradeManager.CurrentMaxLaserRecharge;
                 }
                 if (abilityController.jumpRange < abilityController.maxJumpRange)
                 {

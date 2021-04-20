@@ -41,12 +41,12 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     private int laserRangeUpgradeCost=200;
     private int laserRechargeUpgradeCost=100;
-    private int rocketRangeUpgradeCost=100;
+    private int rocketRangeUpgradeCost=1000;
     private int rocketReloadUpgradeCost=100;
     private int rocketYieldUpgradeCost=100;
-    private int jumpRangeUpgradeCost=100;
+    private int jumpRangeUpgradeCost=1000;
     private int jumpRechargeUpgradeCost=100;
-    private int shieldBoostUpgradeCost=100;
+    private int shieldBoostUpgradeCost=1000;
     private int shieldOverboostUpgradeCost=100;
     private int shieldRechargeUpgradeCost=100;
     private int shieldMaxUpgradeCost=100;
@@ -152,19 +152,49 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             resources -= laserRangeUpgradeCost;
             currentMaxLaserRange += 1;
             laserRangeUpgradeCost *= 3;
+            abilityController.maxLaserRange = currentMaxLaserRange;
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
-            abilityController.maxLaserRange = currentMaxLaserRange;
         }
     }
 
     public void UpgradeLaserRecharge()
     {
-
+        if(resources>=laserRechargeUpgradeCost && currentMaxLaserRecharge < 3)
+        {
+            resources -= laserRechargeUpgradeCost;
+            currentMaxLaserRecharge += 1;
+            laserRechargeUpgradeCost *= 3;
+            uiController.SetResourceCount(resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeRocketRange()
     {
+        if (rocketsInstalled)
+        {
+            if (resources >= RocketRangeUpgradeCost && currentMaxRocketRange < 6)
+            {
+                resources -= rocketRangeUpgradeCost;
+                currentMaxRocketRange += 1;
+                rocketRangeUpgradeCost *= 3;
+                abilityController.rocketRange = currentMaxRocketRange;
+                uiController.SetResourceCount(Resources);
+                uiController.SetUpgradeButtons();
+            }
+        }
+        else
+        {
+            if (resources >= RocketRangeUpgradeCost)
+            {
+                resources -= rocketRangeUpgradeCost;
+                rocketsInstalled = true;
+                rocketRangeUpgradeCost = 100;
+                uiController.SetResourceCount(Resources);
+                uiController.SetUpgradeButtons();
+            }
+        }
 
     }
 

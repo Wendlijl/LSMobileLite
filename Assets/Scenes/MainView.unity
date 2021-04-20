@@ -1465,7 +1465,7 @@ GameObject:
   - component: {fileID: 141043102}
   - component: {fileID: 141043101}
   m_Layer: 5
-  m_Name: UpgradeShields
+  m_Name: UpgradeShieldsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1534,8 +1534,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeShields
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1669,7 +1669,7 @@ GameObject:
   - component: {fileID: 154530026}
   - component: {fileID: 154530025}
   m_Layer: 5
-  m_Name: UpgradeRocketReload
+  m_Name: UpgradeRocketReloadButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2008,7 +2008,7 @@ GameObject:
   - component: {fileID: 189522360}
   - component: {fileID: 189522359}
   m_Layer: 5
-  m_Name: Spare
+  m_Name: SpareButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5391,7 +5391,7 @@ GameObject:
   - component: {fileID: 753964721}
   - component: {fileID: 753964720}
   m_Layer: 5
-  m_Name: UpgradeRocketRange
+  m_Name: UpgradeRocketRangeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5959,7 +5959,7 @@ GameObject:
   - component: {fileID: 821077744}
   - component: {fileID: 821077743}
   m_Layer: 5
-  m_Name: UpgradeShieldBoost
+  m_Name: UpgradeShieldBoostButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6126,7 +6126,7 @@ GameObject:
   - component: {fileID: 837621026}
   - component: {fileID: 837621025}
   m_Layer: 5
-  m_Name: UpgradeJumpRecharge
+  m_Name: UpgradeJumpRechargeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6334,7 +6334,7 @@ GameObject:
   - component: {fileID: 851319825}
   - component: {fileID: 851319824}
   m_Layer: 5
-  m_Name: UpgradeLaserRange
+  m_Name: UpgradeLaserRangeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7500,7 +7500,7 @@ GameObject:
   - component: {fileID: 966950812}
   - component: {fileID: 966950811}
   m_Layer: 5
-  m_Name: UpgradeLaserRecharge
+  m_Name: UpgradeLaserRechargeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7569,8 +7569,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeLaserRecharge
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9551,7 +9551,7 @@ GameObject:
   - component: {fileID: 1142370942}
   - component: {fileID: 1142370941}
   m_Layer: 5
-  m_Name: UpgradeShieldOverboost
+  m_Name: UpgradeShieldOverboostButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12761,7 +12761,7 @@ GameObject:
   - component: {fileID: 1388180088}
   - component: {fileID: 1388180087}
   m_Layer: 5
-  m_Name: UpgradeJumpRange
+  m_Name: UpgradeJumpRangeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15106,7 +15106,7 @@ GameObject:
   - component: {fileID: 1679932539}
   - component: {fileID: 1679932538}
   m_Layer: 5
-  m_Name: UpgradeRocketYield
+  m_Name: UpgradeRocketYieldButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15236,7 +15236,7 @@ GameObject:
   - component: {fileID: 1703966850}
   - component: {fileID: 1703966849}
   m_Layer: 5
-  m_Name: UpgradeShieldBoostRecharge
+  m_Name: UpgradeShieldBoostRechargeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16573,7 +16573,7 @@ GameObject:
   - component: {fileID: 1847424013}
   - component: {fileID: 1847424012}
   m_Layer: 5
-  m_Name: RepairHealth
+  m_Name: RepairHealthButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17168,7 +17168,7 @@ GameObject:
   - component: {fileID: 1912441611}
   - component: {fileID: 1912441610}
   m_Layer: 5
-  m_Name: UpgradeHealth
+  m_Name: UpgradeHealthButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17237,8 +17237,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeHealth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
