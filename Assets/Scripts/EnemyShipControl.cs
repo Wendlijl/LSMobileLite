@@ -251,7 +251,7 @@ public class EnemyShipControl : MonoBehaviour
                     else
                     {
                         Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                        playerHealthControl.PlayerHit();
+                        playerHealthControl.PlayerHit(1);
                     }
 
 
@@ -320,7 +320,7 @@ public class EnemyShipControl : MonoBehaviour
                     else
                     {
                         Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                        playerHealthControl.PlayerHit();
+                        playerHealthControl.PlayerHit(1);
                     }
 
                     break;

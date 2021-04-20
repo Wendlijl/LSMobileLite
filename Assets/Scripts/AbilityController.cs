@@ -16,7 +16,6 @@ public class AbilityController : MonoBehaviour
     public int shieldBoostRechargeTime;
     public int currentShieldBoostCharge;
     public bool rocketState;
-    public bool shieldOverboost;
     public int rocketRange;
     public int rocketReloadTime;
     public int currentRocketReloadAmount;
@@ -73,15 +72,14 @@ public class AbilityController : MonoBehaviour
         jumpState = false;
         jumpCells = new List<Vector3Int>();
         rocketRange = resourceAndUpgradeManager.CurrentMaxRocketRange;
-        rocketReloadTime = 3;
-        currentRocketReloadAmount = 3;
+        rocketReloadTime = resourceAndUpgradeManager.CurrentMaxRocketReload;
+        currentRocketReloadAmount = resourceAndUpgradeManager.CurrentMaxRocketReload;
         playerFlats = new List<Vector3Int>();
         timer = 0.0f;
         turnOffAb = false;
         abilityActive = false;
         uiController.SetLaserCharge(laserRange, maxLaserRange);
         uiController.SetJumpCharge(jumpRange, maxJumpRange);
-        shieldOverboost = false;
         shieldBoostRechargeTime = 5;
         currentShieldBoostCharge = 5;
         uiController.SetShieldBoostRechargeState(currentShieldBoostCharge, shieldBoostRechargeTime);
@@ -253,7 +251,7 @@ public class AbilityController : MonoBehaviour
         if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive &&(currentShieldBoostCharge>=shieldBoostRechargeTime||shieldState))
         {
             //abilityUsed = true; set in PlayerHealthControl based on whether ability triggers
-            playerHealthControl.IncreaseShields(resourceAndUpgradeManager.CurrentMaxShieldBoost, shieldOverboost);
+            playerHealthControl.IncreaseShields(resourceAndUpgradeManager.CurrentMaxShieldBoost, resourceAndUpgradeManager.CurrentShieldOverboostActive);
             currentShieldBoostCharge = 0;
             uiController.SetShieldBoostRechargeState(currentShieldBoostCharge, shieldBoostRechargeTime);
         }

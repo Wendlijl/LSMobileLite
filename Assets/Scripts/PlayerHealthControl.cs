@@ -9,30 +9,38 @@ public class PlayerHealthControl : MonoBehaviour
     public int maxPlayerShields;
     public int currentPlayerShields;
 
+    private GameObject gameController;
     private UIControl uiControl;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private AbilityController abilityController;
     // Start is called before the first frame update
     void Start()
     {
-        uiControl = GameObject.Find("GameController").GetComponent<UIControl>();
+        gameController = GameObject.Find("GameController");
+        uiControl = gameController.GetComponent<UIControl>();
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
-        maxPlayerHealth = 3;
+        maxPlayerHealth = resourceAndUpgradeManager.CurrentMaxHealth;
         currentPlayerHealth = 3;
-        maxPlayerShields = 2;
+        maxPlayerShields = resourceAndUpgradeManager.CurrentMaxShields;
         currentPlayerShields = 2;
         uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
 
-    public void PlayerHit()
+    public void PlayerHit(int damageAmount)
     {
-        if (currentPlayerShields > 0)
+        for(int i = 0; i <= damageAmount-1; i++)
         {
-            currentPlayerShields--;
+            if (currentPlayerShields > 0)
+            {
+                currentPlayerShields--;
+            }
+            else
+            {
+                currentPlayerHealth--;
+            }
         }
-        else
-        {
-            currentPlayerHealth--;
-        }
+
         uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
 

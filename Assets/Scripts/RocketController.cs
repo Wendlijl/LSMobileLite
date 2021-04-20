@@ -9,6 +9,7 @@ public class RocketController : MonoBehaviour
     public GameObject rocketExplosion;
     public int turnsAlive;
     public int turnDelay;
+    private int rocketYield;
 
     private Quaternion targetRotation; //Variable to hold the intended rotation of this game object
     private GridLayout gridLayout; //Variable to hold a reference to the grid layout
@@ -18,6 +19,7 @@ public class RocketController : MonoBehaviour
     private UIControl uiController;
     private TurnManager turnManager;
     private GameObject gameController;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private bool alreadyUsed;
 
     // Start is called before the first frame update
@@ -27,6 +29,7 @@ public class RocketController : MonoBehaviour
         gameController = GameObject.Find("GameController"); //Access and store a reference to the player game object
         abilityController = player.GetComponent<AbilityController>();
         movementController = player.GetComponent<MovementController>();
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         mapManager = gameController.GetComponent<ManageMap>();
         uiController = gameController.GetComponent<UIControl>();
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Access and store a reference to the grid layout
@@ -35,6 +38,7 @@ public class RocketController : MonoBehaviour
         turnsAlive = 0;
         turnDelay = 1;
         alreadyUsed = false;
+        rocketYield = resourceAndUpgradeManager.CurrentMaxRocketYield;
         SetRotation(); //Call the function that will orient this object in the direction of the target. 
 
     }
@@ -79,7 +83,8 @@ public class RocketController : MonoBehaviour
             }
         }
         Instantiate(rocketExplosion, origin, Quaternion.identity);
-        GetNeighbours(gridLayout.WorldToCell(origin));
+        rocketYield = resourceAndUpgradeManager.CurrentMaxRocketYield;
+        GetExplosionNeighbours(gridLayout.WorldToCell(origin),rocketYield);
         Destroy(gameObject);
     }
 
@@ -90,21 +95,21 @@ public class RocketController : MonoBehaviour
         transform.rotation = targetRotation; //instantly rotates laser to correct orientation 
     }
 
-    public void GetNeighbours(Vector3Int origin)
+    private void GetExplosionNeighbours(Vector3Int origin, int explosionYield)
     {
         
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         Vector3Int playerPos = player.GetComponent<MovementController>().playerCellPosition;
-        for (int x = -1; x <= 1; x++)
+        for (int x = -1 * explosionYield; x <= 1 * explosionYield; x++)
         {
-            for (int y = -1; y <= 1; y++)
+            for (int y = -1 * explosionYield; y <= 1 * explosionYield; y++)
             {
                 int modX = origin.x + x;
                 int modY = origin.y + y;
 
                 if (modX < mapManager.mapXMax && modX > mapManager.mapXMin && modY < mapManager.mapYMax && modY > mapManager.mapYMin)
                 {
-                    if (mapManager.HexCellDistance(mapManager.evenq2cube(origin), mapManager.evenq2cube(new Vector3Int(modX, modY, 0))) <= 1)
+                    if (mapManager.HexCellDistance(mapManager.evenq2cube(origin), mapManager.evenq2cube(new Vector3Int(modX, modY, 0))) <= 1 * explosionYield)
                     {
                         foreach (GameObject enemy in enemies)
                         {
@@ -117,7 +122,7 @@ public class RocketController : MonoBehaviour
                         }
                         if(playerPos.x ==modX && playerPos.y == modY)
                         {
-                            player.GetComponent<PlayerHealthControl>().PlayerHit();
+                            player.GetComponent<PlayerHealthControl>().PlayerHit(1*explosionYield);
                         }
                     }
                 }

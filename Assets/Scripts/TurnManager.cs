@@ -73,7 +73,7 @@ public class TurnManager : MonoBehaviour
                 }
                 if (abilityController.jumpRange < abilityController.maxJumpRange)
                 {
-                    abilityController.jumpRange+=2;
+                    abilityController.jumpRange+=resourceAndUpgradeManager.CurrentMaxJumpRecharge;
                     if (abilityController.jumpRange > abilityController.maxJumpRange)
                     {
                         abilityController.jumpRange = abilityController.maxJumpRange;
@@ -120,11 +120,11 @@ public class TurnManager : MonoBehaviour
         {
             //Debug.Log("Reset all combat stats");
             abilityController.laserRange = abilityController.maxLaserRange;
-            abilityController.jumpRange = abilityController.maxJumpRange;
+            abilityController.jumpRange = resourceAndUpgradeManager.CurrentMaxJumpRange;
             abilityController.currentRocketReloadAmount = abilityController.rocketReloadTime;
             abilityController.currentShieldBoostCharge = abilityController.shieldBoostRechargeTime;
             uiController.SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
-            uiController.SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
+            uiController.SetJumpCharge(abilityController.jumpRange, resourceAndUpgradeManager.CurrentMaxJumpRange);
             uiController.SetRocketReloadState(abilityController.currentRocketReloadAmount, abilityController.rocketReloadTime);
             uiController.SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, abilityController.shieldBoostRechargeTime);
             movementController.hasMoved = false;

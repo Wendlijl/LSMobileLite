@@ -5,11 +5,14 @@ using UnityEngine;
 public class ResourceAndUpgradeManager : MonoBehaviour
 {
     //This script is designed to control all of the resources the player collects and manage the upgrades the player has purchased
-    private AbilityController abilityController;
     private GameObject player;
+    private AbilityController abilityController;
+    private PlayerHealthControl playerHealthControl;
+    
 
-    private UIControl uiController;
     private GameObject gameController;
+    private UIControl uiController;
+    
 
     private int baseLaserRange = 3;
     private int baseLaserRecharge = 1;
@@ -48,10 +51,10 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int jumpRechargeUpgradeCost=100;
     private int shieldBoostUpgradeCost=1000;
     private int shieldOverboostUpgradeCost=100;
-    private int shieldRechargeUpgradeCost=100;
+    private int shieldBoostRechargeUpgradeCost = 100;
     private int shieldMaxUpgradeCost=100;
     private int healthMaxUpgradeCost=100;
-    private int healthRepairCost = 100;
+    private int healthRepairCost = 500;
 
     private bool rocketsInstalled=false;
     private bool jumpDriveInstalled=false;
@@ -93,7 +96,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     public int JumpRechargeUpgradeCost { get { return jumpRechargeUpgradeCost; }}
     public int ShieldBoostUpgradeCost { get { return shieldBoostUpgradeCost; }}
     public int ShieldOverboostUpgradeCost { get { return shieldOverboostUpgradeCost; }}
-    public int ShieldRechargeUpgradeCost { get { return shieldRechargeUpgradeCost; }}
+    public int ShieldRechargeUpgradeCost { get { return shieldBoostRechargeUpgradeCost; }}
     public int ShieldMaxUpgradeCost { get { return shieldMaxUpgradeCost; }}
     public int HealthMaxUpgradeCost { get { return healthMaxUpgradeCost; }}
     public int HealthRepairCost { get { return healthRepairCost; }}
@@ -110,6 +113,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     {
         player = GameObject.Find("Player");
         abilityController = player.GetComponent<AbilityController>();
+        playerHealthControl = player.GetComponent<PlayerHealthControl>();
 
         gameController = GameObject.Find("GameController");
         uiController = gameController.GetComponent<UIControl>();
@@ -132,17 +136,39 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeHealth()
     {
-
+        if (resources >= HealthMaxUpgradeCost && currentMaxHealth < 6)
+        {
+            resources -= HealthMaxUpgradeCost;
+            currentMaxHealth += 1;
+            playerHealthControl.maxPlayerHealth = currentMaxHealth;
+            playerHealthControl.RestoreHealth();
+            uiController.SetResourceCount(resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeShields()
     {
-
+        if (resources >= ShieldMaxUpgradeCost && currentMaxShields < 6)
+        {
+            resources -= ShieldMaxUpgradeCost;
+            currentMaxShields += 1;
+            playerHealthControl.maxPlayerShields = currentMaxShields;
+            playerHealthControl.RestoreShields();
+            uiController.SetResourceCount(resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void RepairHealth()
     {
-
+        if (resources >= healthRepairCost)
+        {
+            resources -= healthRepairCost;
+            playerHealthControl.IncreaseHealth(1);
+            uiController.SetResourceCount(resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeLaserRange()
@@ -153,6 +179,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             currentMaxLaserRange += 1;
             laserRangeUpgradeCost *= 3;
             abilityController.maxLaserRange = currentMaxLaserRange;
+            abilityController.laserRange = CurrentMaxLaserRange;
+            uiController.SetLaserCharge(CurrentMaxLaserRange, CurrentMaxLaserRange);
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
         }
@@ -200,12 +228,27 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeRocketReload()
     {
-        
+        if (resources >= rocketReloadUpgradeCost && currentMaxRocketReload > 2)
+        {
+            resources -= rocketReloadUpgradeCost;
+            rocketReloadUpgradeCost *= 3;
+            currentMaxRocketReload -= 1;
+            abilityController.rocketReloadTime = currentMaxRocketReload;
+            uiController.SetResourceCount(Resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeRocketYield()
     {
-
+        if (resources >= RocketYieldUpgradeCost && CurrentMaxRocketYield < 3)
+        {
+            resources -= RocketYieldUpgradeCost;
+            rocketYieldUpgradeCost *= 3;
+            currentMaxRocketYield += 1;
+            uiController.SetResourceCount(Resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeShieldBoost()
@@ -233,12 +276,25 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeShieldBoostRecharge()
     {
-
+        if (resources >= shieldBoostRechargeUpgradeCost && currentMaxShieldBoostRecharge>2)
+        {
+            resources -= shieldBoostRechargeUpgradeCost;
+            currentMaxShieldBoostRecharge -= 1;
+            shieldBoostRechargeUpgradeCost *= 3;
+            uiController.SetResourceCount(Resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeShieldOverboost()
     {
-
+        if (resources >= ShieldOverboostUpgradeCost&&!currentShieldOverboostActive)
+        {
+            resources -= ShieldOverboostUpgradeCost;
+            currentShieldOverboostActive = true;
+            uiController.SetResourceCount(Resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 
     public void UpgradeJumpRange()
@@ -251,6 +307,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 currentMaxJumpRange += 1;
                 jumpRangeUpgradeCost *= 3;
                 abilityController.maxJumpRange = currentMaxJumpRange;
+                abilityController.jumpRange = currentMaxJumpRange;
+                uiController.SetJumpCharge(currentMaxJumpRange, currentMaxJumpRange);
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
             }
@@ -267,6 +325,13 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeJumpRecharge()
     {
-
+        if (resources >= jumpRechargeUpgradeCost)
+        {
+            resources -= jumpRechargeUpgradeCost;
+            currentMaxJumpRecharge += 1;
+            jumpRechargeUpgradeCost *= 3;
+            uiController.SetResourceCount(Resources);
+            uiController.SetUpgradeButtons();
+        }
     }
 }
