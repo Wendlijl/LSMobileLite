@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerHealthControl : MonoBehaviour
 {
-    public int maxPlayerHealth;
-    public int currentPlayerHealth;
-    public int maxPlayerShields;
-    public int currentPlayerShields;
+    public int maxPlayerHealth=3;
+    public int currentPlayerHealth=3;
+    public int maxPlayerShields=2;
+    public int currentPlayerShields=2;
 
     private GameObject gameController;
     private UIControl uiControl;
@@ -21,9 +21,7 @@ public class PlayerHealthControl : MonoBehaviour
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
         maxPlayerHealth = resourceAndUpgradeManager.CurrentMaxHealth;
-        currentPlayerHealth = 3;
         maxPlayerShields = resourceAndUpgradeManager.CurrentMaxShields;
-        currentPlayerShields = 2;
         uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
 

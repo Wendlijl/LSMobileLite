@@ -5,20 +5,20 @@ using UnityEngine;
 public class AbilityController : MonoBehaviour
 {
     public bool laserState; //variable to track the activation state of the laser ability 
-    public int laserRange; //variable to set the range of the laser ability
+    public int laserRange = 3; //variable to set the range of the laser ability
     public int maxLaserRange; //the maximum current range of the laser
-    public int jumpRange;
+    public int jumpRange = 3;
     public int maxJumpRange;
     public bool weaponState;
     public bool abilityUsed;
     public bool jumpState;
     public bool shieldState;
-    public int shieldBoostRechargeTime;
-    public int currentShieldBoostCharge;
+    public int shieldBoostRechargeTime = 5;
+    public int currentShieldBoostCharge = 5;
     public bool rocketState;
     public int rocketRange;
-    public int rocketReloadTime;
-    public int currentRocketReloadAmount;
+    public int rocketReloadTime = 5;
+    public int currentRocketReloadAmount = 5;
     public bool abilityActive;
     public GameObject player; //variable to store a reference to the player game object
     private GameObject gameController;
@@ -60,9 +60,7 @@ public class AbilityController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
         movementController = player.GetComponent<MovementController>();
-        laserRange = 3; //set the initial state of the laser range parameter
         maxLaserRange = resourceAndUpgradeManager.CurrentMaxLaserRange; //set the initial state of the maximum laser range parameter
-        jumpRange = 3;
         maxJumpRange = resourceAndUpgradeManager.CurrentMaxJumpRange;
         instX = player.transform.position.x; //set the initial x position for instantiated objects
         instY = player.transform.position.y; //set the initial y position for instantiated objects
@@ -73,15 +71,12 @@ public class AbilityController : MonoBehaviour
         jumpCells = new List<Vector3Int>();
         rocketRange = resourceAndUpgradeManager.CurrentMaxRocketRange;
         rocketReloadTime = resourceAndUpgradeManager.CurrentMaxRocketReload;
-        currentRocketReloadAmount = resourceAndUpgradeManager.CurrentMaxRocketReload;
         playerFlats = new List<Vector3Int>();
         timer = 0.0f;
         turnOffAb = false;
         abilityActive = false;
         uiController.SetLaserCharge(laserRange, maxLaserRange);
         uiController.SetJumpCharge(jumpRange, maxJumpRange);
-        shieldBoostRechargeTime = 5;
-        currentShieldBoostCharge = 5;
         uiController.SetShieldBoostRechargeState(currentShieldBoostCharge, shieldBoostRechargeTime);
         uiController.SetRocketReloadState(currentRocketReloadAmount, rocketReloadTime);
     }

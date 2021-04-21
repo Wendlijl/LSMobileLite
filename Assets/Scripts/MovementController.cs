@@ -36,6 +36,8 @@ public class MovementController : MonoBehaviour
     private AbilityController abilityController;
     private ClickManager clickManager;
     private TurnManager turnManager;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private GameObject gameController;
 
     void Start()
     {
@@ -43,14 +45,18 @@ public class MovementController : MonoBehaviour
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //search for and save a reference to the grid layout component
         playerCellPosition = gridLayout.WorldToCell(transform.position); //get a reference to the player cell position in cell coordinates
         transform.position = gridLayout.CellToWorld(playerCellPosition); //center the player game object within it's nearest cell by converting the cell coordinates to world coordinates
-        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>(); //get a reference to the map manager 
-        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>(); //get a reference to the map manager 
+        gameController = GameObject.Find("GameController");
+        mapManager = gameController.GetComponent<ManageMap>(); //get a reference to the map manager 
+        clickManager = gameController.GetComponent<ClickManager>(); //get a reference to the map manager 
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
+        uiController = gameController.GetComponent<UIControl>();
+        turnManager = gameController.GetComponent<TurnManager>();
+        vision = resourceAndUpgradeManager.CurrentMaxSensorRange;
         mapManager.UpdateFogOfWar(vision, playerCellPosition); //run an update fog of war command from the map manager to clear the fog around the player character on scene start
         //rotTrack = 0; //set rotation tracking to 0 (this will likely be depreicated with a new rotation system
         abilityActive = false; //set the ability active flag to false
         cantMove = false;
-        uiController = GameObject.Find("GameController").GetComponent<UIControl>();
-        turnManager = GameObject.Find("GameController").GetComponent<TurnManager>();
+
         abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
 
     }

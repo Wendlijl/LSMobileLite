@@ -72,7 +72,7 @@ public class UIControl : MonoBehaviour
     private GameObject shieldBoostRechargeUpgradeObject;
     private GameObject shieldOverboostUpgradeObject;
     private GameObject healthRepairObject;
-    private GameObject spareUpgradeObject;
+    private GameObject sensorRangeUpgradeObject;
 
     private GameObject rocketButtonHolder;
     private GameObject shieldButtonHolder;
@@ -192,7 +192,7 @@ public class UIControl : MonoBehaviour
         shieldBoostRechargeUpgradeObject = GameObject.Find("ShieldBoostRechargeUpgradeObject");
         shieldOverboostUpgradeObject = GameObject.Find("ShieldOverboostUpgradeObject");
         healthRepairObject = GameObject.Find("HealthRepairObject");
-        spareUpgradeObject = GameObject.Find("SpareUpgradeObject");
+        sensorRangeUpgradeObject = GameObject.Find("SensorRangeUpgradeObject");
 
         masterUpgradeLayoutGroup.SetActive(false);
 
@@ -320,6 +320,7 @@ public class UIControl : MonoBehaviour
 
     public void SetLaserCharge(int currentCharge, int maxCharge)
     {
+        //Debug.Log("Laser charge set as "+currentCharge+" and "+ maxCharge);
         currentCharge = (currentCharge > 6) ? 6:currentCharge;
         maxCharge = (maxCharge > 6) ? 6: maxCharge;
         //Debug.Log("Current charge: " + currentCharge + ". Max charge: " + maxCharge);
@@ -357,6 +358,7 @@ public class UIControl : MonoBehaviour
     
     public void SetRocketReloadState(int currentRocketReloadAmount, int rocketReloadTime)
     {
+        Debug.Log("Shield boost recharge set to " + currentRocketReloadAmount + " and " + rocketReloadTime);
         rocketSlider.maxValue = rocketReloadTime;
         rocketSlider.value = currentRocketReloadAmount;
         if (currentRocketReloadAmount < rocketReloadTime)
@@ -370,7 +372,7 @@ public class UIControl : MonoBehaviour
     }
 
     public void SetShieldBoostRechargeState(int currentShieldBoostCharge, int shieldBoostRechargeTime)
-    {
+    {    
         shieldSlider.maxValue = shieldBoostRechargeTime;
         shieldSlider.value = currentShieldBoostCharge;
 
@@ -463,6 +465,8 @@ public class UIControl : MonoBehaviour
 
         laserRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxLaserRange < 6 ? true : false);
         laserRechargeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxLaserRecharge < 3 ? true : false);
+
+        sensorRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxSensorRange < 4 ? true : false);
 
         if (resourceAndUpgradeManager.RocketsInstalled)
         {
@@ -560,7 +564,7 @@ public class UIControl : MonoBehaviour
 
         healthRepairObject.SetActive((playerHealthControl.currentPlayerHealth < resourceAndUpgradeManager.CurrentMaxHealth ? true : false));
         
-        spareUpgradeObject.SetActive(false);
+        
 
 
         healthUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.HealthMaxUpgradeCost.ToString();
@@ -568,6 +572,8 @@ public class UIControl : MonoBehaviour
 
         laserRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.LaserRangeUpgradeCost.ToString();
         laserRechargeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.LaserRechargeUpgradeCost.ToString();
+
+        sensorRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.SensorRangeUpgradeCost.ToString();
 
         rocketRangeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.RocketRangeUpgradeCost.ToString();
         rocketReloadUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.RocketReloadUpgradeCost.ToString();
@@ -577,7 +583,7 @@ public class UIControl : MonoBehaviour
         jumpRechargeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.JumpRechargeUpgradeCost.ToString();
 
         shieldBoostUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldBoostUpgradeCost.ToString();
-        shieldBoostRechargeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldRechargeUpgradeCost.ToString();
+        shieldBoostRechargeUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldBoostRechargeUpgradeCost.ToString();
         shieldOverboostUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldOverboostUpgradeCost.ToString();
 
         healthRepairObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.HealthRepairCost.ToString();

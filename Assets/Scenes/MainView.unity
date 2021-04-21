@@ -2008,7 +2008,7 @@ GameObject:
   - component: {fileID: 189522360}
   - component: {fileID: 189522359}
   m_Layer: 5
-  m_Name: SpareButton
+  m_Name: SensorRangeUpgradeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2077,8 +2077,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580153}
-        m_MethodName: SetUpgradePanelInActive
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: UpgradeSensorRange
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8538,7 +8538,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unassigned2
+  m_Text: Delete Resource File
 --- !u!222 &1028152744
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11722,7 +11722,6 @@ MonoBehaviour:
   shieldBoostRechargeTime: 0
   currentShieldBoostCharge: 0
   rocketState: 0
-  shieldOverboost: 0
   rocketRange: 0
   rocketReloadTime: 0
   currentRocketReloadAmount: 0
@@ -12485,7 +12484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1373640508}
   m_Layer: 5
-  m_Name: SpareUpgradeObject
+  m_Name: SensorRangeUpgradeObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13917,7 +13916,7 @@ GameObject:
   - component: {fileID: 1502301884}
   - component: {fileID: 1502301883}
   m_Layer: 5
-  m_Name: Unassigned1
+  m_Name: SaveResourceFile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13985,7 +13984,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1502301884}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: SaveResourceAndUpgradeData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1502301884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14036,7 +14046,7 @@ GameObject:
   - component: {fileID: 1517297076}
   - component: {fileID: 1517297075}
   m_Layer: 5
-  m_Name: Unassigned2
+  m_Name: DeleteResourceFile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14104,7 +14114,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1517297076}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: DeleteResourceAndUpgradeSaveFile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1517297076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14198,7 +14219,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spare
+  m_text: Sensor Range
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6bd27a5c13ebd2e40a0da5a313e71f10, type: 2}
   m_sharedMaterial: {fileID: 1939028641613356154, guid: 6bd27a5c13ebd2e40a0da5a313e71f10,
@@ -14226,7 +14247,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.95
+  m_fontSize: 11.6
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16477,7 +16498,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unassigned1
+  m_Text: Save Resource File
 --- !u!222 &1807838734
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19718,7 +19739,7 @@ GameObject:
   - component: {fileID: 2138213126}
   - component: {fileID: 2138213125}
   m_Layer: 5
-  m_Name: SpareText(TMP)
+  m_Name: SensorRangeUpgradeText(TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19762,7 +19783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spare
+  m_text: +1 Sensor Range
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6bd27a5c13ebd2e40a0da5a313e71f10, type: 2}
   m_sharedMaterial: {fileID: 1939028641613356154, guid: 6bd27a5c13ebd2e40a0da5a313e71f10,
@@ -19790,7 +19811,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.8
+  m_fontSize: 14.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

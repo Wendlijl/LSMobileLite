@@ -89,6 +89,7 @@ public class ManageMap : MonoBehaviour
 
     void Awake()
     {
+        //The following section deals with creating and moving the tutorial level save file so that it is always consistent
         Debug.Log(Path.Combine(Application.persistentDataPath, "QuickSave"));
         string quicksavePath = Path.Combine(Application.persistentDataPath, "QuickSave");
         string quicksaveFilePath = Path.Combine(quicksavePath, "TutorialFile.json");
@@ -115,6 +116,7 @@ public class ManageMap : MonoBehaviour
             Directory.CreateDirectory(quicksavePath);
             FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
         }
+        
         //create a dictionary to hold key value pairs for all the background star tiles
         starTileDict = new Dictionary<string, Tile>() {
             { "starTile0", starTile0 },
