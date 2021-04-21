@@ -15,6 +15,7 @@ public class UIControl : MonoBehaviour
     public GameObject pausePanel; //variable to hold the game pause screen
     public GameObject upgradePanel; //variable to hold the upgrade panel
     public GameObject newGameMessage; //variable to hold the upgrade panel
+    private GameObject resourceWarningMessage;
     
     private TMP_Text resourceTextDisplay;
     private Button landOnPlanet; //contextual button used for landing on planets
@@ -93,7 +94,10 @@ public class UIControl : MonoBehaviour
         abilityController = player.GetComponent<AbilityController>();
         movementController = player.GetComponent<MovementController>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
-        
+
+        resourceWarningMessage = GameObject.Find("AllResourcesCollectedWarningBackgroundImage");
+        resourceWarningMessage.SetActive(false);
+
         healthPanel = GameObject.Find("HealthPanel");
         emptyHealthPanel = GameObject.Find("EmptyHealthPanel");
         shieldPanel = GameObject.Find("ShieldPanel");
@@ -234,6 +238,29 @@ public class UIControl : MonoBehaviour
             landOnPlanet.gameObject.SetActive(true);
         }
     }
+
+    public void ResourcesCollectedWarning()
+    {
+        if (resourceWarningMessage.activeInHierarchy)
+        {
+            resourceWarningMessage.SetActive(false);
+        }
+        else
+        {
+            resourceWarningMessage.SetActive(true);
+            ShortWarning[] warningScripts = resourceWarningMessage.GetComponentsInChildren<ShortWarning>();
+            foreach(ShortWarning warningScript in warningScripts)
+            {
+                warningScript.StartCoroutine("FadeOut");
+            }
+            resourceWarningMessage.GetComponentInChildren<ShortWarningText>().StartCoroutine("FadeOut");
+        }
+    }
+
+    public void DisableResourceCollectedWarning()
+    {
+        resourceWarningMessage.SetActive(false);
+    }
     
     public void DeactivateLandOnPlanet()
     {
@@ -358,7 +385,7 @@ public class UIControl : MonoBehaviour
     
     public void SetRocketReloadState(int currentRocketReloadAmount, int rocketReloadTime)
     {
-        Debug.Log("Shield boost recharge set to " + currentRocketReloadAmount + " and " + rocketReloadTime);
+        //Debug.Log("Shield boost recharge set to " + currentRocketReloadAmount + " and " + rocketReloadTime);
         rocketSlider.maxValue = rocketReloadTime;
         rocketSlider.value = currentRocketReloadAmount;
         if (currentRocketReloadAmount < rocketReloadTime)

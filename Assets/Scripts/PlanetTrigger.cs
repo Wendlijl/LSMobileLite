@@ -10,6 +10,7 @@ public class PlanetTrigger : MonoBehaviour
     public int totalResourceCount;
     private int planetResourceAmount;
     private GameObject gameController;
+    private GameObject currentPlanet;
     private UIControl uiController; //variable to store a reference to the UIControl script 
     private TurnManager turnManager; //variable to store a reference to the TurnManager script 
     private ManageMap mapManager; //variable to store a reference to the ManageMap script 
@@ -34,6 +35,7 @@ public class PlanetTrigger : MonoBehaviour
     {
         if (!turnManager.combatActive && planetState && collision.gameObject.tag=="Planet")
         {
+            currentPlanet = collision.gameObject;
             uiController.ActivateLandOnPlanet(); //When over a planet, display the "Land" contextutal prompt
             switch (collision.name) //Determine what planet scene to load based on the name of the game object returned from the collision
             {
@@ -116,7 +118,17 @@ public class PlanetTrigger : MonoBehaviour
     public void landButton()
     {
         Debug.Log(planetName);
-        mapManager.GenericSpawnEnemies();
-        resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
+        Debug.Log("The resources have been collected from this planet --> "+currentPlanet.GetComponent<PlanetController>().ResourcesCollectd);
+
+        if (currentPlanet.GetComponent<PlanetController>().ResourcesCollectd)
+        {
+            uiController.ResourcesCollectedWarning();
+        }
+        else
+        {
+            currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
+            mapManager.GenericSpawnEnemies();
+            resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
+        }
     }
 }
