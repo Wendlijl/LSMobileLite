@@ -16,6 +16,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private UIControl uiController;
 
     private string resourceAndUpgradeDataSaveFileName = "resourceAndUpgradeDataSaveFile";
+    private int solarSystemNumber=1;
 
     private int baseLaserRange = 3;
     private int baseLaserRecharge = 1;
@@ -66,7 +67,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private bool jumpDriveInstalled=false;
     private bool shieldBoostInstalled=false;
 
-
+    public string ResourceAndUpgradeDataSaveFileName { get { return resourceAndUpgradeDataSaveFileName; } }
+    public int SolarSystemNumber { get { return solarSystemNumber; } set { solarSystemNumber = value; } }
     public int BaseShields{get{return baseShields;}}
     public bool BaseShieldOverboost { get{return baseShieldOverboost; }}
     public int BaseShieldBoostRecharge { get{return baseShieldBoostRecharge; }}
@@ -143,6 +145,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             QuickSaveReader instReader = QuickSaveReader.Create(resourceAndUpgradeDataSaveFileName); //create an instance of the quick save reader to pull in the save file
 
             resources = instReader.Read<int>("resources");
+            SolarSystemNumber = instReader.Read<int>("solarSystemNumber");
             currentMaxLaserRange = instReader.Read<int>("currentMaxLaserRange");
             currentMaxLaserRecharge = instReader.Read<int>("currentMaxLaserRecharge");
             currentMaxRocketRange = instReader.Read<int>("currentMaxRocketRange");
@@ -207,6 +210,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         QuickSaveWriter instWriter = QuickSaveWriter.Create(resourceAndUpgradeDataSaveFileName); //create an instance of the QuickSaveWriter
 
         instWriter.Write<int>("resources", Resources); 
+        instWriter.Write<int>("solarSystemNumber", SolarSystemNumber); 
         instWriter.Write<int>("currentMaxLaserRange", currentMaxLaserRange); 
         instWriter.Write<int>("currentMaxLaserRecharge", currentMaxLaserRecharge); 
         instWriter.Write<int>("currentMaxRocketRange", currentMaxRocketRange); 

@@ -55,6 +55,7 @@ public class ManageMap : MonoBehaviour
     public GameObject planet8;
     public GameObject planet9;
     public GameObject planet10;
+    public GameObject starGate;
 
     
     public List<Vector3Int> currentHighlightedTiles; //create a list to hold references to the tiles highlighted by the laser range ability. This list is public so that the abiltiy controller script can access this list to check for in range tiles (not currently implemented)
@@ -63,8 +64,9 @@ public class ManageMap : MonoBehaviour
     private int revealedLength; //variable to store the length of the list of revealed tiles
     private int mapLength; //variable to store the length of the list of map tiles
     private int randTileIndx; //variable to store a random index used to determine which background tile to set a given hex to
+    //private int starGateSpawnPoint;
     private float dispInterval = 0.1f; //variable to determine how often to update the cell highlighted by the mouse. In this case it is done every 0.1 seconds
-
+    private Vector3Int starGateSpawnPoint;
 
     private GridLayout gridLayout; //create a variable to hold an instance of the grid layout
 
@@ -329,6 +331,7 @@ public class ManageMap : MonoBehaviour
         instWriter.Write<int>("planetLength", spawnedPlanets.Count); 
         instWriter.Write<int>("enemyLength", spawnedEnemies.Count); 
         instWriter.Write<Vector3>("playerPos",playerState.playerCellPosition); //write the player position to the save file
+        instWriter.Write<Vector3Int>("starGateSpawnPoint", starGateSpawnPoint);
         foreach (MapTile revealedTile in revealedTiles)//loop through the revealed tiles list and save off each to the save file
         {
             Vector2 saveItem = new Vector2(revealedTile.xCoordinate, revealedTile.yCoordinate); //create a vector two that can be saved to the file because map tiles can't be saved (wrong. Map tiles can be saved. Must have written this before I figured out how)
@@ -371,7 +374,9 @@ public class ManageMap : MonoBehaviour
             int enemyLength = instReader.Read<int>("enemyLength");
             loadedPlayerTile = instReader.Read<Vector3>("playerPos"); //extract the player position coordinates from the save file
             playerState.transform.position = gridLayout.CellToWorld(new Vector3Int ((int)loadedPlayerTile.x, (int)loadedPlayerTile.y, (int)loadedPlayerTile.z)); //set the position of the player basded on the data extracted from the save file
-            for(int i = 0; i < mapLength; i++) //set up a for loop to iterate through the save file and extract all of the map tiles. This uses the map tiles length to shorten the number of iterations for this loop
+            starGateSpawnPoint = instReader.Read<Vector3Int>("starGateSpawnPoint");
+            Instantiate(starGate, starField.CellToWorld(starGateSpawnPoint), Quaternion.identity);
+            for (int i = 0; i < mapLength; i++) //set up a for loop to iterate through the save file and extract all of the map tiles. This uses the map tiles length to shorten the number of iterations for this loop
             {
                 MapTile mapItem = instReader.Read<MapTile>("mapTile" + i.ToString()); //create map tiles based on data extracted from save file 
                 mapTiles.Add(mapItem); //create a list of map tiles extracted from the save file
@@ -437,6 +442,7 @@ public class ManageMap : MonoBehaviour
          * maxPlanets: This is a parameter that defines how many planets will be spawned (Note: this parameter will be overruled in the case that the available spaces to spawn planets is less than this number)
         */
         GameObject[] planets = GameObject.FindGameObjectsWithTag("Planet"); //create a list of any planets in the current scene
+        GameObject[] starGates = GameObject.FindGameObjectsWithTag("StarGate");
         List<GameObject> availablePlaents = new List<GameObject>() { planet0, planet1, planet2, planet3, planet4, planet5, planet6, planet7, planet8, planet9, planet10 }; //create a list of planets that can be used based on supplied prefabs
         List<GameObject> allowablePlanets = new List<GameObject>(); //create a placeholder for a list that will define what planets the function is allowed to spawn
         List<Vector3Int> availableSpawnPoints = new List<Vector3Int>(); //create a placeholder for a list that will define where planets are allowed to spawn
@@ -445,6 +451,12 @@ public class ManageMap : MonoBehaviour
         {
             GameObject.Destroy(planet);
         }
+
+        foreach(GameObject starGate in starGates)
+        {
+            Destroy(starGate);
+        }
+ 
         spawnedPlanets.Clear();
 
         foreach(int planet in allowedPlanets) //loop through the supplied list of allowed planets and build the list of planets that the function is allowed to spawn
@@ -502,6 +514,9 @@ public class ManageMap : MonoBehaviour
                 }
             }
         }
+        int randStarGateIndex = Random.Range(0, availableSpawnPoints.Count);
+        starGateSpawnPoint = availableSpawnPoints[randStarGateIndex];
+        Instantiate(starGate, starField.CellToWorld(starGateSpawnPoint),Quaternion.identity);
     }
 
     public void SpawnEnemies(int maxEnemies, bool repeatEnemies, List<int> allowedEnemies)

@@ -175,7 +175,7 @@ public class UIControl : MonoBehaviour
         }
 
 
-        if (QuickSaveRoot.Exists(mapManager.saveName))
+        if (QuickSaveRoot.Exists(mapManager.saveName)||QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName))
         {
             //Do nothing
         }
@@ -322,8 +322,19 @@ public class UIControl : MonoBehaviour
         foreach(Button button in buttons)
         {
             Debug.Log(button.gameObject.name);
+            if(button.gameObject.name == "ContinueQuestButton")
+            {
+                button.onClick.AddListener(delegate { StartNewLevel(); });
+            }
             button.onClick.AddListener(delegate { DestroyStarGateMessage(); });
         }
+    }
+
+    public void StartNewLevel()
+    {
+        resourceAndUpgradeManager.SolarSystemNumber++;
+        mapManager.Delete();
+        SceneManager.LoadScene(1);
     }
 
     public void DestroyStarGateMessage()
