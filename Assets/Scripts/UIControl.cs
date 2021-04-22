@@ -16,6 +16,7 @@ public class UIControl : MonoBehaviour
     public GameObject upgradePanel; //variable to hold the upgrade panel
     public GameObject newGameMessage; //variable to hold the upgrade panel
     private GameObject resourceWarningMessage;
+    public GameObject starGateMessage;
     
     private TMP_Text resourceTextDisplay;
     private Button landOnPlanet; //contextual button used for landing on planets
@@ -78,6 +79,8 @@ public class UIControl : MonoBehaviour
     private GameObject rocketButtonHolder;
     private GameObject shieldButtonHolder;
     private GameObject jumpButtonHolder;
+
+    private GameObject starGateMessageObject;
 
 
 
@@ -303,6 +306,31 @@ public class UIControl : MonoBehaviour
                 hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
                 StartCoroutine("SetButtonsActive");
             }
+        }
+    }
+
+    public void DisplayStarGateMessage()
+    {
+        starGateMessageObject =  Instantiate(starGateMessage);
+        starGateMessageObject.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>());
+        starGateMessageObject.transform.localScale = new Vector3(1, 1, 1);
+        starGateMessageObject.GetComponent<RectTransform>().localPosition = new Vector3(1, 1, 0);
+        starGateMessageObject.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+        starGateMessageObject.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
+
+        Button[] buttons = starGateMessageObject.GetComponentsInChildren<Button>();
+        foreach(Button button in buttons)
+        {
+            Debug.Log(button.gameObject.name);
+            button.onClick.AddListener(delegate { DestroyStarGateMessage(); });
+        }
+    }
+
+    public void DestroyStarGateMessage()
+    {
+        if (starGateMessageObject)
+        {
+            Destroy(starGateMessageObject);
         }
     }
 
