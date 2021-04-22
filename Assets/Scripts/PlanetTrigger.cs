@@ -16,11 +16,13 @@ public class PlanetTrigger : MonoBehaviour
     private ManageMap mapManager; //variable to store a reference to the ManageMap script 
     private string planetName;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private GridLayout gridLayout;
     
     
     //private int loadingIndex; //variable to set what scense should be loaded when landing on a planet
     private void Start()
     {
+        gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //get a reference to the grid layout 
         totalResourceCount = 0;
         planetResourceAmount = 0;
         planetState = true;
@@ -118,8 +120,9 @@ public class PlanetTrigger : MonoBehaviour
     public void landButton()
     {
         Debug.Log(planetName);
-        Debug.Log("The resources have been collected from this planet --> "+currentPlanet.GetComponent<PlanetController>().ResourcesCollectd);
-
+        //Debug.Log("The resources have been collected from this planet --> "+currentPlanet.GetComponent<PlanetController>().ResourcesCollectd);
+        Vector3Int currentPlanetCell = gridLayout.WorldToCell(currentPlanet.transform.position);
+        Debug.Log(currentPlanetCell);
         if (currentPlanet.GetComponent<PlanetController>().ResourcesCollectd)
         {
             uiController.ResourcesCollectedWarning();
@@ -129,6 +132,20 @@ public class PlanetTrigger : MonoBehaviour
             currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
             mapManager.GenericSpawnEnemies();
             resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
+        }
+
+        foreach (PlanetObject planet in mapManager.spawnedPlanets)
+        {
+            if (planet.xCoordinate == currentPlanetCell.x && planet.yCoordinate == currentPlanetCell.y)
+            {
+                mapManager.spawnedPlanets.Add(new PlanetObject(planet.xCoordinate, planet.yCoordinate, planet.planetString, currentPlanet.GetComponent<PlanetController>().ResourcesCollectd));
+                mapManager.spawnedPlanets.Remove(planet);
+                break;
+            }
+        }
+        foreach (PlanetObject planet in mapManager.spawnedPlanets)
+        {
+            Debug.Log("The planet at " + planet.xCoordinate + "x " + planet.yCoordinate + "y" + " has had it's resources collected --> " + planet.resourcesCollected);
         }
     }
 }

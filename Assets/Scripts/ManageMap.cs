@@ -72,7 +72,7 @@ public class ManageMap : MonoBehaviour
     private List<MapTile> revealedTiles; //create a list of hold the reference to the revealed map tiles
     private List<Vector3Int> revealedTilesRaw; //create a list to hold the unedited references of revealed tile coordinates (this list will have duplicates)
     private List<Vector3Int> revealedTilesUnique; //create a list to hold edited references of revealed tile coordinates (this list should not have duplicates)
-    private List<PlanetObject> spawnedPlanets;
+    public List<PlanetObject> spawnedPlanets;
     public List<EnemyObject> spawnedEnemies;
 
     private List<string> starTileStrings; //list of dictionary names for the star tiles used as the map background
@@ -486,7 +486,7 @@ public class ManageMap : MonoBehaviour
                     string planetName = planetTemp.name;
                     Vector3Int planetPosition = starField.WorldToCell(planetTemp.transform.position);
                     planetName = planetName.Replace(clone, "");
-                    spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName));
+                    spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName,false));
                 }
                 else //If planets are not allowed to repeat, then instantiate a randomly selected planet at the randomly selected coordinates and then remove both the planet and the coordinates from their respective lists to ensure niether is used again
                 {
@@ -498,7 +498,7 @@ public class ManageMap : MonoBehaviour
                     string planetName = planetTemp.name;
                     Vector3Int planetPosition = starField.WorldToCell(planetTemp.transform.position);
                     planetName = planetName.Replace(clone, "");
-                    spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName));
+                    spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName,false));
                 }
             }
         }
