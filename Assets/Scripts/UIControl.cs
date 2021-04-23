@@ -425,7 +425,7 @@ public class UIControl : MonoBehaviour
     
     public void SetRocketReloadState(int currentRocketReloadAmount, int rocketReloadTime)
     {
-        //Debug.Log("Shield boost recharge set to " + currentRocketReloadAmount + " and " + rocketReloadTime);
+        Debug.Log("Shield boost recharge set to " + currentRocketReloadAmount + " and " + rocketReloadTime);
         rocketSlider.maxValue = rocketReloadTime;
         rocketSlider.value = currentRocketReloadAmount;
         if (currentRocketReloadAmount < rocketReloadTime)

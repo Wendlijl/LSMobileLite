@@ -382,6 +382,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 resources -= rocketRangeUpgradeCost;
                 rocketsInstalled = true;
                 rocketRangeUpgradeCost = 100;
+                abilityController.currentRocketReloadAmount = CurrentMaxRocketReload;
+                uiController.SetRocketReloadState(abilityController.currentRocketReloadAmount, CurrentMaxRocketReload);
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
                 SaveResourceAndUpgradeData();
@@ -436,6 +438,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             resources -= shieldBoostUpgradeCost;
             shieldBoostInstalled = true;
             shieldBoostUpgradeCost = 100;
+            abilityController.currentShieldBoostCharge = CurrentMaxShieldBoostRecharge;
+            uiController.SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, CurrentMaxShieldBoostRecharge);
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
@@ -489,6 +493,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             resources -= jumpRangeUpgradeCost;
             jumpDriveInstalled = true;
             jumpRangeUpgradeCost = 100;
+            abilityController.jumpRange = CurrentMaxJumpRange;
+            uiController.SetJumpCharge(abilityController.jumpRange, CurrentMaxJumpRange);
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();

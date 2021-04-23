@@ -20,6 +20,7 @@ public class RocketController : MonoBehaviour
     private TurnManager turnManager;
     private GameObject gameController;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private PlayerHealthControl playerHealthControl;
     private bool alreadyUsed;
 
     // Start is called before the first frame update
@@ -29,6 +30,7 @@ public class RocketController : MonoBehaviour
         gameController = GameObject.Find("GameController"); //Access and store a reference to the player game object
         abilityController = player.GetComponent<AbilityController>();
         movementController = player.GetComponent<MovementController>();
+        playerHealthControl = player.GetComponent<PlayerHealthControl>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         mapManager = gameController.GetComponent<ManageMap>();
         uiController = gameController.GetComponent<UIControl>();
@@ -122,7 +124,12 @@ public class RocketController : MonoBehaviour
                         }
                         if(playerPos.x ==modX && playerPos.y == modY)
                         {
-                            player.GetComponent<PlayerHealthControl>().PlayerHit(1*explosionYield);
+                            playerHealthControl.PlayerHit(1*explosionYield);
+                            if (playerHealthControl.currentPlayerHealth <= 0)
+                            {
+                                //playerHealthControl.DestroyPlayer();
+                                playerHealthControl.StartCoroutine("DestroyPlayer");
+                            }
                         }
                     }
                 }
