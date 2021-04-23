@@ -36,7 +36,7 @@ public class TurnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (mapManager.spawnedEnemies.Count > 0 && !combatActive)
+        if (mapManager.spawnedEnemies.Count > 0 && !combatActive && !playerHealthControl.BeenDestroyed)
         {
             //Debug.Log("Combat is active");
             firstTurn = true;

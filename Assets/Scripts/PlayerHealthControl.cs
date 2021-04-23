@@ -14,17 +14,23 @@ public class PlayerHealthControl : MonoBehaviour
     private UIControl uiControl;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private AbilityController abilityController;
+    private MovementController movementController;
+    private TurnManager turnManager;
     private bool beenDestroyed = false;
+
+    public bool BeenDestroyed { get { return beenDestroyed; } set { beenDestroyed = value; } }
     // Start is called before the first frame update
     void Start()
     {
         gameController = GameObject.Find("GameController");
         uiControl = gameController.GetComponent<UIControl>();
+        turnManager = gameController.GetComponent<TurnManager>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
         maxPlayerHealth = resourceAndUpgradeManager.CurrentMaxHealth;
         maxPlayerShields = resourceAndUpgradeManager.CurrentMaxShields;
         uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+        movementController = gameObject.GetComponent<MovementController>();
     }
 
     public void PlayerHit(int damageAmount)
@@ -44,7 +50,7 @@ public class PlayerHealthControl : MonoBehaviour
         uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
 
-    public void DestroyPlayer()
+    public IEnumerator DestroyPlayer()
     {
         if (!beenDestroyed)
         {
@@ -53,6 +59,12 @@ public class PlayerHealthControl : MonoBehaviour
             color.a = 0f;
             gameObject.GetComponent<SpriteRenderer>().color = color;
             Instantiate(explosion, transform.position, Quaternion.identity);
+            turnManager.combatActive = false;
+            abilityController.weaponState = false;
+            movementController.movementState = false;
+            uiControl.SetEndTurnButtonState();
+            yield return new WaitForSeconds(.5f);
+            uiControl.SetGameOverPanelState();
         }
     }
 

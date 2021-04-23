@@ -17,6 +17,7 @@ public class UIControl : MonoBehaviour
     public GameObject newGameMessage; //variable to hold the upgrade panel
     private GameObject resourceWarningMessage;
     public GameObject starGateMessage;
+    public GameObject gameOverPanel;
     
     private TMP_Text resourceTextDisplay;
     private Button landOnPlanet; //contextual button used for landing on planets
@@ -515,6 +516,18 @@ public class UIControl : MonoBehaviour
         //this function controls the quit 
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
+    }
+
+    public void SetGameOverPanelState()
+    {
+        if (gameOverPanel.activeInHierarchy)
+        {
+            gameOverPanel.SetActive(false);
+        }
+        else
+        {
+            gameOverPanel.SetActive(true);
+        }
     }
 
     //public void SetResourceCount(int resources, bool addToCurrent)

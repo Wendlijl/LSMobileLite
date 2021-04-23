@@ -50,7 +50,8 @@ public class FireEnemyLaser : MonoBehaviour
             playerHealthControl.PlayerHit(1);
             if (playerHealthControl.currentPlayerHealth <= 0)
             {
-                playerHealthControl.DestroyPlayer();
+                //playerHealthControl.DestroyPlayer();
+                playerHealthControl.StartCoroutine("DestroyPlayer");
             }
             Destroy(gameObject);
 

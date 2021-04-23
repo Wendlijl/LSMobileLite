@@ -771,9 +771,31 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2017080807}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1352580152}
+        m_MethodName: Delete
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: DeleteResourceAndUpgradeSaveFile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1352580153}
+        m_MethodName: Quit
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12233,6 +12255,7 @@ MonoBehaviour:
   newGameMessage: {fileID: 1068681562}
   starGateMessage: {fileID: 5748864713192715832, guid: cafa6207ad342b1408630d49299b8739,
     type: 3}
+  gameOverPanel: {fileID: 2017080807}
 --- !u!4 &1352580154
 Transform:
   m_ObjectHideFlags: 0
