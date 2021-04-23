@@ -14,6 +14,7 @@ public class FireEnemyLaser : MonoBehaviour
     private Quaternion targetRotation; //Variable to hold the intended rotation of this game object
     private SpriteRenderer laserSprite; //Variable to hold a reference to the Sprite Renderer component
     private GridLayout gridLayout; //Variable to hold a reference to the grid layout
+    private PlayerHealthControl playerHealthControl;
 
     //The below value is used in another method to set the rotation of this object
     //private float rotAngle;
@@ -23,6 +24,7 @@ public class FireEnemyLaser : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store a reference to the player game object
+        playerHealthControl = player.GetComponent<PlayerHealthControl>();
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Access and store a reference to the grid layout
         target =gridLayout.CellToWorld(player.GetComponent<MovementController>().playerCellPosition); //set the target position equal to the position of the mouse pointer
         timer = 0; //set the initial value of the timer that tracks the life of the laser animation
@@ -45,6 +47,11 @@ public class FireEnemyLaser : MonoBehaviour
         timer += Time.deltaTime; //Increment the timer tracking the life of the laser shot
         if (timer > 0.6) //If the timer exceeds the lifespan of the laser animation, destroy this object
         {
+            playerHealthControl.PlayerHit(1);
+            if (playerHealthControl.currentPlayerHealth <= 0)
+            {
+                playerHealthControl.DestroyPlayer();
+            }
             Destroy(gameObject);
 
         }

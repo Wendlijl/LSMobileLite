@@ -517,6 +517,7 @@ public class ManageMap : MonoBehaviour
         int randStarGateIndex = Random.Range(0, availableSpawnPoints.Count);
         starGateSpawnPoint = availableSpawnPoints[randStarGateIndex];
         Instantiate(starGate, starField.CellToWorld(starGateSpawnPoint),Quaternion.identity);
+        Save();
     }
 
     public void SpawnEnemies(int maxEnemies, bool repeatEnemies, List<int> allowedEnemies)

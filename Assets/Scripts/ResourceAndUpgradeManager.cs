@@ -11,7 +11,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private AbilityController abilityController;
     private PlayerHealthControl playerHealthControl;
     private MovementController movementController;
-    
+
     private GameObject gameController;
     private UIControl uiController;
 
@@ -134,6 +134,13 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         if (QuickSaveRoot.Exists(resourceAndUpgradeDataSaveFileName)) //use the quicksave feature to check if a save file exists 
         {
             LoadResourceAndUpgradeData(); //if a save file exists, call the load function
+        }
+        else
+        {
+            playerHealthControl.RestoreHealth();
+            playerHealthControl.RestoreShields();
+            abilityController.laserRange = currentMaxLaserRange;
+            uiController.SetLaserCharge(abilityController.laserRange, currentMaxLaserRange);
         }
 
     }

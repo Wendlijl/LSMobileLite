@@ -111,9 +111,6 @@ public class TurnManager : MonoBehaviour
                 enemyTurn = false;
                 playerTurn = true;
                 //uiController.SetEndTurnButtonState();
-
-
-
             }
         }
         else

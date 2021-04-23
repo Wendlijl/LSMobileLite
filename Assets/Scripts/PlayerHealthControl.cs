@@ -8,11 +8,13 @@ public class PlayerHealthControl : MonoBehaviour
     public int currentPlayerHealth=3;
     public int maxPlayerShields=2;
     public int currentPlayerShields=2;
+    public GameObject explosion;
 
     private GameObject gameController;
     private UIControl uiControl;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private AbilityController abilityController;
+    private bool beenDestroyed = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,18 @@ public class PlayerHealthControl : MonoBehaviour
         }
 
         uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+    }
+
+    public void DestroyPlayer()
+    {
+        if (!beenDestroyed)
+        {
+            beenDestroyed = true;
+            Color color = new Color();
+            color.a = 0f;
+            gameObject.GetComponent<SpriteRenderer>().color = color;
+            Instantiate(explosion, transform.position, Quaternion.identity);
+        }
     }
 
     public void RestoreShields()

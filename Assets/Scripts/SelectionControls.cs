@@ -9,10 +9,12 @@ public class SelectionControls : MonoBehaviour
     public Slider mainSlider;
     public GameObject continuePanel;
     public GameObject optionsPanel;
+    public GameObject creditsPanel;
     bool hasMoved; //Create a check for whether movement has happened yet
     bool hasSelected; //Create check for whether player has made a selection
     float upDownMovement; //Create a variable to define vertical movement of selector
-    public string saveName;
+    public string mapSaveName;
+    public string resourcesSaveName;
 
     public void Awake()
     {
@@ -27,7 +29,7 @@ public class SelectionControls : MonoBehaviour
     public void SubmitSliderSetting()
     {
         //Move the slider based on player input. Bound the slider to min and max values
-        if (upDownMovement < 0 && mainSlider.value<4)
+        if (upDownMovement < 0 && mainSlider.value<5)
         {
             mainSlider.value++;
         }
@@ -56,7 +58,7 @@ public class SelectionControls : MonoBehaviour
             {
                 case 0:
                     print("Continue Selected");
-                    if (QuickSaveRoot.Exists(saveName))
+                    if (QuickSaveRoot.Exists(mapSaveName))
                     {
                         loadLevelStart();
                     }
@@ -75,10 +77,14 @@ public class SelectionControls : MonoBehaviour
                     print("Tutorial Selected");
                     break;
                 case 3:
+                    print("Credits selected");
+                    SetCreditsPanelState();
+                    break;
+                case 4:
                     print("Options Selected");
                     SetOptionsPanelActive();
                     break;
-                case 4:
+                case 5:
                     print("Quit Selected");
                     Quit();
                     break;
@@ -103,6 +109,18 @@ public class SelectionControls : MonoBehaviour
     {
         optionsPanel.SetActive(false);
     }
+    public void SetCreditsPanelState()
+    {
+        if (creditsPanel.activeInHierarchy)
+        {
+            creditsPanel.SetActive(false);
+        }
+        else
+        {
+            creditsPanel.SetActive(true);
+        }
+        
+    }
 
     public void loadLevelStart()
     {
@@ -122,14 +140,24 @@ public class SelectionControls : MonoBehaviour
     }
     public void DeleteSave()
     {
-        if (QuickSaveRoot.Exists(saveName))
+        if (QuickSaveRoot.Exists(mapSaveName))
         {
-            QuickSaveRoot.Delete(saveName);
-            print("Deleted data file " + saveName);
+            QuickSaveRoot.Delete(mapSaveName);
+            print("Deleted data file " + mapSaveName);
         }
         else
         {
-            print("Nothing to delete");
+            print("No map to delete");
+        }
+
+        if (QuickSaveRoot.Exists(resourcesSaveName))
+        {
+            QuickSaveRoot.Delete(resourcesSaveName);
+            print("Deleted data file " + resourcesSaveName);
+        }
+        else
+        {
+            print("No resources to delete");
         }
     }
 
