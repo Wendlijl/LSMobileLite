@@ -119,7 +119,7 @@ public class PlanetTrigger : MonoBehaviour
 
     public void landButton()
     {
-        mapManager.Save();
+        
         Debug.Log(planetName);
         //Debug.Log("The resources have been collected from this planet --> "+currentPlanet.GetComponent<PlanetController>().ResourcesCollectd);
         Vector3Int currentPlanetCell = gridLayout.WorldToCell(currentPlanet.transform.position);
@@ -131,7 +131,7 @@ public class PlanetTrigger : MonoBehaviour
         else
         {
             currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
-            mapManager.GenericSpawnEnemies();
+            mapManager.ContextualSpawnEnemies();
             resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
         }
 
@@ -144,6 +144,8 @@ public class PlanetTrigger : MonoBehaviour
                 break;
             }
         }
+        mapManager.Save();
+        resourceAndUpgradeManager.SaveResourceAndUpgradeData();
         //foreach (PlanetObject planet in mapManager.spawnedPlanets)
         //{
         //    Debug.Log("The planet at " + planet.xCoordinate + "x " + planet.yCoordinate + "y" + " has had it's resources collected --> " + planet.resourcesCollected);

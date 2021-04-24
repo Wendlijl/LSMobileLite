@@ -18,6 +18,7 @@ public class UIControl : MonoBehaviour
     private GameObject resourceWarningMessage;
     public GameObject starGateMessage;
     public GameObject gameOverPanel;
+    public GameObject victoryPanel;
     
     private TMP_Text resourceTextDisplay;
     private Button landOnPlanet; //contextual button used for landing on planets
@@ -327,6 +328,10 @@ public class UIControl : MonoBehaviour
             {
                 button.onClick.AddListener(delegate { StartNewLevel(); });
             }
+            if(button.gameObject.name == "ReturnHomeButton")
+            {
+                button.onClick.AddListener(delegate { DisplayVictoryText(); });
+            }
             button.onClick.AddListener(delegate { DestroyStarGateMessage(); });
         }
     }
@@ -334,6 +339,7 @@ public class UIControl : MonoBehaviour
     public void StartNewLevel()
     {
         resourceAndUpgradeManager.SolarSystemNumber++;
+        resourceAndUpgradeManager.SaveResourceAndUpgradeData();
         mapManager.Delete();
         SceneManager.LoadScene(1);
     }
@@ -355,6 +361,8 @@ public class UIControl : MonoBehaviour
 
     public void SetHealthState(int maxHealth, int currentHealth, int maxShields, int currentShields)
     {
+        Debug.Log("Max Health "+ maxHealth+". Current health "+currentHealth+". Max Shields "+ maxShields+". Current Shields "+ currentShields);
+
         for (int i = 0; i <= 6; i++)
         {
             healthList[i].SetActive(false);
@@ -425,7 +433,7 @@ public class UIControl : MonoBehaviour
     
     public void SetRocketReloadState(int currentRocketReloadAmount, int rocketReloadTime)
     {
-        Debug.Log("Shield boost recharge set to " + currentRocketReloadAmount + " and " + rocketReloadTime);
+        //Debug.Log("Shield boost recharge set to " + currentRocketReloadAmount + " and " + rocketReloadTime);
         rocketSlider.maxValue = rocketReloadTime;
         rocketSlider.value = currentRocketReloadAmount;
         if (currentRocketReloadAmount < rocketReloadTime)
@@ -515,6 +523,8 @@ public class UIControl : MonoBehaviour
     {
         //this function controls the quit 
         Time.timeScale = 1.0f;
+        mapManager.Save();
+        resourceAndUpgradeManager.SaveResourceAndUpgradeData();
         SceneManager.LoadScene(0);
     }
 
@@ -545,7 +555,7 @@ public class UIControl : MonoBehaviour
         laserRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxLaserRange < 6 ? true : false);
         laserRechargeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxLaserRecharge < 3 ? true : false);
 
-        sensorRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxSensorRange < 4 ? true : false);
+        sensorRangeUpgradeObject.SetActive(resourceAndUpgradeManager.CurrentMaxSensorRange < 10 ? true : false);
 
         if (resourceAndUpgradeManager.RocketsInstalled)
         {
@@ -666,5 +676,88 @@ public class UIControl : MonoBehaviour
         shieldOverboostUpgradeObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.ShieldOverboostUpgradeCost.ToString();
 
         healthRepairObject.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = resourceAndUpgradeManager.HealthRepairCost.ToString();
+    }
+
+    public void DisplayVictoryText()
+    {
+        TMP_Text[] victoryTextFields = victoryPanel.GetComponentsInChildren<TMP_Text>(); ;
+        if (resourceAndUpgradeManager.Resources < 1000)
+        {
+            
+            foreach(TMP_Text textField in victoryTextFields)
+            {
+                if(textField.name== "VicotryText(TMP)")
+                {
+                    textField.text = "You leave the gate network and return home. You sell the resources you collected but don't even make enough to recoup your expenses. In the end, you have to sell your ship to get by. Your days of adventure and dreams of riches are over.";
+                }
+            }
+            victoryPanel.SetActive(true);
+        }
+        else if(resourceAndUpgradeManager.Resources > 1000&& resourceAndUpgradeManager.Resources<2500)
+        {
+            foreach (TMP_Text textField in victoryTextFields)
+            {
+                if (textField.name == "VicotryText(TMP)")
+                {
+                    textField.text = "You leave the gate network and return home. You sell the resources you collected, but only barely cover the expenses of the trip. You get a job running cargo in some of the safer systems for a few years, but its a hard living and in the end, you have to sell your ship to get by. Your days of adventure and dreams of riches are over.";
+                }
+            }
+            victoryPanel.SetActive(true);
+        }
+        else if(resourceAndUpgradeManager.Resources > 2500&& resourceAndUpgradeManager.Resources<5000)
+        {
+            foreach (TMP_Text textField in victoryTextFields)
+            {
+                if (textField.name == "VicotryText(TMP)")
+                {
+                    textField.text = "You leave the gate network and return home. You sell the resources you collected, and manage to cover all your expenses with a small amount left over. You invest in some upgrades for your ship and manage to become a competative name in the inner system shipping business. You do well and make a modest living.";
+                }
+            }
+            victoryPanel.SetActive(true);
+        }
+        else if(resourceAndUpgradeManager.Resources > 5000&& resourceAndUpgradeManager.Resources<10000)
+        {
+            foreach (TMP_Text textField in victoryTextFields)
+            {
+                if (textField.name == "VicotryText(TMP)")
+                {
+                    textField.text = "You leave the gate network and return home. You sell the resources you collected, and make a substantial amount of money. You easily cover your expenses and have enough left over to be a little ambitious. You buy a second ship and hire a crew. Slowly you build a small business running cargo in the inner systems. You do very well and live a good life.";
+                }
+            }
+            victoryPanel.SetActive(true);
+        }
+        else if(resourceAndUpgradeManager.Resources > 10000&& resourceAndUpgradeManager.Resources<20000)
+        {
+            foreach (TMP_Text textField in victoryTextFields)
+            {
+                if (textField.name == "VicotryText(TMP)")
+                {
+                    textField.text = "You leave the gate network and return home. You smile the whole trip back. These are the riches you had dreamed of. With what you've collected you could buy half a dozen small ships, or you could just retire. Buy a big house on a tropical planet. Your future can be whatever you want it to be. You intend to enjoy it.";
+                }
+            }
+            victoryPanel.SetActive(true);
+        }
+        else if(resourceAndUpgradeManager.Resources > 20000&& resourceAndUpgradeManager.Resources<50000)
+        {
+            foreach (TMP_Text textField in victoryTextFields)
+            {
+                if (textField.name == "VicotryText(TMP)")
+                {
+                    textField.text = "You are in awe as you leave the gate network and return home. This was more than you had ever imagined you would find. Your mind races as you imagine what you could do with this wealth. Whatever you do next, you know one thing for sure. People are going to know your name. You're the one who conqured the gate network.";
+                }
+            }
+            victoryPanel.SetActive(true);
+        }
+        else if(resourceAndUpgradeManager.Resources > 50000)
+        {
+            foreach (TMP_Text textField in victoryTextFields)
+            {
+                if (textField.name == "VicotryText(TMP)")
+                {
+                    textField.text = "It doesn't even seem real. It was a struggle. You fought tooth and nail, and at the end you weren't even sure you would make it out, but here it is. You look again at the wealth of resources you have amassed and it leaves you dumbfounded. This changes everything.";
+                }
+            }
+            victoryPanel.SetActive(true);
+        }
     }
 }

@@ -342,4 +342,24 @@ public class AbilityController : MonoBehaviour
         }
     }
 
+    public void TurnOffAbilities()
+    {
+        if (jumpState)
+        {
+            JumpActive();
+        }
+        else if (laserState)
+        {
+            LaserActive();
+        }
+        else if (shieldState)
+        {
+            ShieldActive();
+        }
+        else if (rocketState)
+        {
+            RocketsActive();
+        }
+    }
+
 }

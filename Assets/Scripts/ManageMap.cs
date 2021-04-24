@@ -69,6 +69,7 @@ public class ManageMap : MonoBehaviour
     private Vector3Int starGateSpawnPoint;
 
     private GridLayout gridLayout; //create a variable to hold an instance of the grid layout
+    private GameObject gameController;
 
     private List<MapTile> mapTiles; //create a list to hold the reference to the map tiles
     private List<MapTile> revealedTiles; //create a list of hold the reference to the revealed map tiles
@@ -88,25 +89,26 @@ public class ManageMap : MonoBehaviour
     private Vector3 lastHighCell; //variable to hold the coordinates of the previously highlighted grid cell. 
     private AbilityController abilityController;
     private UIControl uiController;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
 
     void Awake()
     {
         //The following section deals with creating and moving the tutorial level save file so that it is always consistent
-        Debug.Log(Path.Combine(Application.persistentDataPath, "QuickSave"));
+        //Debug.Log(Path.Combine(Application.persistentDataPath, "QuickSave"));
         string quicksavePath = Path.Combine(Application.persistentDataPath, "QuickSave");
         string quicksaveFilePath = Path.Combine(quicksavePath, "TutorialFile.json");
-        Debug.Log(Application.dataPath);
+        //Debug.Log(Application.dataPath);
         string dataPath = Application.dataPath;
         string dataPathTutorial = Path.Combine(dataPath, "TutorialFile.json");
         if (Directory.Exists(quicksavePath))
         {
             if (File.Exists(quicksaveFilePath))
             {
-                Debug.Log("I found the file!");
+                //Debug.Log("I found the file!");
             }
             else
             {
-                Debug.Log("Need to move File");
+                //Debug.Log("Need to move File");
                 FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
             }
             
@@ -114,7 +116,7 @@ public class ManageMap : MonoBehaviour
         }
         else
         {
-            Debug.Log("Need to make directory then move file");
+            //Debug.Log("Need to make directory then move file");
             Directory.CreateDirectory(quicksavePath);
             FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
         }
@@ -160,6 +162,7 @@ public class ManageMap : MonoBehaviour
         lastHighCell = new Vector3(0, 0, 0); //set the inital value of the last cell highlighted by the mouse pointer
 
         player = GameObject.FindGameObjectWithTag("Player"); //get a reference to the player game object
+        gameController = GameObject.Find("GameController");
         abilityController = player.GetComponent<AbilityController>();
         mapTiles = new List<MapTile>(); //create a list to hold the map tiles
         revealedTiles = new List<MapTile>(); //create a list to hold the revealed tiles
@@ -168,7 +171,8 @@ public class ManageMap : MonoBehaviour
         currentHighlightedTiles = new List<Vector3Int>(); //create a list to hold the tiles currently highlighted by the laser range
         playerState = GameObject.Find("Player").GetComponent<MovementController>(); //get a reference to the player game object
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //get a reference to the grid layout 
-        uiController = GameObject.Find("GameController").GetComponent<UIControl>();
+        uiController = gameController.GetComponent<UIControl>();
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         GenerateMap(); //call the function to generate the map.
     }
     private void Update()
@@ -225,7 +229,7 @@ public class ManageMap : MonoBehaviour
                     starField.SetTile(new Vector3Int(x, y, 0), starTileDict[starTileStrings[randTileIndx]]); //set the background hex at the current coordinates based on the random map tile selected before
                 }
             }
-            GenericSpawnPlanets();
+            ContextualSpawnPlanets();
         }
     }
     public void UpdateFogOfWar(int vision, Vector3Int playerCellPosition) //this script will clear the fog of war based on the player's vision
@@ -498,6 +502,10 @@ public class ManageMap : MonoBehaviour
                     string planetName = planetTemp.name;
                     Vector3Int planetPosition = starField.WorldToCell(planetTemp.transform.position);
                     planetName = planetName.Replace(clone, "");
+                    if (planetName == "Planet10")
+                    {
+                        availablePlaents.RemoveAt(randPlanetIndex); //Only ever allow 1 platinum planet to spawn
+                    }
                     spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName,false));
                 }
                 else //If planets are not allowed to repeat, then instantiate a randomly selected planet at the randomly selected coordinates and then remove both the planet and the coordinates from their respective lists to ensure niether is used again
@@ -597,10 +605,121 @@ public class ManageMap : MonoBehaviour
         //List<int> allowedPlaents = new List<int>() {5,8};
         SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, false, allowedPlaents, 20);
     }
+    public void ContextualSpawnPlanets()
+    {
+        int solarSystemNumber;
+        if (QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName))
+        {
+            QuickSaveReader instReader = QuickSaveReader.Create(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName);
+            solarSystemNumber = instReader.Read<int>("solarSystemNumber");
+        }
+        else
+        {
+            solarSystemNumber = 1;
+        }
+        List<int> allowedPlaents;
+        switch (solarSystemNumber)
+        {
+            case 1:
+                allowedPlaents = new List<int>() { 0, 1, 2 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 10);
+                break;
+            case 2:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 10);
+                break;
+            case 3:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 10);
+                break;
+            case 4:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4, 5 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 10);
+                break;
+            case 5:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 12);
+                break;
+            case 6:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 12);
+                break;
+            case 7:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 12);
+                break;
+            case 8:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 13);
+                break;
+            case 9:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 13);
+                break;
+            default:
+                allowedPlaents = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+                SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 15);
+                break;
+        }
+    }
+
     public void GenericSpawnEnemies() //this function is intended to be the most basic application of the spawn enemies function to be used for testing
     {
         List<int> allowedEnemies = new List<int>() { 0, 1};
         SpawnEnemies(2, true, allowedEnemies);
+    }
+
+    public void ContextualSpawnEnemies()
+    {
+        List<int> allowedEnemies = new List<int>() { 0, 1 };
+        if (resourceAndUpgradeManager.TotalResources < 500)
+        {
+            SpawnEnemies(2, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>500 && resourceAndUpgradeManager.TotalResources < 1000)
+        {
+            SpawnEnemies(4, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>1000 && resourceAndUpgradeManager.TotalResources < 1500)
+        {
+            SpawnEnemies(8, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>1500 && resourceAndUpgradeManager.TotalResources < 2000)
+        {
+            SpawnEnemies(12, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>2000 && resourceAndUpgradeManager.TotalResources < 3000)
+        {
+            SpawnEnemies(15, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>3000 && resourceAndUpgradeManager.TotalResources < 4000)
+        {
+            SpawnEnemies(20, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>4000 && resourceAndUpgradeManager.TotalResources < 5000)
+        {
+            SpawnEnemies(30, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>5000 && resourceAndUpgradeManager.TotalResources < 10000)
+        {
+            SpawnEnemies(40, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>10000 && resourceAndUpgradeManager.TotalResources < 15000)
+        {
+            SpawnEnemies(50, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>20000 && resourceAndUpgradeManager.TotalResources < 30000)
+        {
+            SpawnEnemies(60, true, allowedEnemies);
+        }
+        else if(resourceAndUpgradeManager.TotalResources>40000 && resourceAndUpgradeManager.TotalResources < 50000)
+        {
+            SpawnEnemies(70, true, allowedEnemies);
+        }
+        else
+        {
+            SpawnEnemies(80, true, allowedEnemies);
+        }
     }
 
     public List<PlanetObject> UndiscoveredPlanets( List<PlanetObject> spawnedPlanets, List<Vector3Int> revealedTilesUnique)

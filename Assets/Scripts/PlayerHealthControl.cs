@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CI.QuickSave;
 
 public class PlayerHealthControl : MonoBehaviour
 {
-    public int maxPlayerHealth=3;
+    private int maxPlayerHealth=3;
     public int currentPlayerHealth=3;
     public int maxPlayerShields=2;
     public int currentPlayerShields=2;
     public GameObject explosion;
+
+    public int MaxPlayerHealth { get {  return maxPlayerHealth; } set { Debug.Log("modfied player health"); maxPlayerHealth = value; } }
 
     private GameObject gameController;
     private UIControl uiControl;
@@ -27,9 +30,15 @@ public class PlayerHealthControl : MonoBehaviour
         turnManager = gameController.GetComponent<TurnManager>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         abilityController = GameObject.Find("Player").GetComponent<AbilityController>();
-        maxPlayerHealth = resourceAndUpgradeManager.CurrentMaxHealth;
-        maxPlayerShields = resourceAndUpgradeManager.CurrentMaxShields;
-        uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+
+        if (QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName)) //use the quicksave feature to check if a save file exists 
+        {
+            QuickSaveReader instReader = QuickSaveReader.Create(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName); //create an instance of the quick save reader to pull in the save file
+            MaxPlayerHealth = instReader.Read<int>("currentMaxHealth");
+            maxPlayerShields = instReader.Read<int>("currentMaxShields");
+            uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+        }
+
         movementController = gameObject.GetComponent<MovementController>();
     }
 
@@ -47,7 +56,7 @@ public class PlayerHealthControl : MonoBehaviour
             }
         }
 
-        uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+        uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
 
     public IEnumerator DestroyPlayer()
@@ -71,20 +80,20 @@ public class PlayerHealthControl : MonoBehaviour
     public void RestoreShields()
     {
         currentPlayerShields = maxPlayerShields;
-        uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+        uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
     public void RestoreHealth()
     {
-        currentPlayerHealth = maxPlayerHealth;
-        uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+        currentPlayerHealth = MaxPlayerHealth;
+        uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
     }
 
     public void IncreaseHealth(int healthIncrease)
     {
-        if (currentPlayerHealth < maxPlayerHealth)
+        if (currentPlayerHealth < MaxPlayerHealth)
         {
             currentPlayerHealth = currentPlayerHealth + healthIncrease;
-            uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+            uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
         }        
     }
 
@@ -95,7 +104,7 @@ public class PlayerHealthControl : MonoBehaviour
             if (currentPlayerShields < 6)
             {
                 currentPlayerShields = currentPlayerShields + shieldIncrease;
-                uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+                uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
                 abilityController.abilityUsed = true;
             }
         }
@@ -105,7 +114,7 @@ public class PlayerHealthControl : MonoBehaviour
             {
                 abilityController.abilityUsed = true;
                 currentPlayerShields = currentPlayerShields + shieldIncrease;
-                uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+                uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
             }
         }
        

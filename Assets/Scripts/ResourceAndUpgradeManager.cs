@@ -32,7 +32,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int baseShields = 2;
     private int baseSensorRange = 1;
 
-    private int resources = 10000;
+    private int resources = 0;
+    private int totalResources = 0;
 
     private int  currentMaxLaserRange = 3;
     private int  currentMaxLaserRecharge = 1;
@@ -49,17 +50,17 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int  currentMaxSensorRange = 1;
 
     private int laserRangeUpgradeCost=200;
-    private int laserRechargeUpgradeCost=100;
+    private int laserRechargeUpgradeCost=500;
     private int rocketRangeUpgradeCost=1000;
-    private int rocketReloadUpgradeCost=100;
-    private int rocketYieldUpgradeCost=100;
+    private int rocketReloadUpgradeCost=500;
+    private int rocketYieldUpgradeCost=1000;
     private int jumpRangeUpgradeCost=1000;
-    private int jumpRechargeUpgradeCost=100;
+    private int jumpRechargeUpgradeCost=1000;
     private int shieldBoostUpgradeCost=1000;
-    private int shieldOverboostUpgradeCost=100;
-    private int shieldBoostRechargeUpgradeCost = 100;
-    private int shieldMaxUpgradeCost=100;
-    private int healthMaxUpgradeCost=100;
+    private int shieldOverboostUpgradeCost=250;
+    private int shieldBoostRechargeUpgradeCost = 500;
+    private int shieldMaxUpgradeCost=250;
+    private int healthMaxUpgradeCost=250;
     private int healthRepairCost = 500;
     private int sensorRangeUpgradeCost = 100;
 
@@ -118,6 +119,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
 
     public int Resources { get { return resources; } set { resources = value; } }
+    public int TotalResources { get { return totalResources; } set { totalResources = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -133,7 +135,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
         if (QuickSaveRoot.Exists(resourceAndUpgradeDataSaveFileName)) //use the quicksave feature to check if a save file exists 
         {
-            LoadResourceAndUpgradeData(); //if a save file exists, call the load function
+            LoadResourceAndUpgradeData(); //if a save file exists, call the load function            
         }
         else
         {
@@ -152,6 +154,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             QuickSaveReader instReader = QuickSaveReader.Create(resourceAndUpgradeDataSaveFileName); //create an instance of the quick save reader to pull in the save file
 
             resources = instReader.Read<int>("resources");
+            TotalResources = instReader.Read<int>("totalResources");
             SolarSystemNumber = instReader.Read<int>("solarSystemNumber");
             currentMaxLaserRange = instReader.Read<int>("currentMaxLaserRange");
             currentMaxLaserRecharge = instReader.Read<int>("currentMaxLaserRecharge");
@@ -217,6 +220,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         QuickSaveWriter instWriter = QuickSaveWriter.Create(resourceAndUpgradeDataSaveFileName); //create an instance of the QuickSaveWriter
 
         instWriter.Write<int>("resources", Resources); 
+        instWriter.Write<int>("totalResources", TotalResources); 
         instWriter.Write<int>("solarSystemNumber", SolarSystemNumber); 
         instWriter.Write<int>("currentMaxLaserRange", currentMaxLaserRange); 
         instWriter.Write<int>("currentMaxLaserRecharge", currentMaxLaserRecharge); 
@@ -287,6 +291,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         {
             resources = newResources;
         }
+        TotalResources += newResources;
         uiController.SetResourceCount(resources);
         SaveResourceAndUpgradeData();
     }
@@ -297,8 +302,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         {
             resources -= HealthMaxUpgradeCost;
             currentMaxHealth += 1;
-            playerHealthControl.maxPlayerHealth = currentMaxHealth;
-            playerHealthControl.RestoreHealth();
+            playerHealthControl.MaxPlayerHealth = currentMaxHealth;
+            playerHealthControl.IncreaseHealth(1);
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
@@ -381,7 +386,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             {
                 resources -= rocketRangeUpgradeCost;
                 rocketsInstalled = true;
-                rocketRangeUpgradeCost = 100;
+                rocketRangeUpgradeCost = 300;
                 abilityController.currentRocketReloadAmount = CurrentMaxRocketReload;
                 uiController.SetRocketReloadState(abilityController.currentRocketReloadAmount, CurrentMaxRocketReload);
                 uiController.SetResourceCount(Resources);
@@ -520,7 +525,15 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         {
             resources -= sensorRangeUpgradeCost;
             currentMaxSensorRange += 1;
-            sensorRangeUpgradeCost *= 3;
+            if (sensorRangeUpgradeCost < 900)
+            {
+                sensorRangeUpgradeCost *= 3;
+            }
+            else
+            {
+                sensorRangeUpgradeCost += 300;
+            }
+            
             movementController.vision = CurrentMaxSensorRange;
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
