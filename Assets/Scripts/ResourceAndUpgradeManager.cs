@@ -440,14 +440,17 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         }
         else
         {
-            resources -= shieldBoostUpgradeCost;
-            shieldBoostInstalled = true;
-            shieldBoostUpgradeCost = 100;
-            abilityController.currentShieldBoostCharge = CurrentMaxShieldBoostRecharge;
-            uiController.SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, CurrentMaxShieldBoostRecharge);
-            uiController.SetResourceCount(Resources);
-            uiController.SetUpgradeButtons();
-            SaveResourceAndUpgradeData();
+            if (Resources >= shieldBoostUpgradeCost)
+            {
+                resources -= shieldBoostUpgradeCost;
+                shieldBoostInstalled = true;
+                shieldBoostUpgradeCost = 100;
+                abilityController.currentShieldBoostCharge = CurrentMaxShieldBoostRecharge;
+                uiController.SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, CurrentMaxShieldBoostRecharge);
+                uiController.SetResourceCount(Resources);
+                uiController.SetUpgradeButtons();
+                SaveResourceAndUpgradeData();
+            }
         }
     }
 
@@ -495,14 +498,17 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         }
         else
         {
-            resources -= jumpRangeUpgradeCost;
-            jumpDriveInstalled = true;
-            jumpRangeUpgradeCost = 100;
-            abilityController.jumpRange = CurrentMaxJumpRange;
-            uiController.SetJumpCharge(abilityController.jumpRange, CurrentMaxJumpRange);
-            uiController.SetResourceCount(Resources);
-            uiController.SetUpgradeButtons();
-            SaveResourceAndUpgradeData();
+            if (Resources >= jumpRangeUpgradeCost)
+            {
+                resources -= jumpRangeUpgradeCost;
+                jumpDriveInstalled = true;
+                jumpRangeUpgradeCost = 100;
+                abilityController.jumpRange = CurrentMaxJumpRange;
+                uiController.SetJumpCharge(abilityController.jumpRange, CurrentMaxJumpRange);
+                uiController.SetResourceCount(Resources);
+                uiController.SetUpgradeButtons();
+                SaveResourceAndUpgradeData();
+            }
         }
     }
 
