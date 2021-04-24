@@ -38,6 +38,15 @@ public class PlayerHealthControl : MonoBehaviour
             maxPlayerShields = instReader.Read<int>("currentMaxShields");
             uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
         }
+        else
+        {
+            MaxPlayerHealth = resourceAndUpgradeManager.CurrentMaxHealth;
+            maxPlayerShields = resourceAndUpgradeManager.CurrentMaxShields;
+            currentPlayerHealth = maxPlayerHealth;
+            currentPlayerShields = maxPlayerShields;
+            uiControl.SetHealthState(maxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
+
+        }
 
         movementController = gameObject.GetComponent<MovementController>();
     }

@@ -59,9 +59,9 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int shieldBoostUpgradeCost=1000;
     private int shieldOverboostUpgradeCost=250;
     private int shieldBoostRechargeUpgradeCost = 500;
-    private int shieldMaxUpgradeCost=250;
-    private int healthMaxUpgradeCost=250;
-    private int healthRepairCost = 500;
+    private int shieldMaxUpgradeCost=500;
+    private int healthMaxUpgradeCost=500;
+    private int healthRepairCost = 250;
     private int sensorRangeUpgradeCost = 100;
 
     private bool rocketsInstalled=false;
