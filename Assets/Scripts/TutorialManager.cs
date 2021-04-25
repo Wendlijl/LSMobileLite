@@ -25,6 +25,9 @@ public class TutorialManager : MonoBehaviour
     private bool revealedMap;
     private bool explainedWarpGate;
     private bool readyToExplainWarpGate;
+    private bool readyToExplainUpgrades;
+
+    public bool ReadyToExplainWarGate { get { return readyToExplainWarpGate; } set { readyToExplainWarpGate = value; } }
 
 
     // Start is called before the first frame update
@@ -154,7 +157,7 @@ public class TutorialManager : MonoBehaviour
 
     public void ExplainUpgrades()
     {
-        if (!explainedUpgrades)
+        if (!explainedUpgrades && readyToExplainUpgrades)
         {
             explainedUpgrades = true;
             flowchart.ExecuteBlock("Tutorial13");
@@ -180,4 +183,8 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void ReadyToExplainUpgrades()
+    {
+        readyToExplainUpgrades = true;
+    }
 }

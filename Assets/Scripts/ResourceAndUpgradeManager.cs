@@ -137,6 +137,12 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         tutorialManager = gameController.GetComponent<TutorialManager>();
         uiController.SetResourceCount(resources);
 
+
+        if(mapManager.saveName == "TutorialFile")
+        {
+            resourceAndUpgradeDataSaveFileName = "tutorialResourceAndUpgradeDataSaveFile";
+        }
+
         if (QuickSaveRoot.Exists(resourceAndUpgradeDataSaveFileName)) //use the quicksave feature to check if a save file exists 
         {
             LoadResourceAndUpgradeData(); //if a save file exists, call the load function            

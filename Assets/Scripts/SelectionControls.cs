@@ -75,6 +75,7 @@ public class SelectionControls : MonoBehaviour
                     break;
                 case 2:
                     print("Tutorial Selected");
+                    RunTutorial();
                     break;
                 case 3:
                     print("Credits selected");
@@ -159,6 +160,20 @@ public class SelectionControls : MonoBehaviour
         {
             print("No resources to delete");
         }
+    }
+
+    public void RunTutorial()
+    {
+        if (QuickSaveRoot.Exists("TutorialFile"))
+        {
+            QuickSaveRoot.Delete("TutorialFile");
+        }
+        
+        if (QuickSaveRoot.Exists("tutorialResourceAndUpgradeDataSaveFile"))
+        {
+            QuickSaveRoot.Delete("tutorialResourceAndUpgradeDataSaveFile");
+        }
+        SceneManager.LoadScene(2);
     }
 
 }

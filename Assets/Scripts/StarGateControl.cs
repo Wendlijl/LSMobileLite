@@ -10,6 +10,7 @@ public class StarGateControl : MonoBehaviour
     private UIControl uiController;
     private GridLayout gridLayout;
     private ManageMap mapManager;
+    private TutorialManager tutorialManager;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class StarGateControl : MonoBehaviour
         turnManager = gameController.GetComponent<TurnManager>();
         uiController = gameController.GetComponent<UIControl>();
         mapManager = gameController.GetComponent<ManageMap>();
+        tutorialManager = gameController.GetComponent<TutorialManager>();
 
         //Awake should run before anything else in the game
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Get and store reference to the grid object
@@ -28,7 +30,18 @@ public class StarGateControl : MonoBehaviour
     {
         if(!turnManager.combatActive && collision.gameObject.tag == "Player")
         {
-            uiController.DisplayStarGateMessage();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                if (tutorialManager.ReadyToExplainWarGate)
+                {
+                    uiController.DisplayStarGateMessage();
+                }
+            }
+            else
+            {
+                uiController.DisplayStarGateMessage();
+            }
+            
         }
     }
 }

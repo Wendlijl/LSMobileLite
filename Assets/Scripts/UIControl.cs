@@ -348,11 +348,27 @@ public class UIControl : MonoBehaviour
             Debug.Log(button.gameObject.name);
             if(button.gameObject.name == "ContinueQuestButton")
             {
-                button.onClick.AddListener(delegate { StartNewLevel(); });
+                if(mapManager.saveName == "TutorialFile")
+                {
+                    button.onClick.AddListener(delegate { Quit(); });
+                }
+                else
+                {
+                    button.onClick.AddListener(delegate { StartNewLevel(); });
+                }
+                
             }
             if(button.gameObject.name == "ReturnHomeButton")
             {
-                button.onClick.AddListener(delegate { DisplayVictoryText(); });
+                if (mapManager.saveName == "TutorialFile")
+                {
+                    button.onClick.AddListener(delegate { Quit(); });
+                }
+                else
+                {
+                    button.onClick.AddListener(delegate { DisplayVictoryText(); });
+                }
+                
             }
             button.onClick.AddListener(delegate { DestroyStarGateMessage(); });
         }
