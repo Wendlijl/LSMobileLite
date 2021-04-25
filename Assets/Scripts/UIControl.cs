@@ -19,17 +19,21 @@ public class UIControl : MonoBehaviour
     public GameObject starGateMessage;
     public GameObject gameOverPanel;
     public GameObject victoryPanel;
-    
+
+
     private TMP_Text resourceTextDisplay;
     private Button landOnPlanet; //contextual button used for landing on planets
     private GameObject endPlayerTurn; //contextual button used for landing on planets
+    private GameObject fogOfWar;
     private Button endEnemyTurn; //contextual button used for landing on planets
     private bool isPaused; //boolean used to track if the game is paused 
     private bool upgradeHologramActive;
+    private bool upgradeState;
+    public bool UpgradeState { get { return upgradeState; } set { upgradeState = value; } }
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
     private AbilityController abilityController;
-    private MovementController movementController;
+    private TutorialManager tutorialManager;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private TurnManager turnManager;
     private PlayerHealthControl playerHealthControl;
@@ -88,6 +92,8 @@ public class UIControl : MonoBehaviour
 
     private void Awake()
     {
+        upgradeState = true;
+        fogOfWar = GameObject.Find("TilemapFogOfWar");
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
         endPlayerTurn = GameObject.Find("PlayerButtonBackground"); //get a reference to the planet landing button
         endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
@@ -95,9 +101,9 @@ public class UIControl : MonoBehaviour
         mapManager = gameController.GetComponent<ManageMap>();
         turnManager = gameController.GetComponent<TurnManager>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
+        tutorialManager = gameController.GetComponent<TutorialManager>();
         player = GameObject.Find("Player");
         abilityController = player.GetComponent<AbilityController>();
-        movementController = player.GetComponent<MovementController>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
 
         resourceWarningMessage = GameObject.Find("AllResourcesCollectedWarningBackgroundImage");
@@ -177,7 +183,7 @@ public class UIControl : MonoBehaviour
         }
 
 
-        if (QuickSaveRoot.Exists(mapManager.saveName)||QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName))
+        if (QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName)||mapManager.saveName=="TutorialFile")
         {
             //Do nothing
         }
@@ -235,6 +241,18 @@ public class UIControl : MonoBehaviour
         }
     }
 
+    public void SetFogOfWarState()
+    {
+        if (fogOfWar.activeInHierarchy)
+        {
+            fogOfWar.SetActive(false);
+        }
+        else
+        {
+            fogOfWar.SetActive(true);
+        }
+    }
+
     public void ActivateLandOnPlanet() 
     {
         //this function will enable the landing button game object when called
@@ -276,7 +294,7 @@ public class UIControl : MonoBehaviour
     public void LoadLevelByIndex()
     {
         //This function will load a given scene based on the scene index
-        Debug.Log(levelIndex);
+        //Debug.Log(levelIndex);
         //SceneManager.LoadScene(levelIndex);
         SceneManager.LoadSceneAsync(levelIndex, LoadSceneMode.Single);
     }
@@ -294,7 +312,7 @@ public class UIControl : MonoBehaviour
 
     public void SetUpgradePanelState()
     {
-        if (!turnManager.combatActive)
+        if (!turnManager.combatActive && upgradeState)
         {
             if (upgradeHologramActive)
             {
@@ -308,6 +326,10 @@ public class UIControl : MonoBehaviour
                 hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
                 StartCoroutine("SetButtonsActive");
             }
+        }
+        if (mapManager.saveName == "TutorialFile")
+        {
+            tutorialManager.ExplainUpgrades();
         }
     }
 
@@ -361,7 +383,7 @@ public class UIControl : MonoBehaviour
 
     public void SetHealthState(int maxHealth, int currentHealth, int maxShields, int currentShields)
     {
-        Debug.Log("Max Health "+ maxHealth+". Current health "+currentHealth+". Max Shields "+ maxShields+". Current Shields "+ currentShields);
+        //Debug.Log("Max Health "+ maxHealth+". Current health "+currentHealth+". Max Shields "+ maxShields+". Current Shields "+ currentShields);
 
         for (int i = 0; i <= 6; i++)
         {

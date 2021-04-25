@@ -29,6 +29,7 @@ public class EnemyShipControl : MonoBehaviour
     private PlayerHealthControl playerHealthControl;
     private AbilityController abilityController;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private TutorialManager tutorialManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -44,6 +45,7 @@ public class EnemyShipControl : MonoBehaviour
         mapManager = gameController.GetComponent<ManageMap>(); //Access and store a reference to the map manager script
         clickManager = gameController.GetComponent<ClickManager>(); //Access and store a reference to the click manager script
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
+        tutorialManager = gameController.GetComponent<TutorialManager>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
         inRagne = false; //Set the initial state of the Boolean tracking range to the player
         shotIncoming = false; //Set the initial state of the laser animation
@@ -79,7 +81,7 @@ public class EnemyShipControl : MonoBehaviour
                         }
                     }
 
-                    if (inRagne) //If the inRange Boolean is true then set shot incoming to true and start a timer to determine when to destroy this enemy
+                    if (inRagne&&abilityController.weaponState) //If the inRange Boolean is true then set shot incoming to true and start a timer to determine when to destroy this enemy
                     {
                         shotIncoming = true;
                         timer += Time.deltaTime;
@@ -106,7 +108,10 @@ public class EnemyShipControl : MonoBehaviour
 
     public void DestroySelf(bool makeExplosion)
     {
-        //this method just allows the enemy to be destroyed from another game
+        if (mapManager.saveName == "TutorialFile")
+        {
+            tutorialManager.ExplainCombatMovement();
+        }
         if (makeExplosion)
         {
             Instantiate(explosion, gameObject.transform.position, Quaternion.identity);

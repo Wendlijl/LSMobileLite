@@ -74,7 +74,7 @@ public class ManageMap : MonoBehaviour
     private List<MapTile> mapTiles; //create a list to hold the reference to the map tiles
     private List<MapTile> revealedTiles; //create a list of hold the reference to the revealed map tiles
     private List<Vector3Int> revealedTilesRaw; //create a list to hold the unedited references of revealed tile coordinates (this list will have duplicates)
-    private List<Vector3Int> revealedTilesUnique; //create a list to hold edited references of revealed tile coordinates (this list should not have duplicates)
+    public List<Vector3Int> revealedTilesUnique; //create a list to hold edited references of revealed tile coordinates (this list should not have duplicates)
     public List<PlanetObject> spawnedPlanets;
     public List<EnemyObject> spawnedEnemies;
 

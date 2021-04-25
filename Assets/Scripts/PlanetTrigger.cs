@@ -16,6 +16,7 @@ public class PlanetTrigger : MonoBehaviour
     private ManageMap mapManager; //variable to store a reference to the ManageMap script 
     private string planetName;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private TutorialManager tutorialManager;
     private GridLayout gridLayout;
     
     
@@ -27,6 +28,7 @@ public class PlanetTrigger : MonoBehaviour
         planetResourceAmount = 0;
         planetState = true;
         gameController = GameObject.Find("GameController");
+        tutorialManager = gameController.GetComponent<TutorialManager>();
         uiController = gameController.GetComponent<UIControl>(); //get a reference to the UIControl script
         turnManager = gameController.GetComponent<TurnManager>(); //get a reference to the UIControl script
         mapManager = gameController.GetComponent<ManageMap>();
@@ -81,6 +83,10 @@ public class PlanetTrigger : MonoBehaviour
                     Debug.Log("Planet7");
                     planetName = "Planet7";
                     planetResourceAmount = Random.Range(350, 600);
+                    if(mapManager.saveName == "TutorialFile")
+                    {
+                        tutorialManager.ExplainMining();
+                    }
                     //loadingIndex = 4;
                     break;
                 case "Planet8(Clone)":
@@ -119,36 +125,43 @@ public class PlanetTrigger : MonoBehaviour
 
     public void landButton()
     {
-        
-        Debug.Log(planetName);
-        //Debug.Log("The resources have been collected from this planet --> "+currentPlanet.GetComponent<PlanetController>().ResourcesCollectd);
-        Vector3Int currentPlanetCell = gridLayout.WorldToCell(currentPlanet.transform.position);
-        Debug.Log(currentPlanetCell);
-        if (currentPlanet.GetComponent<PlanetController>().ResourcesCollectd)
+        if (planetState)
         {
-            uiController.ResourcesCollectedWarning();
-        }
-        else
-        {
-            currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
-            mapManager.ContextualSpawnEnemies();
-            resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
-        }
-
-        foreach (PlanetObject planet in mapManager.spawnedPlanets)
-        {
-            if (planet.xCoordinate == currentPlanetCell.x && planet.yCoordinate == currentPlanetCell.y)
+            Debug.Log(planetName);
+            //Debug.Log("The resources have been collected from this planet --> "+currentPlanet.GetComponent<PlanetController>().ResourcesCollectd);
+            Vector3Int currentPlanetCell = gridLayout.WorldToCell(currentPlanet.transform.position);
+            Debug.Log(currentPlanetCell);
+            if (currentPlanet.GetComponent<PlanetController>().ResourcesCollectd)
             {
-                mapManager.spawnedPlanets.Add(new PlanetObject(planet.xCoordinate, planet.yCoordinate, planet.planetString, currentPlanet.GetComponent<PlanetController>().ResourcesCollectd));
-                mapManager.spawnedPlanets.Remove(planet);
-                break;
+                uiController.ResourcesCollectedWarning();
+            }
+            else
+            {
+                currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
+                mapManager.ContextualSpawnEnemies();
+                resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
+            }
+
+            foreach (PlanetObject planet in mapManager.spawnedPlanets)
+            {
+                if (planet.xCoordinate == currentPlanetCell.x && planet.yCoordinate == currentPlanetCell.y)
+                {
+                    mapManager.spawnedPlanets.Add(new PlanetObject(planet.xCoordinate, planet.yCoordinate, planet.planetString, currentPlanet.GetComponent<PlanetController>().ResourcesCollectd));
+                    mapManager.spawnedPlanets.Remove(planet);
+                    break;
+                }
+            }
+            mapManager.Save();
+            resourceAndUpgradeManager.SaveResourceAndUpgradeData();
+            //foreach (PlanetObject planet in mapManager.spawnedPlanets)
+            //{
+            //    Debug.Log("The planet at " + planet.xCoordinate + "x " + planet.yCoordinate + "y" + " has had it's resources collected --> " + planet.resourcesCollected);
+            //}
+
+            if(mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.ExplainCombat();
             }
         }
-        mapManager.Save();
-        resourceAndUpgradeManager.SaveResourceAndUpgradeData();
-        //foreach (PlanetObject planet in mapManager.spawnedPlanets)
-        //{
-        //    Debug.Log("The planet at " + planet.xCoordinate + "x " + planet.yCoordinate + "y" + " has had it's resources collected --> " + planet.resourcesCollected);
-        //}
     }
 }

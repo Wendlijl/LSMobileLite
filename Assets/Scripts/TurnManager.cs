@@ -17,11 +17,13 @@ public class TurnManager : MonoBehaviour
     private UIControl uiController;
     private PlayerHealthControl playerHealthControl;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private TutorialManager tutorialManager;
 
     void Start()
     {
         gameController = GameObject.Find("GameController");
         player = GameObject.Find("Player");
+        tutorialManager = gameController.GetComponent<TutorialManager>();
         mapManager = gameController.GetComponent<ManageMap>();
         uiController = gameController.GetComponent<UIControl>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
@@ -128,6 +130,10 @@ public class TurnManager : MonoBehaviour
             abilityController.abilityUsed = false;
             playerHealthControl.RestoreShields();
             mapManager.ClearHighlighting();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.PlayerWon();
+            }
         }
 
         uiController.SetEndTurnButtonState();

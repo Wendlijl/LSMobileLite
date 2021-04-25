@@ -14,6 +14,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     private GameObject gameController;
     private UIControl uiController;
+    private ManageMap mapManager;
+    private TutorialManager tutorialManager;
 
     private string resourceAndUpgradeDataSaveFileName = "resourceAndUpgradeDataSaveFile";
     private int solarSystemNumber=1;
@@ -131,6 +133,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
         gameController = GameObject.Find("GameController");
         uiController = gameController.GetComponent<UIControl>();
+        mapManager = gameController.GetComponent<ManageMap>();
+        tutorialManager = gameController.GetComponent<TutorialManager>();
         uiController.SetResourceCount(resources);
 
         if (QuickSaveRoot.Exists(resourceAndUpgradeDataSaveFileName)) //use the quicksave feature to check if a save file exists 
@@ -298,7 +302,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeHealth()
     {
-        if (resources >= HealthMaxUpgradeCost && currentMaxHealth < 6)
+        if (resources >= HealthMaxUpgradeCost && currentMaxHealth < 6 && uiController.UpgradeState)
         {
             resources -= HealthMaxUpgradeCost;
             currentMaxHealth += 1;
@@ -307,12 +311,16 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
     public void UpgradeShields()
     {
-        if (resources >= ShieldMaxUpgradeCost && currentMaxShields < 6)
+        if (resources >= ShieldMaxUpgradeCost && currentMaxShields < 6 && uiController.UpgradeState)
         {
             resources -= ShieldMaxUpgradeCost;
             currentMaxShields += 1;
@@ -321,24 +329,32 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
     public void RepairHealth()
     {
-        if (resources >= healthRepairCost)
+        if (resources >= healthRepairCost && uiController.UpgradeState)
         {
             resources -= healthRepairCost;
             playerHealthControl.IncreaseHealth(1);
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
     public void UpgradeLaserRange()
     {
-        if (resources >= laserRangeUpgradeCost && currentMaxLaserRange < 6)
+        if (resources >= laserRangeUpgradeCost && currentMaxLaserRange < 6 && uiController.UpgradeState)
         {
             resources -= laserRangeUpgradeCost;
             currentMaxLaserRange += 1;
@@ -349,12 +365,16 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
     public void UpgradeLaserRecharge()
     {
-        if(resources>=laserRechargeUpgradeCost && currentMaxLaserRecharge < 3)
+        if(resources>=laserRechargeUpgradeCost && currentMaxLaserRecharge < 3 && uiController.UpgradeState)
         {
             resources -= laserRechargeUpgradeCost;
             currentMaxLaserRecharge += 1;
@@ -362,6 +382,10 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
@@ -369,7 +393,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     {
         if (rocketsInstalled)
         {
-            if (resources >= RocketRangeUpgradeCost && currentMaxRocketRange < 6)
+            if (resources >= RocketRangeUpgradeCost && currentMaxRocketRange < 6 && uiController.UpgradeState)
             {
                 resources -= rocketRangeUpgradeCost;
                 currentMaxRocketRange += 1;
@@ -378,11 +402,15 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
                 SaveResourceAndUpgradeData();
+                if (mapManager.saveName == "TutorialFile")
+                {
+                    tutorialManager.RevealMap();
+                }
             }
         }
         else
         {
-            if (resources >= RocketRangeUpgradeCost)
+            if (resources >= RocketRangeUpgradeCost && uiController.UpgradeState)
             {
                 resources -= rocketRangeUpgradeCost;
                 rocketsInstalled = true;
@@ -392,6 +420,10 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
                 SaveResourceAndUpgradeData();
+                if (mapManager.saveName == "TutorialFile")
+                {
+                    tutorialManager.RevealMap();
+                }
             }
         }
 
@@ -399,7 +431,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public void UpgradeRocketReload()
     {
-        if (resources >= rocketReloadUpgradeCost && currentMaxRocketReload > 2)
+        if (resources >= rocketReloadUpgradeCost && currentMaxRocketReload > 2 && uiController.UpgradeState)
         {
             resources -= rocketReloadUpgradeCost;
             rocketReloadUpgradeCost *= 3;
@@ -408,12 +440,16 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
     public void UpgradeRocketYield()
     {
-        if (resources >= RocketYieldUpgradeCost && CurrentMaxRocketYield < 3)
+        if (resources >= RocketYieldUpgradeCost && CurrentMaxRocketYield < 3 && uiController.UpgradeState)
         {
             resources -= RocketYieldUpgradeCost;
             rocketYieldUpgradeCost *= 3;
@@ -428,7 +464,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     {
         if (shieldBoostInstalled)
         {
-            if (resources >= shieldBoostUpgradeCost && currentMaxShieldBoost < 3)
+            if (resources >= shieldBoostUpgradeCost && currentMaxShieldBoost < 3 && uiController.UpgradeState)
             {
                 resources -= shieldBoostUpgradeCost;
                 currentMaxShieldBoost += 1;
@@ -436,11 +472,15 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
                 SaveResourceAndUpgradeData();
+                if (mapManager.saveName == "TutorialFile")
+                {
+                    tutorialManager.RevealMap();
+                }
             }
         }
         else
         {
-            if (Resources >= shieldBoostUpgradeCost)
+            if (Resources >= shieldBoostUpgradeCost && uiController.UpgradeState)
             {
                 resources -= shieldBoostUpgradeCost;
                 shieldBoostInstalled = true;
@@ -450,13 +490,17 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
                 SaveResourceAndUpgradeData();
+                if (mapManager.saveName == "TutorialFile")
+                {
+                    tutorialManager.RevealMap();
+                }
             }
         }
     }
 
     public void UpgradeShieldBoostRecharge()
     {
-        if (resources >= shieldBoostRechargeUpgradeCost && currentMaxShieldBoostRecharge>2)
+        if (resources >= shieldBoostRechargeUpgradeCost && currentMaxShieldBoostRecharge>2 && uiController.UpgradeState)
         {
             resources -= shieldBoostRechargeUpgradeCost;
             currentMaxShieldBoostRecharge -= 1;
@@ -464,18 +508,26 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
     public void UpgradeShieldOverboost()
     {
-        if (resources >= ShieldOverboostUpgradeCost&&!currentShieldOverboostActive)
+        if (resources >= ShieldOverboostUpgradeCost&&!currentShieldOverboostActive && uiController.UpgradeState)
         {
             resources -= ShieldOverboostUpgradeCost;
             currentShieldOverboostActive = true;
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
@@ -483,7 +535,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     {
         if (jumpDriveInstalled)
         {
-            if (resources >= jumpRangeUpgradeCost && currentMaxJumpRange < 6)
+            if (resources >= jumpRangeUpgradeCost && currentMaxJumpRange < 6 && uiController.UpgradeState)
             {
                 resources -= jumpRangeUpgradeCost;
                 currentMaxJumpRange += 1;
@@ -494,11 +546,15 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
                 SaveResourceAndUpgradeData();
+                if (mapManager.saveName == "TutorialFile")
+                {
+                    tutorialManager.RevealMap();
+                }
             }
         }
         else
         {
-            if (Resources >= jumpRangeUpgradeCost)
+            if (Resources >= jumpRangeUpgradeCost && uiController.UpgradeState)
             {
                 resources -= jumpRangeUpgradeCost;
                 jumpDriveInstalled = true;
@@ -508,13 +564,17 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 uiController.SetResourceCount(Resources);
                 uiController.SetUpgradeButtons();
                 SaveResourceAndUpgradeData();
+                if (mapManager.saveName == "TutorialFile")
+                {
+                    tutorialManager.RevealMap();
+                }
             }
         }
     }
 
     public void UpgradeJumpRecharge()
     {
-        if (resources >= jumpRechargeUpgradeCost)
+        if (resources >= jumpRechargeUpgradeCost && uiController.UpgradeState)
         {
             resources -= jumpRechargeUpgradeCost;
             currentMaxJumpRecharge += 1;
@@ -522,12 +582,16 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 
     public void UpgradeSensorRange()
     {
-        if (resources >= sensorRangeUpgradeCost)
+        if (resources >= sensorRangeUpgradeCost && uiController.UpgradeState)
         {
             resources -= sensorRangeUpgradeCost;
             currentMaxSensorRange += 1;
@@ -544,6 +608,10 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.RevealMap();
+            }
         }
     }
 }

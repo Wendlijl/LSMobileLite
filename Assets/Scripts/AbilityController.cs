@@ -42,6 +42,7 @@ public class AbilityController : MonoBehaviour
     private TurnManager turnManager;
     private PlayerHealthControl playerHealthControl;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private TutorialManager tutorialManager;
 
     private float timer;
     private bool turnOffAb;
@@ -57,6 +58,7 @@ public class AbilityController : MonoBehaviour
         uiController = gameController.GetComponent<UIControl>();
         turnManager = gameController.GetComponent<TurnManager>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
+        tutorialManager = gameController.GetComponent<TutorialManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //store a reference to the player game object
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
         movementController = player.GetComponent<MovementController>();
@@ -101,7 +103,7 @@ public class AbilityController : MonoBehaviour
                     {
                         //Debug.Log(target);
                         //Debug.Log(playerHex + new Vector3Int(x, y, 0));
-                        if (target == (playerHex + new Vector3Int(x, y, 0))) //check if the target hex matches one of the highlighted hexes
+                        if (target == (playerHex + new Vector3Int(x, y, 0))&&weaponState) //check if the target hex matches one of the highlighted hexes
                         {
                             instX = player.transform.position.x; //set the x position of the instatiation equal to the player's current x position
                             instY = player.transform.position.y; //set the y position of the instatiation equal to the player's current x position
@@ -201,7 +203,7 @@ public class AbilityController : MonoBehaviour
             RocketsActive();
         }
         //Debug.Log(abilityUsed);
-        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive)
+        if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive ||laserState)
         {
             //When this function is called, it checks the current state of the laser abilty then switches to the other state and applies the necessary updates
             if (laserState)
@@ -226,6 +228,10 @@ public class AbilityController : MonoBehaviour
             //player.GetComponent<MovementController>().abilityActive = laserState; //set the abilityActive variable in the MovementController equal to the laser state
             mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to disable the range display
         
+        }
+        if(mapManager.saveName == "TutorialFile")
+        {
+            tutorialManager.ExplainLaser();
         }
     }
 

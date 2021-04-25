@@ -11,7 +11,8 @@ public class PlayerHealthControl : MonoBehaviour
     public int currentPlayerShields=2;
     public GameObject explosion;
 
-    public int MaxPlayerHealth { get {  return maxPlayerHealth; } set { Debug.Log("modfied player health"); maxPlayerHealth = value; } }
+    //public int MaxPlayerHealth { get {  return maxPlayerHealth; } set { Debug.Log("modfied player health"); maxPlayerHealth = value; } }
+    public int MaxPlayerHealth { get {  return maxPlayerHealth; } set { maxPlayerHealth = value; } }
 
     private GameObject gameController;
     private UIControl uiControl;
@@ -19,6 +20,8 @@ public class PlayerHealthControl : MonoBehaviour
     private AbilityController abilityController;
     private MovementController movementController;
     private TurnManager turnManager;
+    private TutorialManager tutorialManager;
+    private ManageMap mapManager;
     private bool beenDestroyed = false;
 
     public bool BeenDestroyed { get { return beenDestroyed; } set { beenDestroyed = value; } }
@@ -26,6 +29,8 @@ public class PlayerHealthControl : MonoBehaviour
     void Start()
     {
         gameController = GameObject.Find("GameController");
+        mapManager = gameController.GetComponent<ManageMap>();
+        tutorialManager = gameController.GetComponent<TutorialManager>();
         uiControl = gameController.GetComponent<UIControl>();
         turnManager = gameController.GetComponent<TurnManager>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
@@ -70,19 +75,27 @@ public class PlayerHealthControl : MonoBehaviour
 
     public IEnumerator DestroyPlayer()
     {
-        if (!beenDestroyed)
+        if (mapManager.saveName == "TutorialFile")
         {
-            beenDestroyed = true;
-            Color color = new Color();
-            color.a = 0f;
-            gameObject.GetComponent<SpriteRenderer>().color = color;
-            Instantiate(explosion, transform.position, Quaternion.identity);
-            turnManager.combatActive = false;
-            abilityController.weaponState = false;
-            movementController.movementState = false;
-            uiControl.SetEndTurnButtonState();
-            yield return new WaitForSeconds(.5f);
-            uiControl.SetGameOverPanelState();
+            IncreaseHealth(1);
+            tutorialManager.PlayerLost();
+        }
+        else
+        {
+            if (!beenDestroyed)
+            {
+                beenDestroyed = true;
+                Color color = new Color();
+                color.a = 0f;
+                gameObject.GetComponent<SpriteRenderer>().color = color;
+                Instantiate(explosion, transform.position, Quaternion.identity);
+                turnManager.combatActive = false;
+                abilityController.weaponState = false;
+                movementController.movementState = false;
+                uiControl.SetEndTurnButtonState();
+                yield return new WaitForSeconds(.5f);
+                uiControl.SetGameOverPanelState();
+            }
         }
     }
 
