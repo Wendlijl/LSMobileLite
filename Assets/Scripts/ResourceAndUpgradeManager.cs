@@ -34,7 +34,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private int baseShields = 2;
     private int baseSensorRange = 1;
 
-    private int resources = 0;
+    private int resources = 10000;
     private int totalResources = 0;
 
     private int  currentMaxLaserRange = 3;
