@@ -4373,9 +4373,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Controls\nOn Tactical Map: \n- Click on highlighted cell to move\n- Use
-    the \"Land\" button to land on planets\n- Use esc to pause\n- Use laser to destory
-    enemies\n- Other abilities (under development)\n- Upgrade path (under development) "
+  m_Text: "Controls\n- Click the highlighted cell on the tactical map to move\n-
+    Use the \"Land\" button to land on planets\n- Use esc to pause\n- During combat
+    the player can:\n    - Make one move\n    - Use one ability\n- Abilities can
+    be used in combat by clicking on the associated button\n- Upgrade menu can be
+    accessed by clicking on upgrade button in lower right of screen\n- Collected
+    resources are displayed in upper right of screen\n- Player health and shields
+    are displayed at the top of the screen"
 --- !u!222 &1980101535
 CanvasRenderer:
   m_ObjectHideFlags: 0
