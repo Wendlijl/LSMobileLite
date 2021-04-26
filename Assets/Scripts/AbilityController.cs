@@ -229,7 +229,7 @@ public class AbilityController : MonoBehaviour
             mapManager.UpdateHighlight(laserRange, player.GetComponent<MovementController>().playerCellPosition, laserState); //call the method that will update the map display to disable the range display
         
         }
-        if(mapManager.saveName == "TutorialFile")
+        if(mapManager.saveName == "TutorialFile" && weaponState)
         {
             tutorialManager.ExplainLaser();
         }
