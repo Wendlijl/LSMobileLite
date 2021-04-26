@@ -6,91 +6,34 @@ using CI.QuickSave;
 
 public class SelectionControls : MonoBehaviour
 {
-    public Slider mainSlider;
+
     public GameObject continuePanel;
     public GameObject optionsPanel;
     public GameObject creditsPanel;
-    bool hasMoved; //Create a check for whether movement has happened yet
-    bool hasSelected; //Create check for whether player has made a selection
-    float upDownMovement; //Create a variable to define vertical movement of selector
+
     public string mapSaveName;
     public string resourcesSaveName;
 
+    private GameObject continueButton;
+
     public void Awake()
     {
-        //Get the slider object
-        mainSlider = GameObject.Find("SelectionSlider").GetComponent<Slider>();
-        //continuePanel = GameObject.Find("ContinuePanel");
-        //optionsPanel = GameObject.Find("OptionsPanel");
-        Debug.Log(continuePanel);
-        Debug.Log(optionsPanel);
-    }
+        continueButton = GameObject.Find("ContinueButton");
 
-    public void SubmitSliderSetting()
-    {
-        //Move the slider based on player input. Bound the slider to min and max values
-        if (upDownMovement < 0 && mainSlider.value<5)
+        if (QuickSaveRoot.Exists(mapSaveName)|| QuickSaveRoot.Exists(resourcesSaveName))
         {
-            mainSlider.value++;
+            continueButton.SetActive(true);
         }
-        else if (upDownMovement > 0 && mainSlider.value > 0)
+        else
         {
-            mainSlider.value--;
+            continueButton.SetActive(false);
         }
-
     }
-    public void Update()
+   
+    public void NewGame()
     {
-        upDownMovement = Input.GetAxis("Vertical");
-        //Determine if the selector has moved yet for a given keypress.
-        if (upDownMovement == 0)
-        {
-            hasMoved = false;
-        }
-        else if (upDownMovement != 0 && !hasMoved) //If up or down input is detected and the selector has not moved, then call the movement function and set hasMoved to true
-        {
-            hasMoved = true;
-            SubmitSliderSetting();
-        }
-        if (Input.GetKeyDown("return") || Input.GetKeyDown("space"))
-        {
-            switch (mainSlider.value)
-            {
-                case 0:
-                    print("Continue Selected");
-                    if (QuickSaveRoot.Exists(mapSaveName))
-                    {
-                        loadLevelStart();
-                    }
-                    else
-                    {
-                        SetContinuePanelActive();
-                    }
-                    //SetContinuePanelActive();
-                    break;
-                case 1:
-                    print("New Selected");
-                    DeleteSave();
-                    loadLevelStart();
-                    break;
-                case 2:
-                    print("Tutorial Selected");
-                    RunTutorial();
-                    break;
-                case 3:
-                    print("Credits selected");
-                    SetCreditsPanelState();
-                    break;
-                case 4:
-                    print("Options Selected");
-                    SetOptionsPanelActive();
-                    break;
-                case 5:
-                    print("Quit Selected");
-                    Quit();
-                    break;
-            }
-        }
+        DeleteSave();
+        loadLevelStart();
     }
 
     public void SetContinuePanelActive()
@@ -122,6 +65,8 @@ public class SelectionControls : MonoBehaviour
         }
         
     }
+
+
 
     public void loadLevelStart()
     {
