@@ -109,7 +109,8 @@ public class ManageMap : MonoBehaviour
             else
             {
                 //Debug.Log("Need to move File");
-                FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+                //FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+                File.Copy(dataPathTutorial, quicksaveFilePath);
             }
             
             
@@ -118,7 +119,8 @@ public class ManageMap : MonoBehaviour
         {
             //Debug.Log("Need to make directory then move file");
             Directory.CreateDirectory(quicksavePath);
-            FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+            //FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+            File.Copy(dataPathTutorial, quicksaveFilePath);
         }
         
         //create a dictionary to hold key value pairs for all the background star tiles
