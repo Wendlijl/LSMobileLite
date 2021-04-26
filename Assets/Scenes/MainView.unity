@@ -6516,7 +6516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &838638762
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9000,6 +9000,8 @@ GameObject:
   - component: {fileID: 1068681569}
   - component: {fileID: 1068681577}
   - component: {fileID: 1068681578}
+  - component: {fileID: 1068681564}
+  - component: {fileID: 1068681563}
   m_Layer: 0
   m_Name: NewGameMessageFlowchart
   m_TagString: Untagged
@@ -9007,6 +9009,62 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &1068681563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068681562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 14
+  indentLevel: 0
+  storyText: May you find wealth among the stars!
+  description: 
+  character: {fileID: 0}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1068681564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068681562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 13
+  indentLevel: 0
+  storyText: 'Email: J.wendling2150@gmail.com
+
+    Discord: Jman2150#9377'
+  description: 
+  character: {fileID: 0}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
 --- !u!114 &1068681569
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -9021,7 +9079,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 4
   indentLevel: 0
-  storyText: Let no one stand in your way. For wealth and glory!
+  storyText: 'So I hope you have a good time and if you have anything you''d like
+    to share please reach out in one of the following ways:'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -9048,8 +9107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 3
   indentLevel: 0
-  storyText: 'Find the next star gate to continue your journey or return home to
-    claim the bounties of your discovery. '
+  storyText: There are a number of aspects of this game I would still like to polish
+    and several features I am thinking of adding.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -9076,8 +9135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 2
   indentLevel: 0
-  storyText: It's dangerous out there, but untold riches await the brave. Seek out
-    undiscovered planets and claim thier resources for yourself.
+  storyText: First, thanks for playing my game! This game is still under development
+    so if you're playing it now then I would love to hear any feedback you have!
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -9147,7 +9206,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 67
     y: 69
-    width: 126
+    width: 166
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9162,6 +9221,8 @@ MonoBehaviour:
   - {fileID: 1068681571}
   - {fileID: 1068681570}
   - {fileID: 1068681569}
+  - {fileID: 1068681564}
+  - {fileID: 1068681563}
   suppressAllAutoSelections: 0
 --- !u!114 &1068681575
 MonoBehaviour:
@@ -9176,7 +9237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 530.5, y: 46}
+  scrollPos: {x: 160.5, y: 12}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -9190,7 +9251,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 1068681574}
   selectedCommands:
-  - {fileID: 1068681569}
+  - {fileID: 1068681563}
   variables: []
   description: 
   stepPause: 0
@@ -10150,7 +10211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1173546986
 RectTransform:
   m_ObjectHideFlags: 0
