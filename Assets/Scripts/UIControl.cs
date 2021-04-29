@@ -26,6 +26,8 @@ public class UIControl : MonoBehaviour
     private GameObject endPlayerTurn; //contextual button used for landing on planets
     private GameObject fogOfWar;
     private Button endEnemyTurn; //contextual button used for landing on planets
+    private GameObject playerTurnIcon;
+    private GameObject enemyTurnIcon;
     private bool isPaused; //boolean used to track if the game is paused 
     private bool upgradeHologramActive;
     private bool upgradeState;
@@ -97,6 +99,8 @@ public class UIControl : MonoBehaviour
         landOnPlanet = GameObject.Find("LandingButton").GetComponent<Button>(); //get a reference to the planet landing button
         endPlayerTurn = GameObject.Find("PlayerButtonBackground"); //get a reference to the planet landing button
         endEnemyTurn = GameObject.Find("EndEnemyTurnButton").GetComponent<Button>(); //get a reference to the planet landing button
+        playerTurnIcon = GameObject.Find("PlayerTurnIconBackground");
+        enemyTurnIcon = GameObject.Find("EnemyTurnIconBackground");
         gameController = GameObject.Find("GameController");
         mapManager = gameController.GetComponent<ManageMap>();
         turnManager = gameController.GetComponent<TurnManager>();
@@ -124,6 +128,8 @@ public class UIControl : MonoBehaviour
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endPlayerTurn.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endEnemyTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
+        playerTurnIcon.SetActive(false);
+        enemyTurnIcon.SetActive(false);
         isPaused = false; //set the game pause state to false
         sceneIndex = SceneManager.GetActiveScene().buildIndex; //get a reference to the current scene index
 
@@ -514,19 +520,26 @@ public class UIControl : MonoBehaviour
         {
             endEnemyTurn.gameObject.SetActive(false);
             endPlayerTurn.gameObject.SetActive(false);
+
+            playerTurnIcon.SetActive(false);
+            enemyTurnIcon.SetActive(false);
         }
         else
         {
             if (turnManager.playerTurn)
             {
-                endEnemyTurn.gameObject.SetActive(false);
                 endPlayerTurn.gameObject.SetActive(true);
+
+                playerTurnIcon.SetActive(true);
+                enemyTurnIcon.SetActive(false);
 
             }
             else
             {
-                endEnemyTurn.gameObject.SetActive(true);
+
                 endPlayerTurn.gameObject.SetActive(false);
+                playerTurnIcon.SetActive(false);
+                enemyTurnIcon.SetActive(true);
             }
             SetLaserCharge(abilityController.laserRange, abilityController.maxLaserRange);
             SetJumpCharge(abilityController.jumpRange, abilityController.maxJumpRange);
