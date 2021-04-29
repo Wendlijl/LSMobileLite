@@ -69,21 +69,26 @@ public class TurnManager : MonoBehaviour
         {
             if (playerTurn && abilityController.abilityUsed && movementController.hasMoved)
             {
-                if (abilityController.laserRange < abilityController.maxLaserRange)
+                if (abilityController.laserRange < resourceAndUpgradeManager.CurrentMaxLaserRange)
                 {
                     abilityController.laserRange+= resourceAndUpgradeManager.CurrentMaxLaserRecharge;
+                    if (abilityController.laserRange > resourceAndUpgradeManager.CurrentMaxLaserRange)
+                    {
+                        abilityController.laserRange = resourceAndUpgradeManager.CurrentMaxLaserRange;
+                    }
                 }
-                if (abilityController.jumpRange < abilityController.maxJumpRange)
+                if (abilityController.jumpRange < resourceAndUpgradeManager.CurrentMaxJumpRange)
                 {
                     abilityController.jumpRange+=resourceAndUpgradeManager.CurrentMaxJumpRecharge;
-                    if (abilityController.jumpRange > abilityController.maxJumpRange)
+                    if (abilityController.jumpRange > resourceAndUpgradeManager.CurrentMaxJumpRange)
                     {
-                        abilityController.jumpRange = abilityController.maxJumpRange;
+                        abilityController.jumpRange = resourceAndUpgradeManager.CurrentMaxJumpRange;
                     }
                 }
                 if (abilityController.currentRocketReloadAmount < abilityController.rocketReloadTime)
                 {
                     abilityController.currentRocketReloadAmount++;
+
                 }
                 if (abilityController.currentShieldBoostCharge < abilityController.shieldBoostRechargeTime)
                 {
@@ -103,9 +108,7 @@ public class TurnManager : MonoBehaviour
                 //
                 movementController.hasMoved = false;
                 abilityController.abilityUsed = false;
-                OrderEnemyTurns();
-                UpdateTurn();
-
+                StartCoroutine("OrderEnemyTurns");
             }
             else if (enemyTurn)
             {
@@ -147,14 +150,17 @@ public class TurnManager : MonoBehaviour
         //Debug.Log("TM 102");
     }
 
-    public void OrderEnemyTurns()
+    public IEnumerator OrderEnemyTurns()
     {
+        yield return new WaitForSeconds(.5f);
         GameObject[] enemyGameObjects;
         enemyGameObjects = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemyGameObjects)
         {
             enemy.GetComponent<EnemyShipControl>().TakeTurn();
+            yield return new WaitForSeconds(.005f);
         }
         uiController.SetEndTurnButtonState();
+        UpdateTurn();
     }
 }

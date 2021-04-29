@@ -115,6 +115,11 @@ public class MovementController : MonoBehaviour
                     hasMoved = false;
                 }
 
+                if(clickCellPosition.x ==playerCellPosition.x && clickCellPosition.y == playerCellPosition.y)
+                {
+                    cantMove = true;
+                }
+
                 //if (clickDistance < 0.33f) //Each cell is 32 pixels wide, so if the click distance is 32 or less then allow the player to move
                 if (clickDistance <= moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
                 {
