@@ -195,7 +195,7 @@ public class EnemyShipControl : MonoBehaviour
                         {
                             nearestEndFlat = nearestFlat;
                         }
-                        List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
+                        List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
                         Vector3Int furthestFromRocket = new Vector3Int(0, 0, 0);
@@ -263,7 +263,7 @@ public class EnemyShipControl : MonoBehaviour
                 case "EnemyB":
                     if (distToPlayer > 1||runAway)
                     {
-                        List<Vector3Int> neighbours = GetNeighbours(enemyCellPosition);
+                        List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
                         Vector3Int furthestFromRocket = new Vector3Int(0, 0, 0);
@@ -331,54 +331,6 @@ public class EnemyShipControl : MonoBehaviour
 
 
         }
-    }
-
-    public List<Vector3Int> GetNeighbours(Vector3Int origin)
-    {
-        List<Vector3Int> openNeighbours = new List<Vector3Int>();
-        bool setSkip = false;
-        for (int x = -1; x <= 1; x++)
-        {
-            for (int y = -1; y <= 1; y++)
-            {
-                if (x == 0 && y == 0)
-                    continue;
-
-                int modX = origin.x + x;
-                int modY = origin.y + y;
-
-                if (modX < mapManager.mapXMax && modX > mapManager.mapXMin && modY < mapManager.mapYMax && modY > mapManager.mapYMin)
-                {
-
-
-                    if (mapManager.HexCellDistance(mapManager.evenq2cube(origin), mapManager.evenq2cube(new Vector3Int(modX, modY, 0))) <= 1)
-                    {
-                        foreach (EnemyObject fellowEnemy in mapManager.spawnedEnemies)
-                        {
-                            if (fellowEnemy.xCoordinate == modX && fellowEnemy.yCoordinate == modY)
-                            {
-                                setSkip = true;
-                            }
-                                
-
-                        }
-                        if (!setSkip)
-                        {
-                            openNeighbours.Add(new Vector3Int(modX, modY, 0));
-                        }
-                        else
-                        {
-                            setSkip = false;
-                        }
-
-                    }
-
-
-                }
-            }
-        }
-
-        return openNeighbours;
     }
 
     private void SetOrientation(Vector3 target)

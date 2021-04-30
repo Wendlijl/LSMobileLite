@@ -953,4 +953,52 @@ public class ManageMap : MonoBehaviour
 
         HighlightSet(flats, state);
     }
+
+    public List<Vector3Int> GetNeighbours(Vector3Int origin)
+    {
+        List<Vector3Int> openNeighbours = new List<Vector3Int>();
+        bool setSkip = false;
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                    continue;
+
+                int modX = origin.x + x;
+                int modY = origin.y + y;
+
+                if (modX < mapXMax && modX > mapXMin && modY < mapYMax && modY > mapYMin)
+                {
+
+
+                    if (HexCellDistance(evenq2cube(origin), evenq2cube(new Vector3Int(modX, modY, 0))) <= 1)
+                    {
+                        foreach (EnemyObject fellowEnemy in spawnedEnemies)
+                        {
+                            if (fellowEnemy.xCoordinate == modX && fellowEnemy.yCoordinate == modY)
+                            {
+                                setSkip = true;
+                            }
+
+
+                        }
+                        if (!setSkip)
+                        {
+                            openNeighbours.Add(new Vector3Int(modX, modY, 0));
+                        }
+                        else
+                        {
+                            setSkip = false;
+                        }
+
+                    }
+
+
+                }
+            }
+        }
+
+        return openNeighbours;
+    }
 }

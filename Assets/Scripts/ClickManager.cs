@@ -30,7 +30,19 @@ public class ClickManager : MonoBehaviour
                     mapManager.ShowFlats(enemy.GetComponent<EnemyShipControl>().thisEnemyName, enemy.GetComponent<EnemyShipControl>().enemyCellPosition, enemy, false);
                 }
             }
-            mouseClicked = true;
+            Debug.Log(Input.mousePosition);
+            Debug.Log("Screen height " + Screen.height + " Screen width " + Screen.width);
+            Debug.Log("% Screen height " + Input.mousePosition.y/Screen.height + " % Screen width " + Input.mousePosition.x / Screen.width);
+            float percentageScreenHeight = Input.mousePosition.y / Screen.height;
+            if (percentageScreenHeight > 0.1 && percentageScreenHeight < 0.9)
+            {
+                mouseClicked = true;
+            }
+            else
+            {
+                mouseClicked = false;
+            }
+            
         }
         else
         {

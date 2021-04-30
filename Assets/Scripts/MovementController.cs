@@ -82,7 +82,7 @@ public class MovementController : MonoBehaviour
             }
 
             //the following if statement controls the mouse movement 
-            if (Input.GetMouseButtonDown(0)) //listen for mouse input from the user
+            if (clickManager.mouseClicked) //listen for mouse input from the user
             {
                 cantMove = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //when the mouse is clicked, create a ray whose origin is at the mouse click position
@@ -123,24 +123,48 @@ public class MovementController : MonoBehaviour
                 //if (clickDistance < 0.33f) //Each cell is 32 pixels wide, so if the click distance is 32 or less then allow the player to move
                 if (clickDistance <= moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec) //distance calculations in cube coordinates return distance in integer units so this can be compared directly to the value defining the movement range
                 {
+                    StopCoroutine(MoveLongerDistance());
                     MovePlayer(clickCellPosition, true);
-                    
+
                     if (turnManager.combatActive)
                     {
                         abilityController.jumpRange--;
-                        turnManager.StartCoroutine("UpdateTurn");
+                        StartCoroutine(turnManager.UpdateTurn());
                     }
-                    
+
                     //Debug.Log("MC 116");
+                } else if (clickDistance > moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec && !turnManager.combatActive)
+                {
+                    StartCoroutine(MoveLongerDistance());
                 }
             }
         }
-
-
-
-
-
     }
+
+    public IEnumerator MoveLongerDistance()
+    {
+        while (playerCellPosition != clickCellPosition)
+        {
+            List<Vector3Int> neighbours = mapManager.GetNeighbours(playerCellPosition);
+            int distToTarget = 9999;
+            Vector3Int nearestNeighbourToTarget = new Vector3Int();
+
+            foreach(Vector3Int neighbour in neighbours)
+            {
+                int calcDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(clickCellPosition));
+                if (calcDist < distToTarget)
+                {
+                    nearestNeighbourToTarget = neighbour;
+                    distToTarget = calcDist;
+                }
+            }
+            MovePlayer(nearestNeighbourToTarget, false);
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        yield return null;
+    }
+
     public void GetMovementDirection()
     {
         //The GetMovementDirection function determines the players intended movement based on updown and left right keys

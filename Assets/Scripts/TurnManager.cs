@@ -44,13 +44,13 @@ public class TurnManager : MonoBehaviour
             firstTurn = true;
             combatActive = true;
             uiController.DeactivateLandOnPlanet();
-            StartCoroutine("UpdateTurn");
+            StartCoroutine(UpdateTurn());
         }
         else if(mapManager.spawnedEnemies.Count <= 0 && combatActive)
         {
             //Debug.Log("Combat is inactive");
             combatActive = false;
-            StartCoroutine("UpdateTurn");
+            StartCoroutine(UpdateTurn());
             //Debug.Log("TM 45");
         }
     }
@@ -147,7 +147,7 @@ public class TurnManager : MonoBehaviour
     {
         abilityController.abilityUsed = true;
         movementController.hasMoved = true;
-        StartCoroutine("UpdateTurn");
+        StartCoroutine(UpdateTurn());
         //Debug.Log("TM 102");
     }
 
@@ -162,6 +162,6 @@ public class TurnManager : MonoBehaviour
             yield return new WaitForSeconds(.005f);
         }
         uiController.SetEndTurnButtonState();
-        StartCoroutine("UpdateTurn");
+        StartCoroutine(UpdateTurn());
     }
 }
