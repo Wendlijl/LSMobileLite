@@ -35,9 +35,7 @@ public class TutorialManager : MonoBehaviour
     {
         player = GameObject.Find("Player");
         starGate = GameObject.FindWithTag("StarGate");
-        flowchart = GameObject.Find("Flowchart").GetComponent<Flowchart>();
-        Debug.Log("Number of variables are: "+flowchart.Variables.Count);
-        Debug.Log("The value of exploration is : "+flowchart.GetBooleanVariable("Exploration"));
+
 
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //get a reference to the grid layout
         abilityController = player.GetComponent<AbilityController>();
@@ -49,23 +47,33 @@ public class TutorialManager : MonoBehaviour
         uiControl = gameController.GetComponent<UIControl>();
         explainedMining=false;
         explainedCombat=false;
+
+        if (mapManager.saveName == "TutorialFile")
+        {
+            flowchart = GameObject.Find("Flowchart").GetComponent<Flowchart>();
+            //Debug.Log("Number of variables are: "+flowchart.Variables.Count);
+            //Debug.Log("The value of exploration is : "+flowchart.GetBooleanVariable("Exploration"));
+        }
     }
 
     private void Update()
     {
-        if (mapManager.revealedTilesUnique.Count >= 20 &&!flowchart.GetBooleanVariable("Exploration"))
+        if(mapManager.saveName == "TutorialFile")
         {
-            flowchart.SetBooleanVariable("Exploration", true);
-            flowchart.ExecuteBlock("Tutorial5");
-            Debug.Log("Exploration changed");
-        }
-
-        if (readyToExplainWarpGate && !explainedWarpGate) 
-        {
-            if (mapManager.HexCellDistance(mapManager.evenq2cube(gridLayout.WorldToCell(player.transform.position)), mapManager.evenq2cube(gridLayout.WorldToCell(starGate.transform.position))) < 2)
+            if (mapManager.revealedTilesUnique.Count >= 20 && !flowchart.GetBooleanVariable("Exploration"))
             {
-                explainedWarpGate = true;
-                flowchart.ExecuteBlock("Tutorial15");
+                flowchart.SetBooleanVariable("Exploration", true);
+                flowchart.ExecuteBlock("Tutorial5");
+                Debug.Log("Exploration changed");
+            }
+
+            if (readyToExplainWarpGate && !explainedWarpGate)
+            {
+                if (mapManager.HexCellDistance(mapManager.evenq2cube(gridLayout.WorldToCell(player.transform.position)), mapManager.evenq2cube(gridLayout.WorldToCell(starGate.transform.position))) < 2)
+                {
+                    explainedWarpGate = true;
+                    flowchart.ExecuteBlock("Tutorial15");
+                }
             }
         }
     }
