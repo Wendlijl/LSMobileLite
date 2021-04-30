@@ -239,6 +239,8 @@ public class UIControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q) && isPaused) //if the game is paused and the Q key is pressed, then quit the game
         {
+            mapManager.Save();
+            resourceAndUpgradeManager.SaveResourceAndUpgradeData();
             Quit();
         }
         if (Input.GetKeyDown(KeyCode.R) && isPaused) //if the game is paused and the R key is pressed then restart the level
@@ -574,8 +576,6 @@ public class UIControl : MonoBehaviour
     {
         //this function controls the quit 
         Time.timeScale = 1.0f;
-        mapManager.Save();
-        resourceAndUpgradeManager.SaveResourceAndUpgradeData();
         SceneManager.LoadScene(0);
     }
 
