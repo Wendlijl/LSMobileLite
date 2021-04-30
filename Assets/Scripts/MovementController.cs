@@ -128,7 +128,7 @@ public class MovementController : MonoBehaviour
                     if (turnManager.combatActive)
                     {
                         abilityController.jumpRange--;
-                        turnManager.UpdateTurn();
+                        turnManager.StartCoroutine("UpdateTurn");
                     }
                     
                     //Debug.Log("MC 116");

@@ -35,6 +35,7 @@ public class UIControl : MonoBehaviour
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
     private AbilityController abilityController;
+    private MovementController movementController;
     private TutorialManager tutorialManager;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private TurnManager turnManager;
@@ -90,6 +91,9 @@ public class UIControl : MonoBehaviour
 
     private GameObject starGateMessageObject;
 
+    private GameObject abilityUsedIcon;
+    private GameObject moveUsedIcon;
+
 
 
     private void Awake()
@@ -109,6 +113,7 @@ public class UIControl : MonoBehaviour
         player = GameObject.Find("Player");
         abilityController = player.GetComponent<AbilityController>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
+        movementController = player.GetComponent<MovementController>();
 
         resourceWarningMessage = GameObject.Find("AllResourcesCollectedWarningBackgroundImage");
         resourceWarningMessage.SetActive(false);
@@ -128,6 +133,11 @@ public class UIControl : MonoBehaviour
         landOnPlanet.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endPlayerTurn.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
         endEnemyTurn.gameObject.SetActive(false); //disable the planet landing button so it cannot be clicked until desired
+        abilityUsedIcon = GameObject.Find("AbilityUsedToken");
+        moveUsedIcon = GameObject.Find("HasMovedToken");
+
+        abilityUsedIcon.SetActive(false);
+        moveUsedIcon.SetActive(false);
         playerTurnIcon.SetActive(false);
         enemyTurnIcon.SetActive(false);
         isPaused = false; //set the game pause state to false
@@ -142,6 +152,8 @@ public class UIControl : MonoBehaviour
         shieldRechargingingImage.SetActive(false);
 
         upgradeHologramActive = false;
+
+
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
@@ -548,6 +560,12 @@ public class UIControl : MonoBehaviour
             SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, abilityController.shieldBoostRechargeTime);
             SetRocketReloadState(abilityController.currentRocketReloadAmount, abilityController.rocketReloadTime);
         }
+    }
+
+    public void SetPlayerTurnIndicators()
+    {
+        abilityUsedIcon.SetActive(abilityController.abilityUsed);
+        moveUsedIcon.SetActive(movementController.hasMoved);
     }
 
     public void Pause()

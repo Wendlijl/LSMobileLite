@@ -139,7 +139,7 @@ public class AbilityController : MonoBehaviour
                         movementController.hasMoved = true;
                         uiController.SetEndTurnButtonState();
                     }
-                    turnManager.UpdateTurn();
+                    turnManager.StartCoroutine("UpdateTurn");
                 }
             }else if (rocketState)
             {
@@ -155,7 +155,7 @@ public class AbilityController : MonoBehaviour
                 {
                     currentRocketReloadAmount = 0;
                     Instantiate(rocket, player.transform.position, Quaternion.identity);
-                    turnManager.UpdateTurn();
+                    turnManager.StartCoroutine("UpdateTurn");
                 }
             }
         }
@@ -178,7 +178,7 @@ public class AbilityController : MonoBehaviour
                 turnOffAb = false;
                 //Debug.Log("set true at Ab con 156");
                 abilityUsed = true;
-                turnManager.UpdateTurn();
+                turnManager.StartCoroutine("UpdateTurn");
                 if (turnManager.combatActive && movementController.hasMoved)
                 {
                     uiController.SetEndTurnButtonState();
