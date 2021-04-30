@@ -9107,6 +9107,10 @@ GameObject:
   - component: {fileID: 1003539001}
   - component: {fileID: 1003539000}
   - component: {fileID: 1003539006}
+  - component: {fileID: 1003539010}
+  - component: {fileID: 1003539009}
+  - component: {fileID: 1003539008}
+  - component: {fileID: 1003539007}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -9198,7 +9202,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 67
     y: 70
-    width: 124.137886
+    width: 124.5454
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9230,11 +9234,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 373.13495, y: -648.58563}
+  scrollPos: {x: 537.5859, y: -1662.3486}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 0.58000034
+  zoom: 0.55000037
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -9242,9 +9246,8 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1003538843}
-  selectedCommands:
-  - {fileID: 1003538882}
+  - {fileID: 1003538994}
+  selectedCommands: []
   variables:
   - {fileID: 1003538889}
   - {fileID: 1003538899}
@@ -9456,7 +9459,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196
     y: 178
-    width: 106.896515
+    width: 109.999954
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9544,7 +9547,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -28
     y: 170
-    width: 75.86205
+    width: 75.45453
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9599,7 +9602,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 40.838734
     y: 693.92267
-    width: 101.724106
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9723,7 +9726,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196.27567
     y: 605.4788
-    width: 113.79306
+    width: 117.27268
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9843,7 +9846,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -115.15278
     y: 608.33594
-    width: 118.96548
+    width: 122.72723
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9966,7 +9969,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.32022
     y: 486.11597
-    width: 101.724106
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10087,7 +10090,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 171.29893
     y: 382.0071
-    width: 108.62065
+    width: 109.999954
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10207,7 +10210,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -99.278534
     y: 391.58167
-    width: 108.62065
+    width: 111.818146
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10372,7 +10375,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 55.06185
     y: 265.43292
-    width: 99.99997
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10891,7 +10894,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 34.7518
     y: 789.57465
-    width: 99.99997
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11246,9 +11249,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 24.751835
+    x: 19.297295
     y: 877.0746
-    width: 99.99997
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11332,7 +11335,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -121.06905
     y: 1019.7212
-    width: 113.79306
+    width: 117.27268
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11388,7 +11391,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 156.97969
     y: 1014.2967
-    width: 165.51718
+    width: 166.36356
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11491,7 +11494,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 8.930954
     y: 950.2089
-    width: 99.99997
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11688,7 +11691,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 10.74915
     y: 1124.7544
-    width: 99.99997
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11905,7 +11908,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 9.320572
     y: 1209.0406
-    width: 99.99997
+    width: 100.90906
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11963,7 +11966,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 134.25203
     y: 1256.9856
-    width: 94.82756
+    width: 97.27269
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12019,7 +12022,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -166.56975
     y: 1258.3555
-    width: 160.34476
+    width: 162.7272
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12213,7 +12216,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 11.801999
     y: 1348.5892
-    width: 105.17238
+    width: 106.3636
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12329,7 +12332,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -238.986
     y: 1439.715
-    width: 132.75858
+    width: 135.4545
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12338,6 +12341,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 1003539010}
   - {fileID: 1003538945}
   - {fileID: 1003538944}
   - {fileID: 1003538966}
@@ -12386,7 +12390,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -16.678589
     y: 1445.4844
-    width: 179.31027
+    width: 182.72719
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12395,6 +12399,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 1003539009}
   - {fileID: 1003538947}
   - {fileID: 1003538943}
   - {fileID: 1003538965}
@@ -12526,7 +12531,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 239.84637
     y: 1448.0034
-    width: 170.68958
+    width: 173.63629
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12535,6 +12540,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 1003539008}
   - {fileID: 1003538952}
   - {fileID: 1003539002}
   - {fileID: 1003539001}
@@ -12956,7 +12962,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 22.99353
     y: 1586.4678
-    width: 105.17238
+    width: 106.3636
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -13160,7 +13166,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1.97406
     y: 1826.6029
-    width: 105.17238
+    width: 106.3636
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -13363,7 +13369,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 16.906572
     y: 1680.7534
-    width: 106.896515
+    width: 106.3636
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -13676,7 +13682,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 18.525797
     y: 1760.5933
-    width: 106.896515
+    width: 106.3636
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -13691,6 +13697,7 @@ MonoBehaviour:
   - {fileID: 1003538989}
   - {fileID: 1003538990}
   - {fileID: 1003538988}
+  - {fileID: 1003539007}
   suppressAllAutoSelections: 0
 --- !u!114 &1003538995
 MonoBehaviour:
@@ -14024,6 +14031,118 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
+--- !u!114 &1003539007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 273
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 1352580151}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetMovementState
+  targetMethodText: 'SetMovementState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003539008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 272
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 1352580151}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetMovementState
+  targetMethodText: 'SetMovementState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003539009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 271
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 1352580151}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetMovementState
+  targetMethodText: 'SetMovementState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003539010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 270
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 1352580151}
+  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: TutorialManager
+  targetMethod: SetMovementState
+  targetMethodText: 'SetMovementState (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
 --- !u!1001 &1005149728
 PrefabInstance:
   m_ObjectHideFlags: 0
