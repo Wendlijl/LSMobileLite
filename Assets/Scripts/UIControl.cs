@@ -68,6 +68,7 @@ public class UIControl : MonoBehaviour
     private GameObject rocketReloadingImage;
     private Slider shieldSlider;
     private GameObject shieldRechargingingImage;
+    private Slider threatLevelSlider;
 
     private GameObject masterUpgradeLayoutGroup;
     private GameObject healthUpgradeObject;
@@ -153,6 +154,7 @@ public class UIControl : MonoBehaviour
 
         upgradeHologramActive = false;
 
+        threatLevelSlider = GameObject.Find("ThreatLevelIndicator").GetComponentInChildren<Slider>();
 
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
@@ -236,6 +238,8 @@ public class UIControl : MonoBehaviour
         rocketButtonHolder.SetActive(resourceAndUpgradeManager.RocketsInstalled);
         shieldButtonHolder.SetActive(resourceAndUpgradeManager.ShieldBoostInstalled);
         jumpButtonHolder.SetActive(resourceAndUpgradeManager.JumpDriveInstalled);
+
+        SetThreatLevelSlider(movementController.ThreatLevel);
     }
 
     void Update()
@@ -517,6 +521,12 @@ public class UIControl : MonoBehaviour
         {
             shieldRechargingingImage.SetActive(false);
         }
+    }
+
+    public void SetThreatLevelSlider(float value)
+    {
+        //Debug.Log(movementController.ThreatLevel);
+        threatLevelSlider.value = value;
     }
 
     public void beginButtonStateCoroutine()

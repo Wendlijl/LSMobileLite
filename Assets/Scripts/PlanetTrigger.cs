@@ -18,6 +18,7 @@ public class PlanetTrigger : MonoBehaviour
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private TutorialManager tutorialManager;
     private GridLayout gridLayout;
+    private MovementController movementController;
     
     
     //private int loadingIndex; //variable to set what scense should be loaded when landing on a planet
@@ -34,6 +35,7 @@ public class PlanetTrigger : MonoBehaviour
         mapManager = gameController.GetComponent<ManageMap>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         //uiController.SetResourceCount(totalResourceCount, false);
+        movementController = GameObject.Find("Player").GetComponent<MovementController>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -140,6 +142,8 @@ public class PlanetTrigger : MonoBehaviour
                 currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
                 mapManager.ContextualSpawnEnemies();
                 resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
+                movementController.AdjustThreatLevel(100);
+                uiController.SetThreatLevelSlider(movementController.ThreatLevel);
             }
 
             foreach (PlanetObject planet in mapManager.spawnedPlanets)
