@@ -168,6 +168,10 @@ public class MovementController : MonoBehaviour
             MoveCount++;
             AdjustThreatLevel(MoveCount);
             uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
+            if (!movementState)
+            {
+                break;
+            }
             yield return new WaitForSeconds(0.2f);
         }
 
