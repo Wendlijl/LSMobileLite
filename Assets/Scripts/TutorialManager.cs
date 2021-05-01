@@ -81,10 +81,7 @@ public class TutorialManager : MonoBehaviour
     public void SetMovementState()
     {
         movementController.movementState = !movementController.movementState;
-        if (!movementController.movementState)
-        {
-            StopCoroutine(movementController.MoveLongerDistance());
-        }
+        StopCoroutine(movementController.MoveLongerDistance());
     }
 
     public void SetWeaponsState()
