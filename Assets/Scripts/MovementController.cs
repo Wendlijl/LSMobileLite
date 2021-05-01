@@ -26,7 +26,6 @@ public class MovementController : MonoBehaviour
     private float sidewaysMovement; //varaible to define sideways movement of player
     private float upDownMovement; //variable to define vertical movement of player
     private int moveCount = 0;
-    private float threatLevel = 0;
     //private float rotTrack; //variable to track where the ship is in it's rotation (Depricated)
     private float clickDistance; //variable to determine how far away a clicked cell is 
     private GridLayout gridLayout; //variable to hold an instance of the grid layout
@@ -42,7 +41,6 @@ public class MovementController : MonoBehaviour
     private GameObject gameController;
 
     public int MoveCount { get { return moveCount; } set { moveCount = value; } }
-    public float ThreatLevel { get { return threatLevel; } set { threatLevel = value; } }
 
     void Start()
     {
@@ -132,7 +130,7 @@ public class MovementController : MonoBehaviour
                     MovePlayer(clickCellPosition, true);
                     MoveCount++;
                     AdjustThreatLevel(MoveCount);
-                    uiController.SetThreatLevelSlider(ThreatLevel);
+                    uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
 
                     if (turnManager.combatActive)
                     {
@@ -169,7 +167,7 @@ public class MovementController : MonoBehaviour
             MovePlayer(nearestNeighbourToTarget, false);
             MoveCount++;
             AdjustThreatLevel(MoveCount);
-            uiController.SetThreatLevelSlider(ThreatLevel);
+            uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
             yield return new WaitForSeconds(0.2f);
         }
 
@@ -178,9 +176,9 @@ public class MovementController : MonoBehaviour
 
     public void AdjustThreatLevel(int threat)
     {
-        if (ThreatLevel < 1)
+        if (resourceAndUpgradeManager.ThreatLevel < 1)
         {
-            ThreatLevel += 0.001f*threat;
+            resourceAndUpgradeManager.ThreatLevel += 0.001f*threat;
         }
     }
 

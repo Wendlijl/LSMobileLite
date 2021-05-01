@@ -70,6 +70,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private bool jumpDriveInstalled=false;
     private bool shieldBoostInstalled=false;
 
+    private float threatLevel = 0;
+
     public string ResourceAndUpgradeDataSaveFileName { get { return resourceAndUpgradeDataSaveFileName; } }
     public int SolarSystemNumber { get { return solarSystemNumber; } set { solarSystemNumber = value; } }
     public int BaseShields{get{return baseShields;}}
@@ -122,10 +124,12 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     public int Resources { get { return resources; } set { resources = value; } }
     public int TotalResources { get { return totalResources; } set { totalResources = value; } }
+    public float ThreatLevel { get { return threatLevel; } set { threatLevel = value; } }
 
     // Start is called before the first frame update
     void Start()
     {
+        ThreatLevel = 0;
         player = GameObject.Find("Player");
         abilityController = player.GetComponent<AbilityController>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
@@ -213,6 +217,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             healthMaxUpgradeCost = instReader.Read<int>("healthMaxUpgradeCost");
             sensorRangeUpgradeCost = instReader.Read<int>("sensorRangeUpgradeCost");
 
+            threatLevel = instReader.Read<float>("threatLevel");
+
             uiController.SetHealthState(CurrentMaxHealth, playerHealthControl.currentPlayerHealth, CurrentMaxShields, playerHealthControl.currentPlayerShields);
             uiController.SetLaserCharge(abilityController.laserRange, currentMaxLaserRange);
             uiController.SetJumpCharge(abilityController.jumpRange, CurrentMaxJumpRange);
@@ -220,6 +226,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             uiController.SetRocketReloadState(abilityController.currentRocketReloadAmount, CurrentMaxRocketReload);
             uiController.SetResourceCount(resources);
             uiController.SetUpgradeButtons();
+            uiController.SetThreatLevelSlider(ThreatLevel);
 
             Debug.Log("Tried to load resources and upgrades");
         }
@@ -272,7 +279,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         instWriter.Write<int>("shieldBoostRechargeUpgradeCost", ShieldBoostRechargeUpgradeCost);
         instWriter.Write<int>("shieldOverboostUpgradeCost", ShieldOverboostUpgradeCost);
 
-
+        instWriter.Write<float>("threatLevel", ThreatLevel);
 
 
         instWriter.Commit();//write the save file

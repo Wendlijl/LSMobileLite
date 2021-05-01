@@ -239,7 +239,7 @@ public class UIControl : MonoBehaviour
         shieldButtonHolder.SetActive(resourceAndUpgradeManager.ShieldBoostInstalled);
         jumpButtonHolder.SetActive(resourceAndUpgradeManager.JumpDriveInstalled);
 
-        SetThreatLevelSlider(movementController.ThreatLevel);
+        SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
     }
 
     void Update()
