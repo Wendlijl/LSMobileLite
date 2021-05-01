@@ -90,6 +90,7 @@ public class ManageMap : MonoBehaviour
     private AbilityController abilityController;
     private UIControl uiController;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
+    private MovementController movementController;
 
     void Awake()
     {
@@ -175,6 +176,7 @@ public class ManageMap : MonoBehaviour
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //get a reference to the grid layout 
         uiController = gameController.GetComponent<UIControl>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
+        movementController = player.GetComponent<MovementController>();
         GenerateMap(); //call the function to generate the map.
     }
     private void Update()
@@ -554,7 +556,47 @@ public class ManageMap : MonoBehaviour
             allowableEnemies.Add(availableEnemies[enemy]);
         }
 
-        availableSpawnPoints.AddRange(revealedTilesUnique); //populate the list of avaiable spawn points by adding all of the currently revelaed tiles
+        int spawnRange = 2;
+        if (maxEnemies <= 10){ spawnRange = 3; }
+        else if (maxEnemies > 10 && maxEnemies <= 30){ spawnRange = 4; }
+        else if (maxEnemies > 30 && maxEnemies <= 40){ spawnRange = 5; }
+        else if (maxEnemies > 40 && maxEnemies <= 60){ spawnRange = 6; }
+        else if (maxEnemies > 60 && maxEnemies <= 80){ spawnRange = 7; }
+        else if (maxEnemies > 80 ){ spawnRange = 8; }
+
+
+        for (int x = -spawnRange; x <= spawnRange; x++) //iterate through the range of the laser to generate the x coordinates
+        {
+            for (int y = -spawnRange; y <= spawnRange; y++) //iterate through the range of the laser to generate the y coordindates
+            {
+                Vector3Int tempCell = movementController.playerCellPosition + new Vector3Int(x, y, 0);
+                float hexCellDistance = HexCellDistance(movementController.playerCellPositionCubeCoords, evenq2cube(tempCell));
+                bool cellUnavailable = false;
+                if (hexCellDistance <= spawnRange)
+                {
+                    foreach (GameObject enemy in enemies)
+                    {
+                        if (tempCell == gridLayout.WorldToCell(enemy.transform.position))
+                        {
+                            cellUnavailable = true;
+                        }
+                    }
+                    if (hexCellDistance == 1 || tempCell.x > mapXMax || tempCell.x < mapXMin || tempCell.y > mapYMax || tempCell.y < mapYMin)
+                    {
+                        cellUnavailable = true;
+                    }
+                    if (!cellUnavailable)
+                    {
+                        availableSpawnPoints.Add(tempCell);
+                    }
+                }
+        
+            }
+        }
+
+
+
+        //availableSpawnPoints.AddRange(revealedTilesUnique); //populate the list of avaiable spawn points by adding all of the currently revelaed tiles
         availableSpawnPoints.Remove(playerState.playerCellPosition); //remove the players current position from the list of available spawn points so that enemies do not spawn beneath the player
         int maxNoRepeatEnemies = allowableEnemies.Count; //set the maximum number of enemies that can be spawned if they are not allowed to repeat
         int maxSpawnPointsAvailable = availableSpawnPoints.Count; //set the maxium number of spawn points that enemies can be spawned at
