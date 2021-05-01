@@ -2936,7 +2936,7 @@ PrefabInstance:
     - target: {fileID: 7267300525211015156, guid: 1ab176ee85f1dda4c92644aef3e20ba2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7267300525211015156, guid: 1ab176ee85f1dda4c92644aef3e20ba2,
         type: 3}
@@ -8064,6 +8064,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742727752301774323, guid: fac46d5e85200f54b923c4ba2560ec03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1352580157}
+    - target: {fileID: 5742727752301774323, guid: fac46d5e85200f54b923c4ba2560ec03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndPlayerTurnButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742727752301774323, guid: fac46d5e85200f54b923c4ba2560ec03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1326505862}
+    - target: {fileID: 5742727752301774323, guid: fac46d5e85200f54b923c4ba2560ec03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: TurnOffAbilities
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742727752301774323, guid: fac46d5e85200f54b923c4ba2560ec03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1352580152}
+    - target: {fileID: 5742727752301774323, guid: fac46d5e85200f54b923c4ba2560ec03,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ClearHighlighting
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fac46d5e85200f54b923c4ba2560ec03, type: 3}
