@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: All resources have been collected from this planet
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6bd27a5c13ebd2e40a0da5a313e71f10, type: 2}
-  m_sharedMaterial: {fileID: 1939028641613356154, guid: 6bd27a5c13ebd2e40a0da5a313e71f10,
+  m_fontAsset: {fileID: 11400000, guid: a02fda3a8d47a3844a781e15e310cff1, type: 2}
+  m_sharedMaterial: {fileID: 1939028641613356154, guid: a02fda3a8d47a3844a781e15e310cff1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.15
+  m_fontSize: 21.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
