@@ -41,6 +41,7 @@ public class StarGateControl : MonoBehaviour
             {
                 uiController.DisplayStarGateMessage();
             }
+            tutorialManager.SetMovementState();
             
         }
     }

@@ -91,7 +91,7 @@ public class PlayerHealthControl : MonoBehaviour
                 Instantiate(explosion, transform.position, Quaternion.identity);
                 turnManager.combatActive = false;
                 abilityController.weaponState = false;
-                movementController.movementState = false;
+                movementController.MovementState = false;
                 uiControl.SetEndTurnButtonState();
                 yield return new WaitForSeconds(.5f);
                 uiControl.SetGameOverPanelState();

@@ -13,7 +13,7 @@ public class MovementController : MonoBehaviour
     public int moveRange = 1; //variable to control how far the player can move
     public float moveScale = 1; //variable to allow scaling of player movement
     public bool abilityActive; //boolean to indicate when abilities are active
-    public bool movementState;
+    private bool movementState;
     public Tilemap fogOfWar; //Get a reference to the overlay tiles
     public Tilemap starField; //Get a reference to the overlay tiles
     public Vector3Int playerCellPosition; //variable to store the cell position of the player
@@ -23,6 +23,7 @@ public class MovementController : MonoBehaviour
 
     public bool hasMoved; //variable to check for whether movement has happened yet
     private bool cantMove;
+    private bool longMoveRunning=false;
     private float sidewaysMovement; //varaible to define sideways movement of player
     private float upDownMovement; //variable to define vertical movement of player
     private int moveCount = 0;
@@ -39,6 +40,8 @@ public class MovementController : MonoBehaviour
     private TurnManager turnManager;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private GameObject gameController;
+
+    public bool MovementState { get { return movementState; } set { movementState = value; } }
 
     public int MoveCount { get { return moveCount; } set { moveCount = value; } }
 
@@ -141,7 +144,11 @@ public class MovementController : MonoBehaviour
                     //Debug.Log("MC 116");
                 } else if (clickDistance > moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec && !turnManager.combatActive)
                 {
-                    StartCoroutine(MoveLongerDistance());
+                    if (!longMoveRunning)
+                    {
+                        StartCoroutine(MoveLongerDistance());
+                    }
+                    
                 }
             }
         }
@@ -149,6 +156,7 @@ public class MovementController : MonoBehaviour
 
     public IEnumerator MoveLongerDistance()
     {
+        longMoveRunning = true;
         while (playerCellPosition != clickCellPosition)
         {
             List<Vector3Int> neighbours = mapManager.GetNeighbours(playerCellPosition);
@@ -174,8 +182,14 @@ public class MovementController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.2f);
         }
-
+        longMoveRunning = false;
         yield return null;
+    }
+
+    public void DisableMovement()
+    {
+        MovementState = false;
+        StopCoroutine(MoveLongerDistance());
     }
 
     public void AdjustThreatLevel(int threat)

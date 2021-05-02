@@ -80,7 +80,7 @@ public class TutorialManager : MonoBehaviour
 
     public void SetMovementState()
     {
-        movementController.movementState = !movementController.movementState;
+        movementController.MovementState = !movementController.MovementState;
         StopCoroutine(movementController.MoveLongerDistance());
     }
 

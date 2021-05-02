@@ -350,6 +350,7 @@ public class UIControl : MonoBehaviour
                 hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
                 StartCoroutine("SetButtonsActive");
             }
+            tutorialManager.SetMovementState();
         }
         if (mapManager.saveName == "TutorialFile")
         {
@@ -394,7 +395,12 @@ public class UIControl : MonoBehaviour
                 }
                 
             }
+            if(button.gameObject.name == "StayHereButton")
+            {
+                button.onClick.AddListener(delegate { tutorialManager.SetMovementState(); });
+            }
             button.onClick.AddListener(delegate { DestroyStarGateMessage(); });
+            
         }
     }
 
