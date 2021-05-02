@@ -1292,7 +1292,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.6
+  m_fontSize: 10.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3971,7 +3971,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.45
+  m_fontSize: 16.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5304,6 +5304,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 850004889}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &850004891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 876459432510431202, guid: 6b623ef67e0f72f488bf7e7b65558051,
+    type: 3}
+  m_PrefabInstance: {fileID: 850004889}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &852664719
 GameObject:
   m_ObjectHideFlags: 0
@@ -6097,7 +6103,7 @@ PrefabInstance:
     - target: {fileID: 5742727750996611050, guid: fac46d5e85200f54b923c4ba2560ec03,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5742727750996611050, guid: fac46d5e85200f54b923c4ba2560ec03,
         type: 3}
@@ -7108,6 +7114,8 @@ GameObject:
   - component: {fileID: 1003539009}
   - component: {fileID: 1003539008}
   - component: {fileID: 1003539007}
+  - component: {fileID: 1003539011}
+  - component: {fileID: 1003539012}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -7197,9 +7205,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 67
+    x: 63.36364
     y: 70
-    width: 124.5454
+    width: 128.8461
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7231,11 +7239,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 537.5859, y: -1662.3486}
+  scrollPos: {x: 319.51312, y: -1519.3868}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
-  blockViewHeight: 400
-  zoom: 0.55000037
+  blockViewHeight: 280
+  zoom: 0.5200004
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -7244,7 +7252,8 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 1003538994}
-  selectedCommands: []
+  selectedCommands:
+  - {fileID: 1003539012}
   variables:
   - {fileID: 1003538889}
   - {fileID: 1003538899}
@@ -7456,7 +7465,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196
     y: 178
-    width: 109.999954
+    width: 113.46149
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7544,7 +7553,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -28
     y: 170
-    width: 75.45453
+    width: 76.92306
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7599,7 +7608,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 40.838734
     y: 693.92267
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7723,7 +7732,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196.27567
     y: 605.4788
-    width: 117.27268
+    width: 121.15379
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7843,7 +7852,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -115.15278
     y: 608.33594
-    width: 122.72723
+    width: 126.92302
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7966,7 +7975,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.32022
     y: 486.11597
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8086,8 +8095,8 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 171.29893
-    y: 382.0071
-    width: 109.999954
+    y: 380.18893
+    width: 113.46149
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8207,7 +8216,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -99.278534
     y: 391.58167
-    width: 111.818146
+    width: 115.38457
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8372,7 +8381,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 55.06185
     y: 265.43292
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8513,13 +8522,13 @@ MonoBehaviour:
   itemId: 63
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -8541,13 +8550,13 @@ MonoBehaviour:
   itemId: 70
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: EnableMovement
+  targetMethodText: 'EnableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -8891,7 +8900,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 34.7518
     y: 789.57465
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8924,13 +8933,13 @@ MonoBehaviour:
   itemId: 93
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: EnableMovement
+  targetMethodText: 'EnableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -8952,13 +8961,13 @@ MonoBehaviour:
   itemId: 92
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -9219,13 +9228,13 @@ MonoBehaviour:
   itemId: 96
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -9248,7 +9257,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 19.297295
     y: 877.0746
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9332,7 +9341,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -121.06905
     y: 1019.7212
-    width: 117.27268
+    width: 121.15379
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9388,7 +9397,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 156.97969
     y: 1014.2967
-    width: 166.36356
+    width: 169.23068
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9491,7 +9500,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 8.930954
     y: 950.2089
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9659,13 +9668,13 @@ MonoBehaviour:
   itemId: 128
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: EnableMovement
+  targetMethodText: 'EnableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -9688,7 +9697,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 10.74915
     y: 1124.7544
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9769,13 +9778,13 @@ MonoBehaviour:
   itemId: 147
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -9905,7 +9914,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 9.320572
     y: 1209.0406
-    width: 100.90906
+    width: 103.846115
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9961,9 +9970,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 134.25203
+    x: 130.80376
     y: 1256.9856
-    width: 97.27269
+    width: 99.99996
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10019,7 +10028,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -166.56975
     y: 1258.3555
-    width: 162.7272
+    width: 169.23068
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10100,13 +10109,13 @@ MonoBehaviour:
   itemId: 160
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: EnableMovement
+  targetMethodText: 'EnableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -10213,7 +10222,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 11.801999
     y: 1348.5892
-    width: 106.3636
+    width: 109.61534
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10329,7 +10338,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -238.986
     y: 1439.715
-    width: 135.4545
+    width: 140.38455
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10387,7 +10396,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -16.678589
     y: 1445.4844
-    width: 182.72719
+    width: 190.3845
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10528,7 +10537,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 239.84637
     y: 1448.0034
-    width: 173.63629
+    width: 180.76913
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10959,7 +10968,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 22.99353
     y: 1586.4678
-    width: 106.3636
+    width: 109.61534
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11052,13 +11061,13 @@ MonoBehaviour:
   itemId: 239
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -11163,7 +11172,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1.97406
     y: 1826.6029
-    width: 106.3636
+    width: 109.61534
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11366,7 +11375,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 16.906572
     y: 1680.7534
-    width: 106.3636
+    width: 109.61534
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11483,13 +11492,13 @@ MonoBehaviour:
   itemId: 245
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: EnableMovement
+  targetMethodText: 'EnableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -11679,7 +11688,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 18.525797
     y: 1760.5933
-    width: 106.3636
+    width: 109.61534
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11689,12 +11698,14 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 1003538993}
+  - {fileID: 1003539012}
   - {fileID: 1003538992}
   - {fileID: 1003538991}
   - {fileID: 1003538989}
   - {fileID: 1003538990}
   - {fileID: 1003538988}
   - {fileID: 1003539007}
+  - {fileID: 1003539011}
   suppressAllAutoSelections: 0
 --- !u!114 &1003538995
 MonoBehaviour:
@@ -12030,7 +12041,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &1003539007
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12043,13 +12054,13 @@ MonoBehaviour:
   itemId: 273
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: EnableMovement
+  targetMethodText: 'EnableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -12058,7 +12069,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &1003539008
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12071,13 +12082,13 @@ MonoBehaviour:
   itemId: 272
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -12086,7 +12097,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &1003539009
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12099,13 +12110,13 @@ MonoBehaviour:
   itemId: 271
   indentLevel: 0
   description: 
-  targetObject: {fileID: 1352580151}
-  targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
-  targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -12114,7 +12125,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &1003539010
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12127,13 +12138,69 @@ MonoBehaviour:
   itemId: 270
   indentLevel: 0
   description: 
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003539011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 274
+  indentLevel: 0
+  description: 
   targetObject: {fileID: 1352580151}
   targetComponentAssemblyName: TutorialManager, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   targetComponentFullname: UnityEngine.Component[]
   targetComponentText: TutorialManager
-  targetMethod: SetMovementState
-  targetMethodText: 'SetMovementState (): Void'
+  targetMethod: ReadyToExplainWarpGate
+  targetMethodText: 'ReadyToExplainWarpGate (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1003539012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 275
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 1326505861}
+  targetComponentAssemblyName: MovementController, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: MovementController
+  targetMethod: DisableMovement
+  targetMethodText: 'DisableMovement (): Void'
   methodParameters: []
   saveReturnValue: 0
   returnValueVariableKey: 
@@ -13116,7 +13183,7 @@ PrefabInstance:
     - target: {fileID: 5724619612317364207, guid: 54ecc3cb4e2d6b04e8fa4acecfdee3d7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5724619612317364207, guid: 54ecc3cb4e2d6b04e8fa4acecfdee3d7,
         type: 3}
@@ -13710,7 +13777,7 @@ PrefabInstance:
     - target: {fileID: 248289585562115399, guid: fa05969eb0866ad42b70c70309b90ae6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 248289585562115399, guid: fa05969eb0866ad42b70c70309b90ae6,
         type: 3}
@@ -13784,6 +13851,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa05969eb0866ad42b70c70309b90ae6, type: 3}
+--- !u!1 &1222215994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 248289585562115400, guid: fa05969eb0866ad42b70c70309b90ae6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1222215993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1223103283
 GameObject:
   m_ObjectHideFlags: 0
@@ -14863,7 +14936,6 @@ MonoBehaviour:
   moveRange: 1
   moveScale: 0.25
   abilityActive: 0
-  movementState: 0
   fogOfWar: {fileID: 620458268}
   starField: {fileID: 1257805224}
   playerCellPosition: {x: 0, y: 0, z: 0}
@@ -15203,14 +15275,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelIndex: 0
-  hologramMenu: {fileID: 0}
+  hologramMenu: {fileID: 850004891}
   pausePanel: {fileID: 985119669}
-  upgradePanel: {fileID: 0}
   newGameMessage: {fileID: 0}
   starGateMessage: {fileID: 5748864713192715832, guid: cafa6207ad342b1408630d49299b8739,
     type: 3}
-  gameOverPanel: {fileID: 0}
-  victoryPanel: {fileID: 0}
+  gameOverPanel: {fileID: 1222215994}
+  victoryPanel: {fileID: 1971407458}
 --- !u!4 &1352580154
 Transform:
   m_ObjectHideFlags: 0
@@ -18548,7 +18619,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.35
+  m_fontSize: 9.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18726,7 +18797,7 @@ PrefabInstance:
     - target: {fileID: 185608460945257218, guid: 71c1ed092e17b13469e40f8515bf4ef1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 185608460945257218, guid: 71c1ed092e17b13469e40f8515bf4ef1,
         type: 3}
@@ -19473,7 +19544,7 @@ PrefabInstance:
     - target: {fileID: 6418846873009939026, guid: 88f5e89e5b670664090be64fa695199f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6418846873009939026, guid: 88f5e89e5b670664090be64fa695199f,
         type: 3}
@@ -19547,6 +19618,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88f5e89e5b670664090be64fa695199f, type: 3}
+--- !u!1 &1971407458 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6418846873009939027, guid: 88f5e89e5b670664090be64fa695199f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1971407457}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2021917178
 GameObject:
   m_ObjectHideFlags: 0
@@ -20211,7 +20288,7 @@ PrefabInstance:
     - target: {fileID: 6833774986361232676, guid: 443f8c6276279ab4c8f55359b12a900c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6833774986361232676, guid: 443f8c6276279ab4c8f55359b12a900c,
         type: 3}
@@ -20484,7 +20561,7 @@ PrefabInstance:
     - target: {fileID: 5968862841946053606, guid: dba8906c668b050458dc0241806fa2ca,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5968862841946053606, guid: dba8906c668b050458dc0241806fa2ca,
         type: 3}

@@ -13,7 +13,7 @@ public class UIControl : MonoBehaviour
     public int levelIndex; //variable used to set the scene to be loaded when landing on a planet
     public GameObject hologramMenu; //variable to hold the hologram upgrade menu
     public GameObject pausePanel; //variable to hold the game pause screen
-    public GameObject upgradePanel; //variable to hold the upgrade panel
+    //public GameObject upgradePanel; //variable to hold the upgrade panel
     public GameObject newGameMessage; //variable to hold the upgrade panel
     private GameObject resourceWarningMessage;
     public GameObject starGateMessage;
@@ -350,7 +350,15 @@ public class UIControl : MonoBehaviour
                 hologramMenu.GetComponent<Animator>().Play("UpgradePanelOpen");
                 StartCoroutine("SetButtonsActive");
             }
-            tutorialManager.SetMovementState();
+
+            if (upgradeHologramActive && movementController.MovementState && mapManager.saveName != "TutorialFile") 
+            {
+                tutorialManager.SetMovementState();
+            }else if(!upgradeHologramActive && !movementController.MovementState)
+            {
+                tutorialManager.SetMovementState();
+            }
+            
         }
         if (mapManager.saveName == "TutorialFile")
         {

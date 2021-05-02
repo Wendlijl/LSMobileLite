@@ -191,6 +191,10 @@ public class MovementController : MonoBehaviour
         MovementState = false;
         StopCoroutine(MoveLongerDistance());
     }
+    public void EnableMovement()
+    {
+        MovementState = true;
+    }
 
     public void AdjustThreatLevel(int threat)
     {

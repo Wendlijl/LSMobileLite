@@ -71,8 +71,7 @@ public class TutorialManager : MonoBehaviour
             {
                 if (mapManager.HexCellDistance(mapManager.evenq2cube(gridLayout.WorldToCell(player.transform.position)), mapManager.evenq2cube(gridLayout.WorldToCell(starGate.transform.position))) < 2)
                 {
-                    explainedWarpGate = true;
-                    flowchart.ExecuteBlock("Tutorial15");
+                    ExplainWarpGate();
                 }
             }
         }
@@ -178,7 +177,6 @@ public class TutorialManager : MonoBehaviour
         if (!revealedMap)
         {
             revealedMap = true;
-            readyToExplainWarpGate = true;
             flowchart.ExecuteBlock("Tutorial14");
         }
     }
@@ -190,6 +188,11 @@ public class TutorialManager : MonoBehaviour
             explainedWarpGate = true;
             flowchart.ExecuteBlock("Tutorial15");
         }
+    }
+
+    public void ReadyToExplainWarpGate()
+    {
+        readyToExplainWarpGate = true;
     }
 
     public void ReadyToExplainUpgrades()

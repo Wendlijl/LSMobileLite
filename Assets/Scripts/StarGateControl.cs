@@ -35,13 +35,15 @@ public class StarGateControl : MonoBehaviour
                 if (tutorialManager.ReadyToExplainWarGate)
                 {
                     uiController.DisplayStarGateMessage();
+                    tutorialManager.SetMovementState();
                 }
             }
             else
             {
                 uiController.DisplayStarGateMessage();
+                tutorialManager.SetMovementState();
             }
-            tutorialManager.SetMovementState();
+            
             
         }
     }
