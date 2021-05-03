@@ -89,7 +89,7 @@ public class AbilityController : MonoBehaviour
     void Update()
     {
         //player = GameObject.FindGameObjectWithTag("Player"); //at one point, the player game object was being set every update. I don't think this is necessary, but it may have had some effect.
-        if (Input.GetMouseButtonDown(0) && !turnOffAb) //check if the laser has been activated
+        if (clickManager.mouseClicked && !turnOffAb) //check if the laser has been activated
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
             target = gridLayout.WorldToCell(ray.origin); //set the position of the target to the position of the mouse pointer in grid coordinates

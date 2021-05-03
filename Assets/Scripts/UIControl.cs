@@ -351,12 +351,13 @@ public class UIControl : MonoBehaviour
                 StartCoroutine("SetButtonsActive");
             }
 
-            if (upgradeHologramActive && movementController.MovementState && mapManager.saveName != "TutorialFile") 
+            //if (upgradeHologramActive && movementController.MovementState && mapManager.saveName != "TutorialFile") 
+            if (upgradeHologramActive && movementController.MovementState) 
             {
-                tutorialManager.SetMovementState();
+                movementController.DisableMovement();
             }else if(!upgradeHologramActive && !movementController.MovementState)
             {
-                tutorialManager.SetMovementState();
+                movementController.EnableMovement();
             }
             
         }
