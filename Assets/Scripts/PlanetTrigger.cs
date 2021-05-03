@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlanetTrigger : MonoBehaviour
 {
     //This script is designed to control the contextual prompt associated with interacting with planets on the hex grid 
-    public bool planetState;
+    private bool planetState;
     public int totalResourceCount;
     private int planetResourceAmount;
     private GameObject gameController;
@@ -19,6 +19,8 @@ public class PlanetTrigger : MonoBehaviour
     private TutorialManager tutorialManager;
     private GridLayout gridLayout;
     private MovementController movementController;
+
+    public bool PlanetState { get { return planetState; } set { planetState = value; } }
     
     
     //private int loadingIndex; //variable to set what scense should be loaded when landing on a planet
@@ -43,6 +45,10 @@ public class PlanetTrigger : MonoBehaviour
         {
             currentPlanet = collision.gameObject;
             uiController.ActivateLandOnPlanet(); //When over a planet, display the "Land" contextutal prompt
+            if (mapManager.saveName == "TutorialFile")
+            {
+                tutorialManager.ExplainMining(collision.name);
+            }
             switch (collision.name) //Determine what planet scene to load based on the name of the game object returned from the collision
             {
                 case "Planet1(Clone)":
@@ -85,10 +91,6 @@ public class PlanetTrigger : MonoBehaviour
                     Debug.Log("Planet7");
                     planetName = "Planet7";
                     planetResourceAmount = Random.Range(350, 600);
-                    if(mapManager.saveName == "TutorialFile")
-                    {
-                        tutorialManager.ExplainMining();
-                    }
                     //loadingIndex = 4;
                     break;
                 case "Planet8(Clone)":
@@ -167,5 +169,14 @@ public class PlanetTrigger : MonoBehaviour
                 tutorialManager.ExplainCombat();
             }
         }
+    }
+
+    public void EnablePlanetState()
+    {
+        PlanetState = true;
+    }
+    public void DisablePlanetState()
+    {
+        PlanetState = false;
     }
 }

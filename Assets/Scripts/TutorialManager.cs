@@ -90,7 +90,7 @@ public class TutorialManager : MonoBehaviour
 
     public void SetPlanetState()
     {
-        planetTrigger.planetState = !planetTrigger.planetState;
+        planetTrigger.PlanetState = !planetTrigger.PlanetState;
     }
 
     public void SetUpgradeState()
@@ -98,12 +98,20 @@ public class TutorialManager : MonoBehaviour
         uiControl.UpgradeState = !uiControl.UpgradeState;   
     }
 
-    public void ExplainMining()
+    public void ExplainMining(string planetName)
     {
         if (!explainedMining)
         {
-            explainedMining = true;
-            flowchart.ExecuteBlock("Tutorial6");
+            if(planetName== "Planet7(Clone)")
+            {
+                explainedMining = true;
+                flowchart.ExecuteBlock("Tutorial6");
+            }
+            else
+            {
+                flowchart.ExecuteBlock("Tutorial6B");
+            }
+
         }
     }
 
