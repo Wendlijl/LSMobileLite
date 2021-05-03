@@ -145,9 +145,12 @@ public class TurnManager : MonoBehaviour
 
     public void EndPlayerTurnButton()
     {
-        abilityController.AbilityUsed = true;
-        movementController.HasMoved = true;
-        StartCoroutine(UpdateTurn());
+        if (!abilityController.abilityActive)
+        {
+            abilityController.AbilityUsed = true;
+            movementController.HasMoved = true;
+            StartCoroutine(UpdateTurn());
+        }
         //Debug.Log("TM 102");
     }
 

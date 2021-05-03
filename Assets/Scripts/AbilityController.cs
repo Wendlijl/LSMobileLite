@@ -179,7 +179,10 @@ public class AbilityController : MonoBehaviour
             if (timer > 0.5)
             {
                 //Debug.Log("Timer");
-                LaserActive();
+                if (laserState)
+                {
+                    LaserActive();
+                }
                 if (turnManager.combatActive)
                 {
                     
