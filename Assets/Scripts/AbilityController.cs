@@ -331,17 +331,21 @@ public class AbilityController : MonoBehaviour
                 {
                     Vector3Int tempCell = movementController.playerCellPosition + new Vector3Int(x, y, 0);
                     float hexCellDistance = mapManager.HexCellDistance(movementController.playerCellPositionCubeCoords, mapManager.evenq2cube(tempCell));
-                    bool cellOccupied = false;
+                    bool cellUnavailable = false;
                     if (hexCellDistance <= jumpRange)
                     {
                         foreach (GameObject enemy in enemies)
                         {
                             if (tempCell == gridLayout.WorldToCell(enemy.transform.position))
                             {
-                                cellOccupied = true;
+                                cellUnavailable = true;
                             }
                         }
-                        if (!cellOccupied)
+                        if ( tempCell.x > mapManager.mapXMax || tempCell.x < mapManager.mapXMin || tempCell.y > mapManager.mapYMax || tempCell.y < mapManager.mapYMin)
+                        {
+                            cellUnavailable = true;
+                        }
+                        if (!cellUnavailable)
                         {
                             jumpCells.Add(tempCell);
                         }
