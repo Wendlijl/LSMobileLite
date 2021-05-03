@@ -22,14 +22,7 @@ public class ClickManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) //This operation is initiated by the player clicking the fire button.
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies) //loop through the list of any enemies currently in the scene and destroy them
-            {
-                if (enemy.GetComponent<EnemyShipControl>().highlightEnabled)
-                {
-                    mapManager.ShowFlats(enemy.GetComponent<EnemyShipControl>().thisEnemyName, enemy.GetComponent<EnemyShipControl>().enemyCellPosition, enemy, false);
-                }
-            }
+
             //Debug.Log(Input.mousePosition);
             //Debug.Log("Screen height " + Screen.height + " Screen width " + Screen.width);
             //Debug.Log("% Screen height " + Input.mousePosition.y/Screen.height + " % Screen width " + Input.mousePosition.x / Screen.width);
@@ -42,7 +35,16 @@ public class ClickManager : MonoBehaviour
             {
                 mouseClicked = false;
             }
-            
+
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in enemies) //loop through the list of any enemies currently in the scene and destroy them
+            {
+                if (enemy.GetComponent<EnemyShipControl>().highlightEnabled)
+                {
+                    mapManager.ShowFlats(enemy.GetComponent<EnemyShipControl>().thisEnemyName, enemy.GetComponent<EnemyShipControl>().enemyCellPosition, enemy, false);
+                }
+            }
+
         }
         else
         {

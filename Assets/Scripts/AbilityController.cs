@@ -94,8 +94,9 @@ public class AbilityController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
             target = gridLayout.WorldToCell(ray.origin); //set the position of the target to the position of the mouse pointer in grid coordinates
             //clickDistance = Vector3.Distance(gridLayout.CellToWorld(target), gridLayout.CellToWorld(gridLayout.WorldToCell(player.transform.position))); //this is find the distance between the player and the point where they click. It converts multiple times bewteen the grid and world coordinates because it wants the world coordinates of the exact center of the relevant hexs. The easiest way I have found to do this is to first take world coordinates, convert them to grid coordinates, then convert those back to world coordinates
-            clickDistance = mapManager.HexCellDistance(mapManager.evenq2cube(target),mapManager.evenq2cube(playerHex)); //This calculation determines the distance to the clicked cell using the cube coordiante method 
             playerHex = gridLayout.WorldToCell(player.transform.position); //get the current position of the player in grid coordinates
+            clickDistance = mapManager.HexCellDistance(mapManager.evenq2cube(target),mapManager.evenq2cube(playerHex)); //This calculation determines the distance to the clicked cell using the cube coordiante method 
+            
             if (laserState && clickDistance<=laserRange) //if the player clicks the mouse and it is within the set range for the laser then initiate the firing sequence
             {
                 //The purpose of this loop is to identify what hexes within the range above are also identified by the highlighted hexes shown to the player. This is a hack and there must certainly be a better way to do this, but it ultimately comes down to figuring out a better method of measuring distance on the hex grid
@@ -107,6 +108,16 @@ public class AbilityController : MonoBehaviour
                         //Debug.Log(playerHex + new Vector3Int(x, y, 0));
                         if (target == (playerHex + new Vector3Int(x, y, 0))&&weaponState) //check if the target hex matches one of the highlighted hexes
                         {
+                            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                            foreach (GameObject enemy in enemies) //loop through the list of any enemies currently in the scene and destroy them
+                            {
+                                if (!enemy.GetComponent<EnemyShipControl>().CheckShotRunning)
+                                {
+                                    StartCoroutine(enemy.GetComponent<EnemyShipControl>().CheckShot(target));
+                                }
+                                
+                            }
+
                             instX = player.transform.position.x; //set the x position of the instatiation equal to the player's current x position
                             instY = player.transform.position.y; //set the y position of the instatiation equal to the player's current x position
                             laserSpwanMod = Vector3.Normalize(player.transform.position - ray.origin); //calculate a vector that points between the target and the player, then normalize it

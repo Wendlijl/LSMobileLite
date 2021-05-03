@@ -96,8 +96,19 @@ public class MovementController : MonoBehaviour
                 clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
+
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (GameObject enemy in enemies) //loop through the list of any enemies currently in the scene and destroy them
+                {
+                    if (!enemy.GetComponent<EnemyShipControl>().CheckShotRunning)
+                    {
+                        enemy.GetComponent<EnemyShipControl>().CheckDisplayRange(clickCellPosition);
+                    }
+
+                }
+
                 //Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-                //Debug.Log("Clicked on "+clickCellPosition);
+                Debug.Log("Clicked on "+clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
                 int i = 1;

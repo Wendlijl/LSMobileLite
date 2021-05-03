@@ -102,9 +102,9 @@ public class TutorialManager : MonoBehaviour
     {
         if (!explainedMining)
         {
+            explainedMining = true;
             if(planetName== "Planet7(Clone)")
             {
-                explainedMining = true;
                 flowchart.ExecuteBlock("Tutorial6");
             }
             else
