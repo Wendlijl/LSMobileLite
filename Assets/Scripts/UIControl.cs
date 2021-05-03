@@ -588,8 +588,8 @@ public class UIControl : MonoBehaviour
 
     public void SetPlayerTurnIndicators()
     {
-        abilityUsedIcon.SetActive(abilityController.abilityUsed);
-        moveUsedIcon.SetActive(movementController.hasMoved);
+        abilityUsedIcon.SetActive(abilityController.AbilityUsed);
+        moveUsedIcon.SetActive(movementController.HasMoved);
     }
 
     public void Pause()

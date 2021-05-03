@@ -10,7 +10,7 @@ public class AbilityController : MonoBehaviour
     public int jumpRange = 3;
     public int maxJumpRange;
     public bool weaponState;
-    public bool abilityUsed;
+    private bool abilityUsed;
     public bool jumpState;
     public bool shieldState;
     public int shieldBoostRechargeTime = 5;
@@ -46,6 +46,8 @@ public class AbilityController : MonoBehaviour
 
     private float timer;
     private bool turnOffAb;
+
+    public bool AbilityUsed { get { return abilityUsed; } set { abilityUsed = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -136,7 +138,7 @@ public class AbilityController : MonoBehaviour
                     uiController.SetJumpCharge(jumpRange,maxJumpRange);
                     if (turnManager.combatActive)
                     {
-                        movementController.hasMoved = true;
+                        movementController.HasMoved = true;
                         uiController.SetEndTurnButtonState();
                     }
                     turnManager.StartCoroutine(turnManager.UpdateTurn());
@@ -179,7 +181,7 @@ public class AbilityController : MonoBehaviour
                 //Debug.Log("set true at Ab con 156");
                 abilityUsed = true;
                 turnManager.StartCoroutine(turnManager.UpdateTurn());
-                if (turnManager.combatActive && movementController.hasMoved)
+                if (turnManager.combatActive && movementController.HasMoved)
                 {
                     uiController.SetEndTurnButtonState();
                 }

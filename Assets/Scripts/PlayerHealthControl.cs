@@ -127,14 +127,14 @@ public class PlayerHealthControl : MonoBehaviour
             {
                 currentPlayerShields = currentPlayerShields + shieldIncrease;
                 uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
-                abilityController.abilityUsed = true;
+                abilityController.AbilityUsed = true;
             }
         }
         else
         {
             if (currentPlayerShields < maxPlayerShields)
             {
-                abilityController.abilityUsed = true;
+                abilityController.AbilityUsed = true;
                 currentPlayerShields = currentPlayerShields + shieldIncrease;
                 uiControl.SetHealthState(MaxPlayerHealth, currentPlayerHealth, maxPlayerShields, currentPlayerShields);
             }

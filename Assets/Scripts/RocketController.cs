@@ -62,9 +62,9 @@ public class RocketController : MonoBehaviour
             alreadyUsed = true;
             abilityController.RocketsActive();
             //Debug.Log("set true at rocket 55");
-            abilityController.abilityUsed = true;
+            abilityController.AbilityUsed = true;
             turnManager.StartCoroutine(turnManager.UpdateTurn());
-            if(turnManager.combatActive && movementController.hasMoved)
+            if(turnManager.combatActive && movementController.HasMoved)
             {
                 uiController.SetEndTurnButtonState();
             }
@@ -77,9 +77,9 @@ public class RocketController : MonoBehaviour
         {
             abilityController.RocketsActive();
             //Debug.Log("set true at rocket 69");
-            abilityController.abilityUsed = true;
+            abilityController.AbilityUsed = true;
             turnManager.StartCoroutine(turnManager.UpdateTurn());
-            if (turnManager.combatActive && movementController.hasMoved)
+            if (turnManager.combatActive && movementController.HasMoved)
             {
                 uiController.SetEndTurnButtonState();
             }

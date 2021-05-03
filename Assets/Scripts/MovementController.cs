@@ -21,7 +21,7 @@ public class MovementController : MonoBehaviour
     public Vector3 setAngleVector; //variable to hold the player ship directional angle
 
 
-    public bool hasMoved; //variable to check for whether movement has happened yet
+    private bool hasMoved; //variable to check for whether movement has happened yet
     private bool cantMove;
     private bool longMoveRunning=false;
     private float sidewaysMovement; //varaible to define sideways movement of player
@@ -44,6 +44,7 @@ public class MovementController : MonoBehaviour
     public bool MovementState { get { return movementState; } set { movementState = value; } }
 
     public int MoveCount { get { return moveCount; } set { moveCount = value; } }
+    public bool HasMoved { get { return hasMoved; } set { hasMoved = value; } }
 
     void Start()
     {
@@ -258,7 +259,7 @@ public class MovementController : MonoBehaviour
         if (regularMove)
         {
             hasMoved = true;
-            if (turnManager.combatActive && abilityController.abilityUsed)
+            if (turnManager.combatActive && abilityController.AbilityUsed)
             {
                 uiController.SetEndTurnButtonState();
             }

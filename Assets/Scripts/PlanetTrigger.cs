@@ -10,6 +10,7 @@ public class PlanetTrigger : MonoBehaviour
     public int totalResourceCount;
     private int planetResourceAmount;
     private GameObject gameController;
+    private GameObject player;
     private GameObject currentPlanet;
     private UIControl uiController; //variable to store a reference to the UIControl script 
     private TurnManager turnManager; //variable to store a reference to the TurnManager script 
@@ -19,6 +20,7 @@ public class PlanetTrigger : MonoBehaviour
     private TutorialManager tutorialManager;
     private GridLayout gridLayout;
     private MovementController movementController;
+    private AbilityController abilityController;
 
     public bool PlanetState { get { return planetState; } set { planetState = value; } }
     
@@ -31,13 +33,15 @@ public class PlanetTrigger : MonoBehaviour
         planetResourceAmount = 0;
         planetState = true;
         gameController = GameObject.Find("GameController");
+        player = GameObject.Find("Player");
         tutorialManager = gameController.GetComponent<TutorialManager>();
         uiController = gameController.GetComponent<UIControl>(); //get a reference to the UIControl script
         turnManager = gameController.GetComponent<TurnManager>(); //get a reference to the UIControl script
         mapManager = gameController.GetComponent<ManageMap>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         //uiController.SetResourceCount(totalResourceCount, false);
-        movementController = GameObject.Find("Player").GetComponent<MovementController>();
+        movementController = player.GetComponent<MovementController>();
+        abilityController = player.GetComponent<AbilityController>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -131,6 +135,8 @@ public class PlanetTrigger : MonoBehaviour
     {
         if (planetState)
         {
+            movementController.HasMoved = false;
+            abilityController.AbilityUsed = false;
             Debug.Log(planetName);
             //Debug.Log("The resources have been collected from this planet --> "+currentPlanet.GetComponent<PlanetController>().ResourcesCollectd);
             Vector3Int currentPlanetCell = gridLayout.WorldToCell(currentPlanet.transform.position);

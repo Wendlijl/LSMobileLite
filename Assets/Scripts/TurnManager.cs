@@ -68,7 +68,7 @@ public class TurnManager : MonoBehaviour
 
         if (combatActive)
         {
-            if (playerTurn && abilityController.abilityUsed && movementController.hasMoved)
+            if (playerTurn && abilityController.AbilityUsed && movementController.HasMoved)
             {
                 if (abilityController.laserRange < resourceAndUpgradeManager.CurrentMaxLaserRange)
                 {
@@ -107,8 +107,8 @@ public class TurnManager : MonoBehaviour
                 //Debug.Log("Update UI. Reset player controls");
                 //Debug.Log("TM 74");
                 //
-                movementController.hasMoved = false;
-                abilityController.abilityUsed = false;
+                movementController.HasMoved = false;
+                abilityController.AbilityUsed = false;
                 StartCoroutine("OrderEnemyTurns");
             }
             else if (enemyTurn)
@@ -130,8 +130,8 @@ public class TurnManager : MonoBehaviour
             uiController.SetJumpCharge(abilityController.jumpRange, resourceAndUpgradeManager.CurrentMaxJumpRange);
             uiController.SetRocketReloadState(abilityController.currentRocketReloadAmount, abilityController.rocketReloadTime);
             uiController.SetShieldBoostRechargeState(abilityController.currentShieldBoostCharge, abilityController.shieldBoostRechargeTime);
-            movementController.hasMoved = false;
-            abilityController.abilityUsed = false;
+            movementController.HasMoved = false;
+            abilityController.AbilityUsed = false;
             playerHealthControl.RestoreShields();
             mapManager.ClearHighlighting();
             if (mapManager.saveName == "TutorialFile")
@@ -145,8 +145,8 @@ public class TurnManager : MonoBehaviour
 
     public void EndPlayerTurnButton()
     {
-        abilityController.abilityUsed = true;
-        movementController.hasMoved = true;
+        abilityController.AbilityUsed = true;
+        movementController.HasMoved = true;
         StartCoroutine(UpdateTurn());
         //Debug.Log("TM 102");
     }
