@@ -13,14 +13,11 @@ public class EnemyShipControl : MonoBehaviour
     public bool highlightEnabled;
     public GameObject enemyLaser;
 
-    private bool laserState; //Boolean to represent whether the laser ability is active
     private bool shotIncoming; //Boolean to track if the laser animation is running
-    private bool inRagne; //Boolean to track if this enemy is currently in range of the player 
     private bool inFlats;
     private bool runAway;
     private bool checkShotRunning;
 
-    private float timer; //A timer for tracking the life of the laser shot
     public string thisEnemyName;
     private GameObject player; //Variable to hold an instance of the player game object
     private GameObject gameController;
@@ -43,16 +40,13 @@ public class EnemyShipControl : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store the player game object
         gameController = GameObject.Find("GameController");
         abilityController = player.GetComponent<AbilityController>(); //Access and store the ability controller
-        laserState = player.GetComponent<AbilityController>().laserState; //Access and store the initial state of the laser ability
         highlightEnabled = false;
         mapManager = gameController.GetComponent<ManageMap>(); //Access and store a reference to the map manager script
         clickManager = gameController.GetComponent<ClickManager>(); //Access and store a reference to the click manager script
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         tutorialManager = gameController.GetComponent<TutorialManager>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
-        inRagne = false; //Set the initial state of the Boolean tracking range to the player
         shotIncoming = false; //Set the initial state of the laser animation
-        timer = 0; //Set the initial value for the timer tracking the laser lifespan
         string clone = "(Clone)";
         thisEnemyName = gameObject.name;
         thisEnemyName = thisEnemyName.Replace(clone, "");
@@ -60,53 +54,6 @@ public class EnemyShipControl : MonoBehaviour
         //thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyName);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-     //   //The following Operation is to determine if this enemy should be destroyed
-     //   laserState = player.GetComponent<AbilityController>().laserState; //On each frame, set the state of the laser ability
-     //   if (clickManager.mouseClicked || shotIncoming) //This operation is initiated by the player clicking the fire button. If the previous loop determined that a laser shot would hit this enemy, then the loop is held open throughout the entire laser animation using the shotIncoming Boolean
-     //   {
-     //       //Debug.Log("Enemy heard the click");
-     //       //Debug.Log("Enemy cell is "+enemyCellPosition);
-     //       //Debug.Log("player target is "+player.GetComponent<AbilityController>().target);
-     //       //Debug.Log("Enemy heard the click");
-     //       if (enemyCellPosition == player.GetComponent<AbilityController>().target || shotIncoming) //This checks if the cell clicked by the player contains this enemy
-     //       {
-     //           //Debug.Log("Enemy is the target");
-     //           if (!laserState && !shotIncoming && !abilityController.abilityActive)
-     //           {
-     //               //Debug.Log("Enemy display range");
-     //               mapManager.ShowFlats(thisEnemyName, enemyCellPosition, gameObject);
-     //           }
-     //           else if (laserState || shotIncoming) //This checks if the laser ability is active when the player clicks the mouse. shotIncoming holds the loop open if an incoming laser is going to hit this enemy
-     //           {
-     //               //Debug.Log("Enemy checking in range");
-     //               foreach (Vector3Int highLightedCell in mapManager.currentHighlightedTiles) //This loops through the list of highlighted cells that the player sees to indicate their laser range. 
-     //               {
-     //                   if (highLightedCell == player.GetComponent<AbilityController>().target) //Checks that this enemy is within the range defined by the highlighted cells shown to the player
-     //                   {
-     //                       inRagne = true; //Sets the inRange Boolean true 
-     //                   }
-     //               }
-     //
-     //               if (inRagne&&abilityController.weaponState) //If the inRange Boolean is true then set shot incoming to true and start a timer to determine when to destroy this enemy
-     //               {
-     //                   //Debug.Log("Enemy destroyed");
-     //                   shotIncoming = true;
-     //                   timer += Time.deltaTime;
-     //                   if (timer > 0.3)
-     //                   {
-     //                       //Once the timer has reached the determined length of the laser lifespan, create an instance of the explosion animation, destroy this game object, and set the shotIncoming and inRange values to false.
-     //                       DestroySelf(true);
-     //                       shotIncoming = false;
-     //                       inRagne = false;
-     //                   }
-     //               }
-     //           }
-     //       }
-     //   }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -136,7 +83,6 @@ public class EnemyShipControl : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             DestroySelf(true);
             shotIncoming = false;
-            inRagne = false;
         }
         CheckShotRunning = false;
         yield return null;

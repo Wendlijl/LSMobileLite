@@ -69,7 +69,7 @@ public class TutorialManager : MonoBehaviour
 
             if (readyToExplainWarpGate && !explainedWarpGate)
             {
-                if (mapManager.HexCellDistance(mapManager.evenq2cube(gridLayout.WorldToCell(player.transform.position)), mapManager.evenq2cube(gridLayout.WorldToCell(starGate.transform.position))) < 2)
+                if (mapManager.HexCellDistance(mapManager.evenq2cube(gridLayout.WorldToCell(player.transform.position)), mapManager.evenq2cube(gridLayout.WorldToCell(starGate.transform.position))) < 3)
                 {
                     ExplainWarpGate();
                 }
