@@ -43,7 +43,7 @@ public class MouseControls : MonoBehaviour
                 movementController.playerCellPosition = gridLayout.WorldToCell(playerTransform.position);
                 playerTransform.position = gridLayout.CellToWorld(movementController.playerCellPosition);
                 //Debug.Log("Adj Player Transform: " + playerTransform.position);
-                mapManager.UpdateFogOfWar(movementController.vision,movementController.playerCellPosition);
+                mapManager.UpdateFogOfWar(movementController.Vision,movementController.playerCellPosition);
                 //Debug.Log("Player Cell Position: " + gridLayout.CellToWorld(movementController.playerCellPosition));
             }
         }

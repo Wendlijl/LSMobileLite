@@ -416,6 +416,7 @@ public class UIControl : MonoBehaviour
     public void StartNewLevel()
     {
         resourceAndUpgradeManager.SolarSystemNumber++;
+        resourceAndUpgradeManager.ThreatLevel = 0;
         resourceAndUpgradeManager.SaveResourceAndUpgradeData();
         mapManager.Delete();
         SceneManager.LoadScene(1);

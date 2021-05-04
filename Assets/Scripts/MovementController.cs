@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
 public class MovementController : MonoBehaviour
 {
     // private PlayerControls playerControls; //Create a variable to hold an instance of the player controls
-    public int vision = 1; //variable to determine player view range
+    private int vision = 1; //variable to determine player view range
     public int moveRange = 1; //variable to control how far the player can move
     public float moveScale = 1; //variable to allow scaling of player movement
     public bool abilityActive; //boolean to indicate when abilities are active
@@ -40,6 +40,9 @@ public class MovementController : MonoBehaviour
     private TurnManager turnManager;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private GameObject gameController;
+
+
+    public int Vision { get { return vision; } set { vision = value; } }
 
     public bool MovementState { get { return movementState; } set { movementState = value; } }
 

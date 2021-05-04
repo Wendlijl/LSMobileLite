@@ -16,6 +16,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private UIControl uiController;
     private ManageMap mapManager;
     private TutorialManager tutorialManager;
+    private GridLayout gridlayout;
 
     private string resourceAndUpgradeDataSaveFileName = "resourceAndUpgradeDataSaveFile";
     private int solarSystemNumber=1;
@@ -141,6 +142,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         tutorialManager = gameController.GetComponent<TutorialManager>();
         uiController.SetResourceCount(resources);
 
+        gridlayout = GameObject.Find("Grid").GetComponent<GridLayout>();
+
 
         if(mapManager.saveName == "TutorialFile")
         {
@@ -193,7 +196,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             abilityController.rocketReloadTime = currentMaxRocketReload;
             abilityController.maxJumpRange = currentMaxJumpRange;
             abilityController.shieldBoostRechargeTime = CurrentMaxShieldBoostRecharge;
-            movementController.vision = CurrentMaxSensorRange;
+            movementController.Vision = CurrentMaxSensorRange;
+            mapManager.UpdateFogOfWar(CurrentMaxSensorRange, gridlayout.WorldToCell(player.transform.position));
 
             playerHealthControl.currentPlayerHealth = instReader.Read<int>("currentHealth");
             playerHealthControl.currentPlayerShields = instReader.Read<int>("currentShields");
@@ -617,7 +621,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
                 sensorRangeUpgradeCost += 300;
             }
             
-            movementController.vision = CurrentMaxSensorRange;
+            movementController.Vision = CurrentMaxSensorRange;
+            mapManager.UpdateFogOfWar(CurrentMaxSensorRange, gridlayout.WorldToCell(player.transform.position));
             uiController.SetResourceCount(Resources);
             uiController.SetUpgradeButtons();
             SaveResourceAndUpgradeData();
