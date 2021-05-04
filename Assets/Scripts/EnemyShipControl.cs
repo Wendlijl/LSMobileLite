@@ -74,8 +74,6 @@ public class EnemyShipControl : MonoBehaviour
     public IEnumerator CheckShot(Vector3Int playerTarget)
     {
         CheckShotRunning = true;
-        Debug.Log("Enemy cell is " + enemyCellPosition);
-        Debug.Log("Target cell is " + playerTarget);
         if (enemyCellPosition == playerTarget)
         {
             //Debug.Log("Enemy destroyed");
@@ -122,7 +120,6 @@ public class EnemyShipControl : MonoBehaviour
                 Debug.Log(thisEnemyName +" is "+ distToRocket+" hexes from a rocket");
                 if (distToRocket < resourceAndUpgradeManager.CurrentMaxRocketYield+2)
                 {
-                    Debug.Log(thisEnemyName + " needs to get out of here!");
                     runAway = true;
                 }
             }

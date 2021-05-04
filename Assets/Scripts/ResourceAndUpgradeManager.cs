@@ -632,4 +632,12 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             }
         }
     }
+
+    public void AdjustThreatLevel(int threat)
+    {
+        if (ThreatLevel < 1)
+        {
+            ThreatLevel += 0.0001f * threat;
+        }
+    }
 }

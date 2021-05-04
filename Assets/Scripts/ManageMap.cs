@@ -715,54 +715,62 @@ public class ManageMap : MonoBehaviour
 
     public void ContextualSpawnEnemies()
     {
-        List<int> allowedEnemies = new List<int>() { 0, 1 };
-        if (resourceAndUpgradeManager.TotalResources < 500)
+
+        int maxEnemies;
+        int solarSystemNumber;
+        if (QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName))
         {
-            SpawnEnemies(2, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>500 && resourceAndUpgradeManager.TotalResources < 1000)
-        {
-            SpawnEnemies(4, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>1000 && resourceAndUpgradeManager.TotalResources < 1500)
-        {
-            SpawnEnemies(8, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>1500 && resourceAndUpgradeManager.TotalResources < 2000)
-        {
-            SpawnEnemies(12, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>2000 && resourceAndUpgradeManager.TotalResources < 3000)
-        {
-            SpawnEnemies(15, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>3000 && resourceAndUpgradeManager.TotalResources < 4000)
-        {
-            SpawnEnemies(20, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>4000 && resourceAndUpgradeManager.TotalResources < 5000)
-        {
-            SpawnEnemies(30, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>5000 && resourceAndUpgradeManager.TotalResources < 10000)
-        {
-            SpawnEnemies(40, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>10000 && resourceAndUpgradeManager.TotalResources < 15000)
-        {
-            SpawnEnemies(50, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>20000 && resourceAndUpgradeManager.TotalResources < 30000)
-        {
-            SpawnEnemies(60, true, allowedEnemies);
-        }
-        else if(resourceAndUpgradeManager.TotalResources>40000 && resourceAndUpgradeManager.TotalResources < 50000)
-        {
-            SpawnEnemies(70, true, allowedEnemies);
+            QuickSaveReader instReader = QuickSaveReader.Create(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName);
+            solarSystemNumber = instReader.Read<int>("solarSystemNumber");
         }
         else
         {
-            SpawnEnemies(80, true, allowedEnemies);
+            solarSystemNumber = 1;
+        }
+
+        switch (solarSystemNumber)
+        {
+            case 1:
+                maxEnemies = 10;
+                break;
+            case 2:
+                maxEnemies = 12;
+                break;
+            case 3:
+                maxEnemies = 15;
+                break;
+            case 4:
+                maxEnemies = 17;
+                break;
+            case 5:
+                maxEnemies = 20;
+                break;
+            case 6:
+                maxEnemies = 22;
+                break;
+            case 7:
+                maxEnemies = 25;
+                break;
+            case 8:
+                maxEnemies = 27;
+                break;
+            case 9:
+                maxEnemies = 30;
+                break;
+            default:
+                maxEnemies = 35;
+                break;
+        }
+
+        List<int> allowedEnemies = new List<int>() { 0, 1 };
+
+        if (resourceAndUpgradeManager.ThreatLevel <= 0.2)
+        {
+            //SpawnEnemies(2, true, allowedEnemies);
+        }
+        else
+        {
+            SpawnEnemies(Mathf.RoundToInt(maxEnemies*resourceAndUpgradeManager.ThreatLevel), true, allowedEnemies);
         }
     }
 

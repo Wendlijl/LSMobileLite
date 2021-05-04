@@ -147,7 +147,7 @@ public class MovementController : MonoBehaviour
                     StopCoroutine(MoveLongerDistance());
                     MovePlayer(clickCellPosition, true);
                     MoveCount++;
-                    AdjustThreatLevel(MoveCount);
+                    resourceAndUpgradeManager.AdjustThreatLevel(MoveCount);
                     uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
 
                     if (turnManager.combatActive)
@@ -189,7 +189,7 @@ public class MovementController : MonoBehaviour
             }
             MovePlayer(nearestNeighbourToTarget, false);
             MoveCount++;
-            AdjustThreatLevel(MoveCount);
+            resourceAndUpgradeManager.AdjustThreatLevel(MoveCount);
             uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
             if (!movementState)
             {
@@ -209,14 +209,6 @@ public class MovementController : MonoBehaviour
     public void EnableMovement()
     {
         MovementState = true;
-    }
-
-    public void AdjustThreatLevel(int threat)
-    {
-        if (resourceAndUpgradeManager.ThreatLevel < 1)
-        {
-            resourceAndUpgradeManager.ThreatLevel += 0.001f*threat;
-        }
     }
 
     public void GetMovementDirection()
