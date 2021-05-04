@@ -180,8 +180,8 @@ public class EnemyShipControl : MonoBehaviour
                         List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
-                        Vector3Int furthestFromRocket = new Vector3Int(0, 0, 0);
-                        int furthestFromRocketdist = 100;
+                        Vector3Int furthestFromRockets = new Vector3Int(0, 0, 0);
+                        int sumFurthestFromRocketsDist = 0;
                         int i = 1;
                         foreach (Vector3Int neighbour in neighbours)
                         {
@@ -192,8 +192,8 @@ public class EnemyShipControl : MonoBehaviour
 
                                 if (rockets.Length > 0)
                                 {
-                                    furthestFromRocket = neighbour;
-                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                    furthestFromRockets = neighbour;
+                                    sumFurthestFromRocketsDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
                                 }
                             }
                             else
@@ -203,10 +203,16 @@ public class EnemyShipControl : MonoBehaviour
                                     shortestMove = neighbour;
                                     shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(nearestEndFlat));
                                 }
-                                if (rockets.Length>0 && mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)))>furthestFromRocketdist)
+
+                                int thisSumFurthestFromRocketsDist = 0;
+                                foreach (GameObject rocket in rockets)
                                 {
-                                    furthestFromRocket = neighbour;
-                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                    thisSumFurthestFromRocketsDist += mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rocket.transform.position)));
+                                }
+                                if (thisSumFurthestFromRocketsDist> sumFurthestFromRocketsDist)
+                                {
+                                    furthestFromRockets = neighbour;
+                                    sumFurthestFromRocketsDist = thisSumFurthestFromRocketsDist;
                                 }
 
                             }
@@ -223,8 +229,8 @@ public class EnemyShipControl : MonoBehaviour
 
                         if (runAway)
                         {
-                            SetOrientation(gridLayout.CellToWorld(furthestFromRocket));
-                            transform.position += (gridLayout.CellToWorld(furthestFromRocket) - gridLayout.CellToWorld(enemyCellPosition));
+                            SetOrientation(gridLayout.CellToWorld(furthestFromRockets));
+                            transform.position += (gridLayout.CellToWorld(furthestFromRockets) - gridLayout.CellToWorld(enemyCellPosition));
                         }
                         else
                         {
@@ -248,8 +254,8 @@ public class EnemyShipControl : MonoBehaviour
                         List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
-                        Vector3Int furthestFromRocket = new Vector3Int(0, 0, 0);
-                        int furthestFromRocketdist = 100;
+                        Vector3Int furthestFromRockets = new Vector3Int(0, 0, 0);
+                        int sumFurthestFromRocketsDist = 0;
                         int i = 1;
                         foreach (Vector3Int neighbour in neighbours)
                         {
@@ -260,8 +266,8 @@ public class EnemyShipControl : MonoBehaviour
 
                                 if (rockets.Length > 0)
                                 {
-                                    furthestFromRocket = neighbour;
-                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                    furthestFromRockets = neighbour;
+                                    sumFurthestFromRocketsDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
                                 }
                             }
                             else
@@ -271,10 +277,16 @@ public class EnemyShipControl : MonoBehaviour
                                     shortestMove = neighbour;
                                     shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
                                 }
-                                if (rockets.Length > 0 && mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position))) > furthestFromRocketdist)
+
+                                int thisSumFurthestFromRocketsDist = 0;
+                                foreach (GameObject rocket in rockets)
                                 {
-                                    furthestFromRocket = neighbour;
-                                    furthestFromRocketdist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                    thisSumFurthestFromRocketsDist += mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rocket.transform.position)));
+                                }
+                                if (thisSumFurthestFromRocketsDist > sumFurthestFromRocketsDist)
+                                {
+                                    furthestFromRockets = neighbour;
+                                    sumFurthestFromRocketsDist = thisSumFurthestFromRocketsDist;
                                 }
                             }
                             i++;
@@ -291,8 +303,8 @@ public class EnemyShipControl : MonoBehaviour
 
                         if (runAway)
                         {
-                            SetOrientation(gridLayout.CellToWorld(furthestFromRocket));
-                            transform.position += (gridLayout.CellToWorld(furthestFromRocket) - gridLayout.CellToWorld(enemyCellPosition));
+                            SetOrientation(gridLayout.CellToWorld(furthestFromRockets));
+                            transform.position += (gridLayout.CellToWorld(furthestFromRockets) - gridLayout.CellToWorld(enemyCellPosition));
                         }
                         else
                         {

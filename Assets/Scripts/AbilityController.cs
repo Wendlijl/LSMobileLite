@@ -295,7 +295,7 @@ public class AbilityController : MonoBehaviour
             rocketState = !rocketState;
             //player.GetComponent<MovementController>().abilityActive = rocketState;
             abilityActive = rocketState;
-            playerFlats = mapManager.GetFlats(rocketRange, playerHex, false);
+            playerFlats = mapManager.GetFlats(rocketRange, gridLayout.WorldToCell(player.transform.position), false);
             mapManager.HighlightSet(playerFlats, rocketState);
         }
         
@@ -316,7 +316,7 @@ public class AbilityController : MonoBehaviour
         {
             RocketsActive();
         }
-
+        //Debug.Log("ability checkpoints: Player turn -"+ turnManager.playerTurn +"; Weapon state - "+ weaponState + "; Ability used - " + abilityUsed + "; Combat active - " + turnManager.combatActive);
         if (turnManager.playerTurn && weaponState && !abilityUsed && turnManager.combatActive)
         {
             jumpState = !jumpState;
@@ -330,8 +330,9 @@ public class AbilityController : MonoBehaviour
                 for (int y = -jumpRange; y <= jumpRange; y++) //iterate through the range of the laser to generate the y coordindates
                 {
                     Vector3Int tempCell = movementController.playerCellPosition + new Vector3Int(x, y, 0);
-                    float hexCellDistance = mapManager.HexCellDistance(movementController.playerCellPositionCubeCoords, mapManager.evenq2cube(tempCell));
+                    float hexCellDistance = mapManager.HexCellDistance(mapManager.evenq2cube(gridLayout.WorldToCell(player.transform.position)), mapManager.evenq2cube(tempCell));
                     bool cellUnavailable = false;
+                    //Debug.Log("hex cell distance " + hexCellDistance);
                     if (hexCellDistance <= jumpRange)
                     {
                         foreach (GameObject enemy in enemies)
@@ -353,7 +354,6 @@ public class AbilityController : MonoBehaviour
 
                 }
             }
-
             mapManager.HighlightSet(jumpCells, jumpState);
             //Debug.Log("Jump cell count is " + jumpCells.Count);
             //Debug.Log("jump range is " + jumpRange);
