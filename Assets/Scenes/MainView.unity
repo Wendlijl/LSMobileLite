@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.6
+  m_fontSize: 11.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2311,6 +2311,7 @@ RectTransform:
   - {fileID: 838638762}
   - {fileID: 985119670}
   - {fileID: 1434753606}
+  - {fileID: 1740787127}
   - {fileID: 1177308797}
   - {fileID: 1380993270}
   - {fileID: 2017080808}
@@ -2318,7 +2319,6 @@ RectTransform:
   - {fileID: 455547239}
   - {fileID: 277510478}
   - {fileID: 606961899}
-  - {fileID: 1740787127}
   - {fileID: 1775281850}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -3577,7 +3577,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.75
+  m_fontSize: 13.95
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7946,7 +7946,6 @@ MonoBehaviour:
   jumpRange: 0
   maxJumpRange: 0
   weaponState: 0
-  abilityUsed: 0
   jumpState: 0
   shieldState: 0
   shieldBoostRechargeTime: 0
@@ -7972,7 +7971,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d07b143fb51a24f80af2eb7d53cbc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planetState: 0
   totalResourceCount: 0
 --- !u!114 &1326505864
 MonoBehaviour:
@@ -7986,17 +7984,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d5152ba390532d49ab9439738184780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vision: 1
   moveRange: 1
   moveScale: 0.25
   abilityActive: 0
-  movementState: 0
   fogOfWar: {fileID: 620458268}
   starField: {fileID: 1257805224}
   playerCellPosition: {x: 0, y: 0, z: 0}
   playerCellPositionCubeCoords: {x: 0, y: 0, z: 0}
   setAngleVector: {x: 0, y: 0, z: 0}
-  hasMoved: 0
 --- !u!82 &1326505865
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8333,7 +8328,6 @@ MonoBehaviour:
   levelIndex: 0
   hologramMenu: {fileID: 1177308796}
   pausePanel: {fileID: 985119669}
-  upgradePanel: {fileID: 0}
   newGameMessage: {fileID: 1068681562}
   starGateMessage: {fileID: 5748864713192715832, guid: cafa6207ad342b1408630d49299b8739,
     type: 3}
@@ -8771,7 +8765,7 @@ RectTransform:
   - {fileID: 2070752780}
   - {fileID: 539881300}
   m_Father: {fileID: 529752950}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0.1}
   m_AnchorMax: {x: 0.9, y: 0.9}
@@ -11694,7 +11688,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.35
+  m_fontSize: 10.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13245,7 +13239,7 @@ PrefabInstance:
     - target: {fileID: 185608460945257218, guid: 71c1ed092e17b13469e40f8515bf4ef1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 185608460945257218, guid: 71c1ed092e17b13469e40f8515bf4ef1,
         type: 3}
@@ -13419,7 +13413,7 @@ PrefabInstance:
     - target: {fileID: 248289585562115399, guid: fa05969eb0866ad42b70c70309b90ae6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 248289585562115399, guid: fa05969eb0866ad42b70c70309b90ae6,
         type: 3}
@@ -13918,7 +13912,7 @@ PrefabInstance:
     - target: {fileID: 876459432510431203, guid: 6b623ef67e0f72f488bf7e7b65558051,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 876459432510431203, guid: 6b623ef67e0f72f488bf7e7b65558051,
         type: 3}
@@ -14242,7 +14236,7 @@ PrefabInstance:
     - target: {fileID: 5724619612317364207, guid: 54ecc3cb4e2d6b04e8fa4acecfdee3d7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5724619612317364207, guid: 54ecc3cb4e2d6b04e8fa4acecfdee3d7,
         type: 3}
@@ -14522,7 +14516,7 @@ PrefabInstance:
     - target: {fileID: 5968862841946053606, guid: dba8906c668b050458dc0241806fa2ca,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5968862841946053606, guid: dba8906c668b050458dc0241806fa2ca,
         type: 3}
@@ -14656,7 +14650,7 @@ PrefabInstance:
     - target: {fileID: 6418846873009939026, guid: 88f5e89e5b670664090be64fa695199f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6418846873009939026, guid: 88f5e89e5b670664090be64fa695199f,
         type: 3}
@@ -14775,7 +14769,7 @@ PrefabInstance:
     - target: {fileID: 6833774986361232676, guid: 443f8c6276279ab4c8f55359b12a900c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6833774986361232676, guid: 443f8c6276279ab4c8f55359b12a900c,
         type: 3}
