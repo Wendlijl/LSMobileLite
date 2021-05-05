@@ -11,6 +11,7 @@ public class StarGateControl : MonoBehaviour
     private GridLayout gridLayout;
     private ManageMap mapManager;
     private TutorialManager tutorialManager;
+    private MovementController movementController;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class StarGateControl : MonoBehaviour
         uiController = gameController.GetComponent<UIControl>();
         mapManager = gameController.GetComponent<ManageMap>();
         tutorialManager = gameController.GetComponent<TutorialManager>();
-
+        movementController = GameObject.Find("Player").GetComponent<MovementController>();
         //Awake should run before anything else in the game
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Get and store reference to the grid object
 
@@ -28,7 +29,7 @@ public class StarGateControl : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!turnManager.combatActive && collision.gameObject.tag == "Player")
+        if (!turnManager.combatActive && collision.gameObject.tag == "Player" && movementController.ClickCellPosition == gridLayout.WorldToCell(transform.position))
         {
             if (mapManager.saveName == "TutorialFile")
             {

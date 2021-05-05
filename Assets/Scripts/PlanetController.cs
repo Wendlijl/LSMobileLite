@@ -8,6 +8,7 @@ public class PlanetController : MonoBehaviour
     private Vector3Int cellPosition; //Create a variable to store the cellPosition of the object
     private ManageMap mapManager;
     private bool resourcesCollected = false;
+    private GameObject planetMinedIcon;
     public bool ResourcesCollectd { get { return resourcesCollected; }set { resourcesCollected = value; } }
     void Awake()
     {
@@ -16,6 +17,8 @@ public class PlanetController : MonoBehaviour
         mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
         cellPosition = gridLayout.WorldToCell(transform.position); //Get the position of this object and convert it to the coordinates of the nearest hex
         transform.position = gridLayout.CellToWorld(cellPosition); //Take the coordinates of the nearest cell, convert them back to world coordinates and assign that position to this object. 
+        planetMinedIcon = transform.GetChild(0).gameObject;
+        planetMinedIcon.SetActive(false);
     }
     private void Start()
     {
@@ -27,5 +30,14 @@ public class PlanetController : MonoBehaviour
                 resourcesCollected = planet.resourcesCollected;
             }
         }
+        if (resourcesCollected)
+        {
+            PlanetMined();
+        }
+    }
+
+    public void PlanetMined()
+    {
+        planetMinedIcon.SetActive(true);
     }
 }

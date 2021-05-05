@@ -41,6 +41,8 @@ public class MovementController : MonoBehaviour
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private GameObject gameController;
 
+    public Vector3Int ClickCellPosition { get { return clickCellPosition; } set { clickCellPosition = value; } }
+
 
     public int Vision { get { return vision; } set { vision = value; } }
 

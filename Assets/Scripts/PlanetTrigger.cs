@@ -135,6 +135,7 @@ public class PlanetTrigger : MonoBehaviour
     {
         if (planetState)
         {
+            currentPlanet.GetComponent<PlanetController>().PlanetMined();
             movementController.HasMoved = false;
             abilityController.AbilityUsed = false;
             Debug.Log(planetName);
