@@ -526,8 +526,19 @@ public class ManageMap : MonoBehaviour
                 }
             }
         }
-        int randStarGateIndex = Random.Range(0, availableSpawnPoints.Count);
-        starGateSpawnPoint = availableSpawnPoints[randStarGateIndex];
+        List<Vector3Int> availableWarpGateSpawnPoints = GetNeighbours(new Vector3Int(0,0,0));
+        foreach(PlanetObject planet in spawnedPlanets)
+        {
+            foreach(Vector3Int spawnPoint in availableWarpGateSpawnPoints)
+            {
+                if (planet.xCoordinate == spawnPoint.x && planet.yCoordinate == spawnPoint.y)
+                {
+                    availableWarpGateSpawnPoints.Remove(spawnPoint);
+                }
+            }
+        }
+        int randStarGateIndex = Random.Range(0, availableWarpGateSpawnPoints.Count);
+        starGateSpawnPoint = availableWarpGateSpawnPoints[randStarGateIndex];
         Instantiate(starGate, starField.CellToWorld(starGateSpawnPoint),Quaternion.identity);
         Save();
     }
