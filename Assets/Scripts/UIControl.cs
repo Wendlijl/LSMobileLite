@@ -541,8 +541,15 @@ public class UIControl : MonoBehaviour
 
     public void SetThreatLevelSlider(float value)
     {
-        //Debug.Log(movementController.ThreatLevel);
-        threatLevelSlider.value = value;
+        if (mapManager.saveName == "TutorialFile" && !tutorialManager.ExplainedMining)
+        {
+            threatLevelSlider.value = 0f;
+        }
+        else
+        {
+            threatLevelSlider.value = value;
+        }
+
     }
 
     public void beginButtonStateCoroutine()

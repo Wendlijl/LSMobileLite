@@ -1292,7 +1292,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.4
+  m_fontSize: 11.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3971,7 +3971,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.05
+  m_fontSize: 18.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7126,6 +7126,12 @@ GameObject:
   - component: {fileID: 1003538901}
   - component: {fileID: 1003539022}
   - component: {fileID: 1003539021}
+  - component: {fileID: 1003539028}
+  - component: {fileID: 1003539027}
+  - component: {fileID: 1003539026}
+  - component: {fileID: 1003539025}
+  - component: {fileID: 1003539024}
+  - component: {fileID: 1003539023}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -7217,7 +7223,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.36364
     y: 70
-    width: 128.57141
+    width: 124.99997
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7249,11 +7255,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 345.82254, y: -757.6494}
+  scrollPos: {x: 412.826, y: -923.92004}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 280
-  zoom: 0.7000002
+  zoom: 0.6400003
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -7261,8 +7267,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1003539016}
-  selectedCommands: []
+  - {fileID: 1003538916}
+  selectedCommands:
+  - {fileID: 1003538914}
   variables:
   - {fileID: 1003538889}
   - {fileID: 1003538899}
@@ -7474,7 +7481,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196
     y: 178
-    width: 109.999985
+    width: 107.81247
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7562,7 +7569,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -28
     y: 170
-    width: 75.71428
+    width: 73.43749
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7617,7 +7624,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 40.838734
     y: 693.92267
-    width: 102.857124
+    width: 99.99998
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7741,7 +7748,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196.27567
     y: 605.4788
-    width: 117.14284
+    width: 115.62497
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7861,7 +7868,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -115.15278
     y: 608.33594
-    width: 122.85712
+    width: 118.74997
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7984,7 +7991,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.32022
     y: 486.11597
-    width: 102.857124
+    width: 99.99998
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8106,7 +8113,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 171.29893
     y: 380.18893
-    width: 109.999985
+    width: 106.24997
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8226,7 +8233,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -99.278534
     y: 391.58167
-    width: 111.42855
+    width: 107.81247
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8391,7 +8398,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 55.06185
     y: 265.43292
-    width: 101.42856
+    width: 98.43748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8910,7 +8917,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 34.7518
     y: 789.57465
-    width: 101.42856
+    width: 98.43748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9252,7 +9259,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -79.75803
     y: 899.12256
-    width: 101.42856
+    width: 98.43748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9334,7 +9341,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -96.49431
     y: 1138.899
-    width: 115.714264
+    width: 115.62497
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9390,7 +9397,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 181.55438
     y: 1133.4745
-    width: 167.14282
+    width: 157.81245
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9442,8 +9449,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 108
   indentLevel: 0
-  storyText: Well now you've done it! Good job kid you got the gate network guardians
-    all riled up!
+  storyText: Awe crap! That ship's threat detection system must be on the fritz again.
+    Now the gate network guardians are all riled up.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -9493,7 +9500,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 33.505703
     y: 1069.3867
-    width: 101.42856
+    width: 98.43748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9691,7 +9698,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 35.323895
     y: 1243.9323
-    width: 101.42856
+    width: 98.43748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9908,7 +9915,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 33.89532
     y: 1328.2185
-    width: 101.42856
+    width: 98.43748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9966,7 +9973,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 155.37845
     y: 1376.1635
-    width: 95.71427
+    width: 95.312485
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10022,7 +10029,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -141.99506
     y: 1376.2175
-    width: 164.28568
+    width: 156.24995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10216,7 +10223,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 36.376743
     y: 1467.7671
-    width: 107.14284
+    width: 104.68748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10332,7 +10339,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -214.41129
     y: 1558.8928
-    width: 137.14282
+    width: 132.81247
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10390,7 +10397,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 7.8961506
     y: 1564.6622
-    width: 184.28568
+    width: 181.24994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10531,7 +10538,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 264.42114
     y: 1567.1813
-    width: 174.28568
+    width: 171.87494
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10962,7 +10969,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 47.56828
     y: 1705.6456
-    width: 107.14284
+    width: 104.68748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11166,7 +11173,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.548805
     y: 1945.7808
-    width: 107.14284
+    width: 104.68748
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11369,7 +11376,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 41.48132
     y: 1799.9313
-    width: 108.57141
+    width: 106.24997
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11682,7 +11689,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 20.732128
     y: 1870.5603
-    width: 108.57141
+    width: 106.24997
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12244,7 +12251,7 @@ MonoBehaviour:
   itemId: 295
   indentLevel: 0
   storyText: This will let you land on planets or asteriods you find and collect
-    resources from them. Give it a try!
+    resources from them.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -12301,7 +12308,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.317919
     y: 975.0714
-    width: 109.999985
+    width: 107.81247
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12312,6 +12319,12 @@ MonoBehaviour:
   commandList:
   - {fileID: 1003539015}
   - {fileID: 1003539014}
+  - {fileID: 1003539028}
+  - {fileID: 1003539027}
+  - {fileID: 1003539026}
+  - {fileID: 1003539025}
+  - {fileID: 1003539024}
+  - {fileID: 1003539023}
   - {fileID: 1003539013}
   - {fileID: 1003539022}
   suppressAllAutoSelections: 0
@@ -12414,7 +12427,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 115.51117
     y: 899.70844
-    width: 109.999985
+    width: 106.24997
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12485,6 +12498,173 @@ MonoBehaviour:
   returnValueType: System.Void
   showInherited: 0
   callMode: 0
+--- !u!114 &1003539023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 309
+  indentLevel: 0
+  storyText: As you can see, your threat level is pretty low right now, so you're
+    fine to try out mining this planet. Give it a shot!
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003539024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 308
+  indentLevel: 0
+  storyText: 'Above that though, it will start throwing more and tougher enemies
+    your way to try and stop you. '
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003539025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 307
+  indentLevel: 0
+  storyText: 'As long as your threat level is low, say less than 20% or so, the network
+    should ignore you. '
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003539026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 306
+  indentLevel: 0
+  storyText: 'The more you poke around a system or mine planets, the more your threat
+    level will increase. '
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003539027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 305
+  indentLevel: 0
+  storyText: Any gate network system you fly to is going to be hostile towards you,
+    but only if it perceives you as a threat.
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1003539028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003538823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 304
+  indentLevel: 0
+  storyText: 'Before you do that though, let''s talk about system threat level. '
+  description: 
+  character: {fileID: 441710990}
+  portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
 --- !u!224 &1005155938 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6833774986361232676, guid: 443f8c6276279ab4c8f55359b12a900c,
@@ -15208,7 +15388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d5152ba390532d49ab9439738184780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vision: 1
   moveRange: 1
   moveScale: 0.25
   abilityActive: 0
@@ -18894,7 +19073,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 9.35
+  m_fontSize: 10.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

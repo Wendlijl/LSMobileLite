@@ -161,12 +161,6 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             abilityController.laserRange = currentMaxLaserRange;
             uiController.SetLaserCharge(abilityController.laserRange, currentMaxLaserRange);
         }
-        if(mapManager.saveName == "TutorialFile")
-        {
-            threatLevel = 0.21f;
-            uiController.SetThreatLevelSlider(threatLevel);
-
-        }
     }
 
     private void LoadResourceAndUpgradeData()

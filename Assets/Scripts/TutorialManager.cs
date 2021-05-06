@@ -15,6 +15,7 @@ public class TutorialManager : MonoBehaviour
     private ManageMap mapManager;
     private UIControl uiControl;
     private GridLayout gridLayout;
+    private ResourceAndUpgradeManager resourceAndUpgradeManager;
 
     private bool explainedMining;
     private bool explainedCombat;
@@ -28,7 +29,7 @@ public class TutorialManager : MonoBehaviour
     private bool readyToExplainUpgrades;
 
     public bool ReadyToExplainWarGate { get { return readyToExplainWarpGate; } set { readyToExplainWarpGate = value; } }
-
+    public bool ExplainedMining { get { return explainedMining; } }
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class TutorialManager : MonoBehaviour
         gameController = GameObject.Find("GameController");
         mapManager = gameController.GetComponent<ManageMap>();
         uiControl = gameController.GetComponent<UIControl>();
+        resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         explainedMining=false;
         explainedCombat=false;
 
@@ -119,6 +121,12 @@ public class TutorialManager : MonoBehaviour
     {
         if (!explainedCombat)
         {
+            if (resourceAndUpgradeManager.ThreatLevel < 0.21f)
+            {
+                resourceAndUpgradeManager.ThreatLevel = 0.21f;
+            }
+            uiControl.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
+            mapManager.ContextualSpawnEnemies();
             explainedCombat = true;
             flowchart.ExecuteBlock("Tutorial7");
         }
