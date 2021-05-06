@@ -451,7 +451,7 @@ public class ManageMap : MonoBehaviour
         */
         GameObject[] planets = GameObject.FindGameObjectsWithTag("Planet"); //create a list of any planets in the current scene
         GameObject[] starGates = GameObject.FindGameObjectsWithTag("StarGate");
-        List<GameObject> availablePlaents = new List<GameObject>() { planet0, planet1, planet2, planet3, planet4, planet5, planet6, planet7, planet8, planet9, planet10 }; //create a list of planets that can be used based on supplied prefabs
+        List<GameObject> availablePlanets = new List<GameObject>() { planet0, planet1, planet2, planet3, planet4, planet5, planet6, planet7, planet8, planet9, planet10 }; //create a list of planets that can be used based on supplied prefabs
         List<GameObject> allowablePlanets = new List<GameObject>(); //create a placeholder for a list that will define what planets the function is allowed to spawn
         List<Vector3Int> availableSpawnPoints = new List<Vector3Int>(); //create a placeholder for a list that will define where planets are allowed to spawn
         
@@ -469,7 +469,7 @@ public class ManageMap : MonoBehaviour
 
         foreach(int planet in allowedPlanets) //loop through the supplied list of allowed planets and build the list of planets that the function is allowed to spawn
         {
-            allowablePlanets.Add(availablePlaents[planet]);
+            allowablePlanets.Add(availablePlanets[planet]);
         }
 
         for (int x = spawnMinX; x <= spawnMaxX; x++) //This loop, and the one nested within it, are designed to populate the list of spawn points that can be used by the function
@@ -508,7 +508,8 @@ public class ManageMap : MonoBehaviour
                     planetName = planetName.Replace(clone, "");
                     if (planetName == "Planet10")
                     {
-                        availablePlaents.RemoveAt(randPlanetIndex); //Only ever allow 1 platinum planet to spawn
+                        Debug.Log("Removing plat planet");
+                        allowablePlanets.RemoveAt(randPlanetIndex); //Only ever allow 1 platinum planet to spawn
                     }
                     spawnedPlanets.Add(new PlanetObject(planetPosition.x, planetPosition.y, planetName,false));
                 }
@@ -527,16 +528,22 @@ public class ManageMap : MonoBehaviour
             }
         }
         List<Vector3Int> availableWarpGateSpawnPoints = GetNeighbours(new Vector3Int(0,0,0));
+        List<Vector3Int> unavailableWarpGateSpawnPoints = new List<Vector3Int>();
         foreach(PlanetObject planet in spawnedPlanets)
         {
             foreach(Vector3Int spawnPoint in availableWarpGateSpawnPoints)
             {
                 if (planet.xCoordinate == spawnPoint.x && planet.yCoordinate == spawnPoint.y)
                 {
-                    availableWarpGateSpawnPoints.Remove(spawnPoint);
+                    unavailableWarpGateSpawnPoints.Add(spawnPoint);
                 }
             }
         }
+        foreach(Vector3Int spawnPoint in unavailableWarpGateSpawnPoints)
+        {
+            availableWarpGateSpawnPoints.Remove(spawnPoint);
+        }
+
         int randStarGateIndex = Random.Range(0, availableWarpGateSpawnPoints.Count);
         starGateSpawnPoint = availableWarpGateSpawnPoints[randStarGateIndex];
         Instantiate(starGate, starField.CellToWorld(starGateSpawnPoint),Quaternion.identity);

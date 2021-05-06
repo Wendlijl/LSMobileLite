@@ -20,7 +20,7 @@ public class UIControl : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject victoryPanel;
     public Animator animator;
-    public float transitionTime=1;
+    public float transitionTime=2;
 
 
     private TMP_Text resourceTextDisplay;
@@ -269,6 +269,7 @@ public class UIControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q) && isPaused) //if the game is paused and the Q key is pressed, then quit the game
         {
+            UnPause();
             mapManager.Save();
             resourceAndUpgradeManager.SaveResourceAndUpgradeData();
             Quit();

@@ -8335,7 +8335,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 2017080807}
   victoryPanel: {fileID: 455547238}
   animator: {fileID: 1619951542}
-  transitionTime: 1
+  transitionTime: 2
 --- !u!4 &1352580154
 Transform:
   m_ObjectHideFlags: 0
