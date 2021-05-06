@@ -45,7 +45,7 @@ public class PlanetTrigger : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!turnManager.combatActive && planetState && collision.gameObject.tag=="Planet")
+        if (!turnManager.combatActive && planetState && collision.gameObject.tag=="Planet" && movementController.ClickCellPosition == gridLayout.WorldToCell(transform.position))
         {
             currentPlanet = collision.gameObject;
             uiController.ActivateLandOnPlanet(); //When over a planet, display the "Land" contextutal prompt
@@ -151,7 +151,7 @@ public class PlanetTrigger : MonoBehaviour
                 currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
                 mapManager.ContextualSpawnEnemies();
                 resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
-                resourceAndUpgradeManager.AdjustThreatLevel(1000);
+                resourceAndUpgradeManager.AdjustThreatLevel(500);
                 uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
             }
 

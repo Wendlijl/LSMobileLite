@@ -636,7 +636,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     {
         if (ThreatLevel < 1)
         {
-            ThreatLevel += 0.0001f * threat;
+            ThreatLevel += 0.00005f * threat;
         }
     }
 }
