@@ -19,6 +19,8 @@ public class UIControl : MonoBehaviour
     public GameObject starGateMessage;
     public GameObject gameOverPanel;
     public GameObject victoryPanel;
+    public Animator animator;
+    public float transitionTime=1;
 
 
     private TMP_Text resourceTextDisplay;
@@ -31,6 +33,7 @@ public class UIControl : MonoBehaviour
     private bool isPaused; //boolean used to track if the game is paused 
     private bool upgradeHologramActive;
     private bool upgradeState;
+    private bool quietSounds;
     public bool UpgradeState { get { return upgradeState; } set { upgradeState = value; } }
     private int sceneIndex; //variable used to hold the current scene index so that level can be restarted at any time
     private ManageMap mapManager;
@@ -95,6 +98,11 @@ public class UIControl : MonoBehaviour
     private GameObject abilityUsedIcon;
     private GameObject moveUsedIcon;
 
+    private AudioSource levelMusic;
+    private AudioSource playerShipSounds;
+    private float levelMusicVolume;
+    private float playerShipSoundsVolume;
+
 
 
     private void Awake()
@@ -111,10 +119,15 @@ public class UIControl : MonoBehaviour
         turnManager = gameController.GetComponent<TurnManager>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         tutorialManager = gameController.GetComponent<TutorialManager>();
+        levelMusic = gameController.GetComponent<AudioSource>();
         player = GameObject.Find("Player");
         abilityController = player.GetComponent<AbilityController>();
         playerHealthControl = player.GetComponent<PlayerHealthControl>();
         movementController = player.GetComponent<MovementController>();
+        playerShipSounds = player.GetComponent<AudioSource>();
+
+        levelMusicVolume = levelMusic.volume;
+        playerShipSoundsVolume = playerShipSounds.volume;
 
         resourceWarningMessage = GameObject.Find("AllResourcesCollectedWarningBackgroundImage");
         resourceWarningMessage.SetActive(false);
@@ -142,6 +155,7 @@ public class UIControl : MonoBehaviour
         playerTurnIcon.SetActive(false);
         enemyTurnIcon.SetActive(false);
         isPaused = false; //set the game pause state to false
+        quietSounds = false;
         sceneIndex = SceneManager.GetActiveScene().buildIndex; //get a reference to the current scene index
 
         rocketSlider = GameObject.Find("RocketReloadMeter").GetComponent<Slider>();
@@ -263,6 +277,77 @@ public class UIControl : MonoBehaviour
         {
             Restart();
         }
+
+        if (quietSounds)
+        {
+            if (levelMusic.volume > 0)
+            {
+                levelMusic.volume -= levelMusicVolume * Time.deltaTime / transitionTime;
+            }
+            if (playerShipSounds.volume > 0)
+            {
+                playerShipSounds.volume -= playerShipSoundsVolume * Time.deltaTime / transitionTime;
+            }
+        }
+    }
+
+    public void StartNewLevel()
+    {
+        resourceAndUpgradeManager.SolarSystemNumber++;
+        resourceAndUpgradeManager.ThreatLevel = 0;
+        resourceAndUpgradeManager.SaveResourceAndUpgradeData();
+        mapManager.Delete();
+        StartCoroutine(MakeSceneTransition(1));
+        //SceneManager.LoadScene(1);
+    }
+
+    public void Pause()
+    {
+        //this function controls the pause logic for the game, setting the pause boolean, calling the pause panel activation function, and freezing all action in the game
+        isPaused = true;
+        pausePanel.gameObject.SetActive(true);
+        Time.timeScale = 0.0f;
+    }
+    public void UnPause()
+    {
+        //this function controls the unpause logic for the game, setting the pause boolean, calling the pause panel deactivation function, and unfreezing all action in the game
+        isPaused = false;
+        pausePanel.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+    public void Restart()
+    {
+        //this function controls the reset level logic for the game, setting the pause boolean, pause panel activation, and game time appropriately, and then reloading the level using the scene manager
+        isPaused = false;
+        pausePanel.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
+        StartCoroutine(MakeSceneTransition(sceneIndex));
+        //SceneManager.LoadScene(sceneIndex);
+    }
+    public void Quit()
+    {
+        //this function controls the quit 
+        Time.timeScale = 1.0f;
+        StartCoroutine(MakeSceneTransition(0));
+        //SceneManager.LoadScene(0);
+    }
+
+    public void LoadMainMenu()
+    {
+        StartCoroutine(MakeSceneTransition(0));
+        //SceneManager.LoadScene(0);
+    }
+
+    public IEnumerator MakeSceneTransition(int desiredSceneIndex)
+    {
+        animator.SetTrigger("Start");
+        levelMusicVolume = levelMusic.volume;
+        playerShipSoundsVolume = playerShipSounds.volume;
+        quietSounds = true;
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(desiredSceneIndex);
     }
 
     public void SetFogOfWarState()
@@ -413,14 +498,7 @@ public class UIControl : MonoBehaviour
         }
     }
 
-    public void StartNewLevel()
-    {
-        resourceAndUpgradeManager.SolarSystemNumber++;
-        resourceAndUpgradeManager.ThreatLevel = 0;
-        resourceAndUpgradeManager.SaveResourceAndUpgradeData();
-        mapManager.Delete();
-        SceneManager.LoadScene(1);
-    }
+
 
     public void DestroyStarGateMessage()
     {
@@ -601,39 +679,6 @@ public class UIControl : MonoBehaviour
         moveUsedIcon.SetActive(movementController.HasMoved);
     }
 
-    public void Pause()
-    {
-        //this function controls the pause logic for the game, setting the pause boolean, calling the pause panel activation function, and freezing all action in the game
-        isPaused = true;
-        pausePanel.gameObject.SetActive(true);
-        Time.timeScale = 0.0f;
-    }
-    public void UnPause()
-    {
-        //this function controls the unpause logic for the game, setting the pause boolean, calling the pause panel deactivation function, and unfreezing all action in the game
-        isPaused = false;
-        pausePanel.gameObject.SetActive(false);
-        Time.timeScale = 1.0f;
-    }
-    public void Restart()
-    {
-        //this function controls the reset level logic for the game, setting the pause boolean, pause panel activation, and game time appropriately, and then reloading the level using the scene manager
-        isPaused = false;
-        pausePanel.gameObject.SetActive(false);
-        Time.timeScale = 1.0f;
-        SceneManager.LoadScene(sceneIndex);
-    }
-    public void Quit()
-    {
-        //this function controls the quit 
-        Time.timeScale = 1.0f;
-        SceneManager.LoadScene(0);
-    }
-
-    public void LoadMainMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
 
     public void SetGameOverPanelState()
     {
