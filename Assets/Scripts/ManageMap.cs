@@ -775,13 +775,10 @@ public class ManageMap : MonoBehaviour
 
         List<int> allowedEnemies = new List<int>() { 0, 1 };
 
-        if (resourceAndUpgradeManager.ThreatLevel <= 0.2)
+
+        if (resourceAndUpgradeManager.ThreatLevel >= 0.2)
         {
-            //SpawnEnemies(2, true, allowedEnemies);
-        }
-        else
-        {
-            SpawnEnemies(Mathf.RoundToInt(maxEnemies*resourceAndUpgradeManager.ThreatLevel), true, allowedEnemies);
+            SpawnEnemies(Mathf.RoundToInt(maxEnemies * resourceAndUpgradeManager.ThreatLevel), true, allowedEnemies);
         }
     }
 
