@@ -164,6 +164,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         if(mapManager.saveName == "TutorialFile")
         {
             threatLevel = 0.21f;
+            uiController.SetThreatLevelSlider(threatLevel);
+
         }
     }
 
