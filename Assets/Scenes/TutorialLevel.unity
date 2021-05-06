@@ -15882,7 +15882,7 @@ MonoBehaviour:
     type: 3}
   gameOverPanel: {fileID: 1222215994}
   victoryPanel: {fileID: 1971407458}
-  animator: {fileID: 0}
+  animator: {fileID: 1620102923}
   transitionTime: 2
 --- !u!4 &1352580154
 Transform:
@@ -18017,6 +18017,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607763924}
   m_CullTransparentMesh: 0
+--- !u!95 &1620102923 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6984032848573770195, guid: 3b13f7427c469af419c054b74ddabd3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 723060947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1643367263
 GameObject:
   m_ObjectHideFlags: 0
