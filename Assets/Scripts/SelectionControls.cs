@@ -10,15 +10,22 @@ public class SelectionControls : MonoBehaviour
     public GameObject continuePanel;
     public GameObject optionsPanel;
     public GameObject creditsPanel;
+    public Animator animator;
 
     public string mapSaveName;
     public string resourcesSaveName;
+    public float transitionTime = 1f;
 
     private GameObject continueButton;
+    private AudioSource musicSource;
+    private float musicVolume;
+    private bool quietMusic;
 
     public void Awake()
     {
         continueButton = GameObject.Find("ContinueButton");
+        musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
+        musicVolume = musicSource.volume;
 
         if (QuickSaveRoot.Exists(mapSaveName)|| QuickSaveRoot.Exists(resourcesSaveName))
         {
@@ -29,7 +36,17 @@ public class SelectionControls : MonoBehaviour
             continueButton.SetActive(false);
         }
     }
-   
+
+    private void Update()
+    {
+        if (quietMusic)
+        {
+            if (musicSource.volume > 0)
+            {
+                musicSource.volume -= musicVolume * Time.deltaTime / transitionTime;
+            }
+        }
+    }
     public void NewGame()
     {
         DeleteSave();
@@ -70,8 +87,7 @@ public class SelectionControls : MonoBehaviour
 
     public void loadLevelStart()
     {
-
-        SceneManager.LoadScene(1);
+        StartCoroutine(MakeSceneTransition(1));
     }
     public void Quit()
     {
@@ -118,7 +134,16 @@ public class SelectionControls : MonoBehaviour
         {
             QuickSaveRoot.Delete("tutorialResourceAndUpgradeDataSaveFile");
         }
-        SceneManager.LoadScene(2);
+        StartCoroutine(MakeSceneTransition(2));
     }
 
+    public IEnumerator MakeSceneTransition(int sceneIndex)
+    {
+        animator.SetTrigger("Start");
+        quietMusic = true;
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(sceneIndex);
+    }
 }
