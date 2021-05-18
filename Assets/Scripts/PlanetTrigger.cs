@@ -148,9 +148,14 @@ public class PlanetTrigger : MonoBehaviour
             }
             else
             {
+                float distToStarGate = mapManager.HexCellDistance(mapManager.evenq2cube(mapManager.StarGateSpawnPoint), mapManager.evenq2cube(currentPlanetCell));
+                Debug.Log(distToStarGate);
+                Debug.Log(planetResourceAmount);
+                Debug.Log((int)(planetResourceAmount * (distToStarGate * (1 / ((float)mapManager.mapXMax / 2 - 1)) + (((float)mapManager.mapXMax / 2 - 2) / ((float)mapManager.mapXMax / 2 - 1)))));
+                int distModifiedResourceAmount =(int) (planetResourceAmount * (distToStarGate * (1 / ((float)mapManager.mapXMax / 2 - 1))+(((float)mapManager.mapXMax / 2 - 2)/ ((float)mapManager.mapXMax / 2 - 1))));
                 currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
                 mapManager.ContextualSpawnEnemies();
-                resourceAndUpgradeManager.ModifyResources(planetResourceAmount, true);
+                resourceAndUpgradeManager.ModifyResources(distModifiedResourceAmount, true);
                 resourceAndUpgradeManager.AdjustThreatLevel(500);
                 uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
             }
