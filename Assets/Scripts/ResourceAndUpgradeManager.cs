@@ -72,6 +72,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     private bool shieldBoostInstalled=false;
 
     private float threatLevel = 0;
+    private int maxThreatLevelCounter=0;
 
     public string ResourceAndUpgradeDataSaveFileName { get { return resourceAndUpgradeDataSaveFileName; } }
     public int SolarSystemNumber { get { return solarSystemNumber; } set { solarSystemNumber = value; } }
@@ -126,6 +127,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     public int Resources { get { return resources; } set { resources = value; } }
     public int TotalResources { get { return totalResources; } set { totalResources = value; } }
     public float ThreatLevel { get { return threatLevel; } set { threatLevel = value; } }
+    public int MaxThreatLevelCounter { get { return maxThreatLevelCounter; } set { maxThreatLevelCounter = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -221,6 +223,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             sensorRangeUpgradeCost = instReader.Read<int>("sensorRangeUpgradeCost");
 
             threatLevel = instReader.Read<float>("threatLevel");
+            MaxThreatLevelCounter = instReader.Read<int>("maxThreatLevelCounter");
 
             uiController.SetHealthState(CurrentMaxHealth, playerHealthControl.currentPlayerHealth, CurrentMaxShields, playerHealthControl.currentPlayerShields);
             uiController.SetLaserCharge(abilityController.laserRange, currentMaxLaserRange);
@@ -283,6 +286,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         instWriter.Write<int>("shieldOverboostUpgradeCost", ShieldOverboostUpgradeCost);
 
         instWriter.Write<float>("threatLevel", ThreatLevel);
+        instWriter.Write<int>("maxThreatLevelCounter", MaxThreatLevelCounter);
 
 
         instWriter.Commit();//write the save file
@@ -637,6 +641,23 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         if (ThreatLevel < 1)
         {
             ThreatLevel += 0.00005f * threat;
+        }
+    }
+
+    public void MaxThreatLevelAssault()
+    {
+        if (MaxThreatLevelCounter < 5)
+        {
+            MaxThreatLevelCounter++;
+        }
+        else
+        {
+            mapManager.Save();
+            SaveResourceAndUpgradeData();
+            movementController.HasMoved = false;
+            abilityController.AbilityUsed = false;
+            mapManager.ContextualSpawnEnemies();
+            MaxThreatLevelCounter = 0;
         }
     }
 }

@@ -92,6 +92,8 @@ public class ManageMap : MonoBehaviour
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private MovementController movementController;
 
+    public Vector3Int StarGateSpawnPoint { get { return starGateSpawnPoint; } }
+
     void Awake()
     {
         //The following section deals with creating and moving the tutorial level save file so that it is always consistent

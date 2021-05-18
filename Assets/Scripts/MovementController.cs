@@ -113,7 +113,7 @@ public class MovementController : MonoBehaviour
                 }
 
                 //Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
-                Debug.Log("Clicked on "+clickCellPosition);
+                //Debug.Log("Clicked on "+clickCellPosition);
                 //Calculate the distance between the player game object and the clicked cell
                 clickDistance = mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords);
                 int i = 1;
@@ -157,7 +157,13 @@ public class MovementController : MonoBehaviour
                         abilityController.jumpRange--;
                         StartCoroutine(turnManager.UpdateTurn());
                     }
-
+                    else
+                    {
+                        if (resourceAndUpgradeManager.ThreatLevel >= 1)
+                        {
+                            resourceAndUpgradeManager.MaxThreatLevelAssault();
+                        }
+                    }
                     //Debug.Log("MC 116");
                 } else if (clickDistance > moveRange && !cantMove && !hasMoved && !clickManager.waitForQuarterSec && !turnManager.combatActive)
                 {
@@ -165,7 +171,10 @@ public class MovementController : MonoBehaviour
                     {
                         StartCoroutine(MoveLongerDistance());
                     }
-                    
+                    if (resourceAndUpgradeManager.ThreatLevel >= 1)
+                    {
+                        resourceAndUpgradeManager.MaxThreatLevelAssault();
+                    }
                 }
             }
         }
