@@ -103,6 +103,7 @@ public class UIControl : MonoBehaviour
     private float levelMusicVolume;
     private float playerShipSoundsVolume;
     private GameObject gameSavingMessage;
+    private Canvas uiCanvas;
 
     public bool IsPaused { get { return isPaused; } }
 
@@ -172,6 +173,8 @@ public class UIControl : MonoBehaviour
         threatLevelSlider = GameObject.Find("ThreatLevelIndicator").GetComponentInChildren<Slider>();
 
         gameSavingMessage = GameObject.Find("GameSavingMessageBackgroundImage");
+
+        uiCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
@@ -322,12 +325,14 @@ public class UIControl : MonoBehaviour
     {
         if (isPaused)
         {
+            uiCanvas.sortingOrder = 20;
             isPaused = false;
             pausePanel.gameObject.SetActive(false);
             Time.timeScale = 1.0f;
         }
         else
         {
+            uiCanvas.sortingOrder = 100;
             isPaused = true;
             pausePanel.gameObject.SetActive(true);
             Time.timeScale = 0.0f;
