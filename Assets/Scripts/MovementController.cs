@@ -185,7 +185,7 @@ public class MovementController : MonoBehaviour
         longMoveRunning = true;
         while (playerCellPosition != clickCellPosition)
         {
-            List<Vector3Int> neighbours = mapManager.GetNeighbours(playerCellPosition);
+            List<Vector3Int> neighbours = mapManager.GetNeighbours(playerCellPosition,1);
             int distToTarget = 9999;
             Vector3Int nearestNeighbourToTarget = new Vector3Int();
 

@@ -20,6 +20,7 @@ public class EnemyShipControl : MonoBehaviour
 
     public string thisEnemyName;
     private GameObject player; //Variable to hold an instance of the player game object
+
     private GameObject gameController;
     private GridLayout gridLayout; //Variable to hold an instance of the grid layout
     private ManageMap mapManager; //Variable to hold an instance of the map manager
@@ -28,6 +29,9 @@ public class EnemyShipControl : MonoBehaviour
     private AbilityController abilityController;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private TutorialManager tutorialManager;
+    private MovementController movementController;
+
+    private int jumpChargeTracker;
 
     public bool CheckShotRunning { get { return checkShotRunning; } set { checkShotRunning = value; } }
 
@@ -38,6 +42,7 @@ public class EnemyShipControl : MonoBehaviour
         enemyCellPosition = gridLayout.WorldToCell(transform.position); //Get this enemy's cell position and convert it to the nearest hex coordinates. This is the first half of an operation to center this object in it's position in the hex grid 
         transform.position = gridLayout.CellToWorld(enemyCellPosition); //Take the hex grid position from the last operation, convert it back to world coordinates and set this object's position to those coordinates
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store the player game object
+        movementController = player.GetComponent<MovementController>();
         gameController = GameObject.Find("GameController");
         abilityController = player.GetComponent<AbilityController>(); //Access and store the ability controller
         highlightEnabled = false;
@@ -133,8 +138,8 @@ public class EnemyShipControl : MonoBehaviour
             switch (thisEnemyName)
             {
                 case "EnemyA":
-                    List<Vector3Int> playerFlats = mapManager.GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, false);
-                    List<Vector3Int> playerEndFlats = mapManager.GetFlats(3, player.gameObject.GetComponent<MovementController>().playerCellPosition, true);
+                    List<Vector3Int> playerFlats = mapManager.GetFlats(3, movementController.playerCellPosition, false);
+                    List<Vector3Int> playerEndFlats = mapManager.GetFlats(3, movementController.playerCellPosition, true);
                     Vector3Int nearestEndFlat = playerEndFlats[0];
                     int distToNearestEndFlat = 999999;
                     foreach (Vector3Int flat in playerEndFlats)
@@ -174,7 +179,7 @@ public class EnemyShipControl : MonoBehaviour
                         {
                             nearestEndFlat = nearestFlat;
                         }
-                        List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition);
+                        List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition,1);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
                         Vector3Int furthestFromRockets = new Vector3Int(0, 0, 0);
@@ -248,7 +253,7 @@ public class EnemyShipControl : MonoBehaviour
                 case "EnemyB":
                     if (distToPlayer > 1||runAway)
                     {
-                        List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition);
+                        List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition,1);
                         Vector3Int shortestMove = new Vector3Int(0, 0, 0);
                         int shortestMoveDist = 100;
                         Vector3Int furthestFromRockets = new Vector3Int(0, 0, 0);
@@ -259,7 +264,7 @@ public class EnemyShipControl : MonoBehaviour
                             if (i == 1)
                             {
                                 shortestMove = neighbour;
-                                shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                                shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), movementController.playerCellPositionCubeCoords);
 
                                 if (rockets.Length > 0)
                                 {
@@ -269,10 +274,10 @@ public class EnemyShipControl : MonoBehaviour
                             }
                             else
                             {
-                                if (mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords) < shortestMoveDist)
+                                if (mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), movementController.playerCellPositionCubeCoords) < shortestMoveDist)
                                 {
                                     shortestMove = neighbour;
-                                    shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), player.gameObject.GetComponent<MovementController>().playerCellPositionCubeCoords);
+                                    shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), movementController.playerCellPositionCubeCoords);
                                 }
 
                                 int thisSumFurthestFromRocketsDist = 0;
@@ -317,6 +322,126 @@ public class EnemyShipControl : MonoBehaviour
                         Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                     }
 
+                    break;
+                case "EnemyC":
+                    if (distToPlayer > 2||runAway)
+                    {
+                        List<Vector3Int> neighbours = mapManager.GetNeighbours(enemyCellPosition,1);
+                        Vector3Int shortestMove = new Vector3Int(0, 0, 0);
+                        int shortestMoveDist = 100;
+                        Vector3Int longestJump = new Vector3Int(0, 0, 0);
+                        int longestJumpDist = 0;
+                        Vector3Int furthestFromRockets = new Vector3Int(0, 0, 0);
+                        int sumFurthestFromRocketsDist = 0;
+                        int i = 1;
+
+                        if (jumpChargeTracker < 1)
+                        {
+                            jumpChargeTracker = 1;
+                            List<Vector3Int> playerNeighbours = mapManager.GetNeighbours(movementController.playerCellPosition, 2);
+
+                            foreach(Vector3Int playerNeighbour in playerNeighbours)
+                            {
+                                if(mapManager.HexCellDistance(mapManager.evenq2cube(playerNeighbour), mapManager.evenq2cube(enemyCellPosition)) > longestJumpDist)
+                                {
+                                    longestJump = playerNeighbour;
+                                    longestJumpDist = mapManager.HexCellDistance(mapManager.evenq2cube(playerNeighbour), mapManager.evenq2cube(enemyCellPosition));
+                                }
+                            }
+                            foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
+                            {
+                                if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
+                                {
+                                    mapManager.spawnedEnemies.Remove(listEnemy);
+                                    break;
+                                }
+                            }
+                            SetOrientation(gridLayout.CellToWorld(longestJump));
+                            transform.position += (gridLayout.CellToWorld(longestJump) - gridLayout.CellToWorld(enemyCellPosition));
+                            enemyCellPosition = gridLayout.WorldToCell(transform.position);
+                            thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyObject.enemyString);
+                            mapManager.spawnedEnemies.Add(thisEnemyObject);
+
+                        }
+                        else
+                        {
+                            foreach (Vector3Int neighbour in neighbours)
+                            {
+                                if (i == 1)
+                                {
+                                    shortestMove = neighbour;
+                                    shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), movementController.playerCellPositionCubeCoords);
+
+                                    if (rockets.Length > 0)
+                                    {
+                                        furthestFromRockets = neighbour;
+                                        sumFurthestFromRocketsDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rockets[0].transform.position)));
+                                    }
+                                }
+                                else
+                                {
+                                    if (mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), movementController.playerCellPositionCubeCoords) < shortestMoveDist)
+                                    {
+                                        shortestMove = neighbour;
+                                        shortestMoveDist = mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), movementController.playerCellPositionCubeCoords);
+                                    }
+
+                                    int thisSumFurthestFromRocketsDist = 0;
+                                    foreach (GameObject rocket in rockets)
+                                    {
+                                        thisSumFurthestFromRocketsDist += mapManager.HexCellDistance(mapManager.evenq2cube(neighbour), mapManager.evenq2cube(gridLayout.WorldToCell(rocket.transform.position)));
+                                    }
+                                    if (thisSumFurthestFromRocketsDist > sumFurthestFromRocketsDist)
+                                    {
+                                        furthestFromRockets = neighbour;
+                                        sumFurthestFromRocketsDist = thisSumFurthestFromRocketsDist;
+                                    }
+                                }
+                                i++;
+                            }
+
+                            foreach (EnemyObject listEnemy in mapManager.spawnedEnemies)
+                            {
+                                if (listEnemy.xCoordinate == thisEnemyObject.xCoordinate && listEnemy.yCoordinate == thisEnemyObject.yCoordinate)
+                                {
+                                    mapManager.spawnedEnemies.Remove(listEnemy);
+                                    break;
+                                }
+                            }
+
+                            if (runAway)
+                            {
+                                SetOrientation(gridLayout.CellToWorld(furthestFromRockets));
+                                transform.position += (gridLayout.CellToWorld(furthestFromRockets) - gridLayout.CellToWorld(enemyCellPosition));
+                            }
+                            else
+                            {
+                                SetOrientation(gridLayout.CellToWorld(shortestMove));
+                                transform.position += (gridLayout.CellToWorld(shortestMove) - gridLayout.CellToWorld(enemyCellPosition));
+                            }
+                            enemyCellPosition = gridLayout.WorldToCell(transform.position);
+                            thisEnemyObject = new EnemyObject(enemyCellPosition.x, enemyCellPosition.y, thisEnemyObject.enemyString);
+                            mapManager.spawnedEnemies.Add(thisEnemyObject);
+
+                            if (jumpChargeTracker >= 1)
+                            {
+                                jumpChargeTracker--;
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        Instantiate(enemyLaser, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                        if (jumpChargeTracker >= 1)
+                        {
+                            jumpChargeTracker--;
+                        }
+                    }
+
+                    break;
+
+                default:
                     break;
             }
 

@@ -1500,7 +1500,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1352580152}
-        m_MethodName: GenericSpawnEnemies
+        m_MethodName: ContextualSpawnEnemies
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5960,7 +5960,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 67
     y: 69
-    width: 166
+    width: 126
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8286,6 +8286,7 @@ MonoBehaviour:
   highlightWeaponMap: {fileID: 1716414513}
   enemyA: {fileID: 1598290169022865805, guid: 1466187b43372634bacb959d2d6a54b4, type: 3}
   enemyB: {fileID: 8599693772137293355, guid: ba8b18cc35023654ab25695c05f50ccb, type: 3}
+  enemyC: {fileID: 2900156596862270242, guid: d49989b4f3dc681429acf5f4b248dd32, type: 3}
   player: {fileID: 1326505861}
   fogTile: {fileID: 11400000, guid: 8d38bc7d82084b04d8f917c12d912236, type: 2}
   highlightTile: {fileID: 11400000, guid: fcf44b691e26573499cd8f8769d9823d, type: 2}

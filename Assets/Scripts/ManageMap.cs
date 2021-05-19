@@ -29,6 +29,7 @@ public class ManageMap : MonoBehaviour
 
     public GameObject enemyA;
     public GameObject enemyB;
+    public GameObject enemyC;
     public GameObject player; //variable for the player game object
 
     //The following variables set the tiles that are used to set the tile objects for populating the map
@@ -161,6 +162,7 @@ public class ManageMap : MonoBehaviour
         {
             { "EnemyA", enemyA },
             { "EnemyB", enemyB },
+            { "EnemyC", enemyC },
         };
         spawnedEnemies = new List<EnemyObject>();
 
@@ -529,7 +531,7 @@ public class ManageMap : MonoBehaviour
                 }
             }
         }
-        List<Vector3Int> availableWarpGateSpawnPoints = GetNeighbours(new Vector3Int(0,0,0));
+        List<Vector3Int> availableWarpGateSpawnPoints = GetNeighbours(new Vector3Int(0,0,0),1);
         List<Vector3Int> unavailableWarpGateSpawnPoints = new List<Vector3Int>();
         foreach(PlanetObject planet in spawnedPlanets)
         {
@@ -561,7 +563,7 @@ public class ManageMap : MonoBehaviour
          * allowedPlanets: This is a list of the planets that the function can choose from when spawning the planets
          */
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); //create a list of any enemies that are currently in the scene
-        List<GameObject> availableEnemies = new List<GameObject>() { enemyA, enemyB }; //create a list of available enemies based on supplied prefabs
+        List<GameObject> availableEnemies = new List<GameObject>() { enemyA, enemyB, enemyC }; //create a list of available enemies based on supplied prefabs
         List<GameObject> allowableEnemies = new List<GameObject>(); //create a placeholder list for enemies that the function is allowed to spawn
         List<Vector3Int> availableSpawnPoints = new List<Vector3Int>(); //create a placeholder list for the available spawn points
 
@@ -782,7 +784,7 @@ public class ManageMap : MonoBehaviour
                 break;
         }
 
-        List<int> allowedEnemies = new List<int>() { 0, 1 };
+        List<int> allowedEnemies = new List<int>() { 0, 1, 2 };
 
 
         if (resourceAndUpgradeManager.ThreatLevel >= 0.2)
@@ -973,20 +975,53 @@ public class ManageMap : MonoBehaviour
         return flats;
     }
 
+
+    public List<Vector3Int> GetRange(int range, Vector3Int centerCellPosition)
+    {
+        List <Vector3Int> rangeArea = new List<Vector3Int>();
+        //this operation will function almost identically to clearing the fog of war, except that it will highlight the cells within range of the laser. 
+        for (int x = -range; x <= range; x++) //iterate through the range of the laser to generate the x coordinates
+        {
+            for (int y = -range; y <= range; y++) //iterate through the range of the laser to generate the y coordindates
+            {
+                //float highlightCellDistance = Vector3.Distance(gridLayout.CellToWorld((playerCellPosition + new Vector3Int(x, y, 0))), gridLayout.CellToWorld(playerCellPosition)); //calculate the distance from the player to the current set of coordinates
+                float highlightCellDistance = HexCellDistance(evenq2cube(centerCellPosition + new Vector3Int(x, y, 0)), evenq2cube(centerCellPosition)); //calculate the distance from the player to the current set of coordinates
+
+                //if (highlightCellDistance > 0.32 * range) //if the calculated distance is larger than the width of a hex cell times the range of the laser, then do nothing
+                if (highlightCellDistance > range) //if the calculated distance is larger than the width of a hex cell times the range of the laser, then do nothing
+                {
+                    //Do nothing
+                }
+                else //if the calculated distance is less than the width of a hex cell times the range of the laser then set the proper highlighting on that cell
+                {
+                    rangeArea.Add(centerCellPosition + new Vector3Int(x, y, 0));
+                }
+            }
+        }
+        return rangeArea;
+    }
+
     public void ShowFlats(string objectName, Vector3Int cellPosition, GameObject givenObject)
     {
-        List<Vector3Int> flats = new List<Vector3Int>();
+        Debug.Log("Called show flats");
+        List<Vector3Int> range = new List<Vector3Int>();
         if (objectName == "EnemyA")
         {
-            flats = GetFlats(3, cellPosition, false);
+            range = GetFlats(3, cellPosition, false);
             givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
-            HighlightSet(flats, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
         }
         else if (objectName == "EnemyB")
         {
-            flats = GetFlats(1, cellPosition, false);
+            range = GetFlats(1, cellPosition, false);
             givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
-            HighlightSet(flats, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+        }
+        else if (objectName == "EnemyC")
+        {
+            range = GetRange(2, cellPosition);
+            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
+            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
         }
         else if (objectName == "Player")
         {
@@ -1000,15 +1035,21 @@ public class ManageMap : MonoBehaviour
 
     public void ShowFlats(string objectName, Vector3Int cellPosition, GameObject givenObject, bool state)
     {
-        List<Vector3Int> flats = new List<Vector3Int>();
+        Debug.Log("Called show flats overload");
+        List<Vector3Int> range = new List<Vector3Int>();
         if (objectName == "EnemyA")
         {
-            flats = GetFlats(3, cellPosition, false);
+            range = GetFlats(3, cellPosition, false);
             givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
         }
         else if (objectName == "EnemyB")
         {
-            flats = GetFlats(1, cellPosition, false);
+            range = GetFlats(1, cellPosition, false);
+            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
+        }
+        else if (objectName == "EnemyC")
+        {
+            range = GetRange(2, cellPosition);
             givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
         }
         else if (objectName == "Player")
@@ -1018,16 +1059,16 @@ public class ManageMap : MonoBehaviour
 
         
 
-        HighlightSet(flats, state);
+        HighlightSet(range, state);
     }
 
-    public List<Vector3Int> GetNeighbours(Vector3Int origin)
+    public List<Vector3Int> GetNeighbours(Vector3Int origin, int neighbourRange)
     {
         List<Vector3Int> openNeighbours = new List<Vector3Int>();
         bool setSkip = false;
-        for (int x = -1; x <= 1; x++)
+        for (int x = -neighbourRange; x <= neighbourRange; x++)
         {
-            for (int y = -1; y <= 1; y++)
+            for (int y = -neighbourRange; y <= neighbourRange; y++)
             {
                 if (x == 0 && y == 0)
                     continue;
@@ -1039,7 +1080,7 @@ public class ManageMap : MonoBehaviour
                 {
 
 
-                    if (HexCellDistance(evenq2cube(origin), evenq2cube(new Vector3Int(modX, modY, 0))) <= 1)
+                    if (HexCellDistance(evenq2cube(origin), evenq2cube(new Vector3Int(modX, modY, 0))) <= neighbourRange)
                     {
                         foreach (EnemyObject fellowEnemy in spawnedEnemies)
                         {
