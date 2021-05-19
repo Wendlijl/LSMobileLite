@@ -7,11 +7,15 @@ public class ClickManager : MonoBehaviour
     public bool mouseClicked;
     public bool waitForQuarterSec;
     private float timer;
+    private GameObject gameController;
     private ManageMap mapManager;
+    private UIControl uiControler;
     // Start is called before the first frame update
     void Start()
     {
-        mapManager = GameObject.Find("GameController").GetComponent<ManageMap>();
+        gameController = GameObject.Find("GameController");
+        mapManager = gameController.GetComponent<ManageMap>();
+        uiControler = gameController.GetComponent<UIControl>();
         waitForQuarterSec = false;
         mouseClicked = false;
         timer = 0;
@@ -20,7 +24,7 @@ public class ClickManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) //This operation is initiated by the player clicking the fire button.
+        if (Input.GetMouseButtonDown(0)&&!uiControler.IsPaused) //This operation is initiated by the player clicking the fire button.
         {
 
             //Debug.Log(Input.mousePosition);

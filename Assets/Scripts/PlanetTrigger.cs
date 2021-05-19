@@ -156,7 +156,7 @@ public class PlanetTrigger : MonoBehaviour
                 currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
                 mapManager.ContextualSpawnEnemies();
                 resourceAndUpgradeManager.ModifyResources(distModifiedResourceAmount, true);
-                resourceAndUpgradeManager.AdjustThreatLevel(500);
+                resourceAndUpgradeManager.AdjustThreatLevel(1000);
                 uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
             }
 

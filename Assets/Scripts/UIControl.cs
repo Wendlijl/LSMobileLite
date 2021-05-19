@@ -102,8 +102,9 @@ public class UIControl : MonoBehaviour
     private AudioSource playerShipSounds;
     private float levelMusicVolume;
     private float playerShipSoundsVolume;
+    private GameObject gameSavingMessage;
 
-
+    public bool IsPaused { get { return isPaused; } }
 
     private void Awake()
     {
@@ -170,6 +171,7 @@ public class UIControl : MonoBehaviour
 
         threatLevelSlider = GameObject.Find("ThreatLevelIndicator").GetComponentInChildren<Slider>();
 
+        gameSavingMessage = GameObject.Find("GameSavingMessageBackgroundImage");
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
@@ -316,6 +318,22 @@ public class UIControl : MonoBehaviour
         pausePanel.gameObject.SetActive(false);
         Time.timeScale = 1.0f;
     }
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            isPaused = false;
+            pausePanel.gameObject.SetActive(false);
+            Time.timeScale = 1.0f;
+        }
+        else
+        {
+            isPaused = true;
+            pausePanel.gameObject.SetActive(true);
+            Time.timeScale = 0.0f;
+        }
+    }
+
     public void Restart()
     {
         //this function controls the reset level logic for the game, setting the pause boolean, pause panel activation, and game time appropriately, and then reloading the level using the scene manager
@@ -395,6 +413,11 @@ public class UIControl : MonoBehaviour
         resourceWarningMessage.SetActive(false);
     }
     
+    public void DisplaySavingGameMessage()
+    {
+        gameSavingMessage.GetComponent<MessageFadeIn>().SetFadeIn = true;
+    }
+
     public void DeactivateLandOnPlanet()
     {
         //this function will disable the landing button game object when called
