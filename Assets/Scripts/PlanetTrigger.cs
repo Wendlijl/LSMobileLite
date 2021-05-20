@@ -154,10 +154,10 @@ public class PlanetTrigger : MonoBehaviour
                 //Debug.Log((int)(planetResourceAmount * (distToStarGate * (1 / ((float)mapManager.mapXMax / 2 - 1)) + (((float)mapManager.mapXMax / 2 - 2) / ((float)mapManager.mapXMax / 2 - 1)))));
                 int distModifiedResourceAmount =(int) (planetResourceAmount * (distToStarGate * (1 / ((float)mapManager.mapXMax / 2 - 1))+(((float)mapManager.mapXMax / 2 - 2)/ ((float)mapManager.mapXMax / 2 - 1))));
                 currentPlanet.GetComponent<PlanetController>().ResourcesCollectd = true;
-                mapManager.ContextualSpawnEnemies();
                 resourceAndUpgradeManager.ModifyResources(distModifiedResourceAmount, true);
-                resourceAndUpgradeManager.AdjustThreatLevel(1000);
+                resourceAndUpgradeManager.AdjustThreatLevel(1500);
                 uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
+                mapManager.ContextualSpawnEnemies();
             }
 
             foreach (PlanetObject planet in mapManager.spawnedPlanets)
