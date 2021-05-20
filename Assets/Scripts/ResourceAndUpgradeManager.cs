@@ -290,6 +290,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
 
         instWriter.Commit();//write the save file
+
+        mapManager.Save();
     }
 
     public void DeleteResourceAndUpgradeSaveFile() 
@@ -652,7 +654,6 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         }
         else
         {
-            mapManager.Save();
             SaveResourceAndUpgradeData();
             movementController.HasMoved = false;
             abilityController.AbilityUsed = false;

@@ -275,7 +275,6 @@ public class UIControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && isPaused) //if the game is paused and the Q key is pressed, then quit the game
         {
             UnPause();
-            mapManager.Save();
             resourceAndUpgradeManager.SaveResourceAndUpgradeData();
             Quit();
         }

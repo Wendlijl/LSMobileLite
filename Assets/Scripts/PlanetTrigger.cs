@@ -169,7 +169,6 @@ public class PlanetTrigger : MonoBehaviour
                     break;
                 }
             }
-            mapManager.Save();
             resourceAndUpgradeManager.SaveResourceAndUpgradeData();
             //foreach (PlanetObject planet in mapManager.spawnedPlanets)
             //{
