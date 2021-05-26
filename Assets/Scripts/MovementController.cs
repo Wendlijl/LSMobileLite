@@ -202,6 +202,10 @@ public class MovementController : MonoBehaviour
             MoveCount++;
             resourceAndUpgradeManager.AdjustThreatLevel(MoveCount);
             uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
+            if (resourceAndUpgradeManager.ThreatLevel >= 1)
+            {
+                resourceAndUpgradeManager.MaxThreatLevelAssault();
+            }
             if (!movementState)
             {
                 if (mapManager.saveName != "TutorialFile")
