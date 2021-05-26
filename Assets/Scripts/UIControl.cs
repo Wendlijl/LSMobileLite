@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using CI.QuickSave;
 using TMPro;
+using Cinemachine;
 
 public class UIControl : MonoBehaviour
 {
@@ -104,6 +105,9 @@ public class UIControl : MonoBehaviour
     private float playerShipSoundsVolume;
     private GameObject gameSavingMessage;
     private Canvas uiCanvas;
+
+    private Slider zoomSlider;
+    private GameObject virtualCamera;
 
     public bool IsPaused { get { return isPaused; } }
 
@@ -259,6 +263,10 @@ public class UIControl : MonoBehaviour
         jumpButtonHolder.SetActive(resourceAndUpgradeManager.JumpDriveInstalled);
 
         SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
+
+        zoomSlider = GameObject.Find("ZoomSlider").GetComponent<Slider>();
+        zoomSlider.value = 0.5f;
+        virtualCamera = GameObject.Find("CM vcam1");
     }
 
     void Update()
@@ -294,6 +302,7 @@ public class UIControl : MonoBehaviour
                 playerShipSounds.volume -= playerShipSoundsVolume * Time.deltaTime / transitionTime;
             }
         }
+        virtualCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = zoomSlider.value * 2 + 1;
     }
 
     public void StartNewLevel()
