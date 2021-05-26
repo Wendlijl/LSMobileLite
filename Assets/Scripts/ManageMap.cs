@@ -92,6 +92,7 @@ public class ManageMap : MonoBehaviour
     private UIControl uiController;
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private MovementController movementController;
+    private ClickManager clickManager;
 
     public Vector3Int StarGateSpawnPoint { get { return starGateSpawnPoint; } }
 
@@ -104,29 +105,31 @@ public class ManageMap : MonoBehaviour
         //Debug.Log(Application.dataPath);
         string dataPath = Application.dataPath;
         string dataPathTutorial = Path.Combine(dataPath, "TutorialFile.json");
-        if (Directory.Exists(quicksavePath))
-        {
-            if (File.Exists(quicksaveFilePath))
-            {
-                //Debug.Log("I found the file!");
-            }
-            else
-            {
-                //Debug.Log("Need to move File");
-                //FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
-                File.Copy(dataPathTutorial, quicksaveFilePath);
-            }
-            
-            
-        }
-        else
-        {
-            //Debug.Log("Need to make directory then move file");
-            Directory.CreateDirectory(quicksavePath);
-            //FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
-            File.Copy(dataPathTutorial, quicksaveFilePath);
-        }
-        
+        Debug.Log("Application data path: "+ dataPath);
+        Debug.Log("Quicksave data path: "+ quicksavePath);
+        //if (Directory.Exists(quicksavePath))
+        //{
+        //    if (File.Exists(quicksaveFilePath))
+        //    {
+        //        //Debug.Log("I found the file!");
+        //    }
+        //    else
+        //    {
+        //        //Debug.Log("Need to move File");
+        //        //FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+        //        File.Copy(dataPathTutorial, quicksaveFilePath);
+        //    }
+        //    
+        //    
+        //}
+        //else
+        //{
+        //    //Debug.Log("Need to make directory then move file");
+        //    Directory.CreateDirectory(quicksavePath);
+        //    //FileUtil.CopyFileOrDirectory(dataPathTutorial, quicksaveFilePath);
+        //    File.Copy(dataPathTutorial, quicksaveFilePath);
+        //}
+
         //create a dictionary to hold key value pairs for all the background star tiles
         starTileDict = new Dictionary<string, Tile>() {
             { "starTile0", starTile0 },
@@ -179,6 +182,7 @@ public class ManageMap : MonoBehaviour
         playerState = GameObject.Find("Player").GetComponent<MovementController>(); //get a reference to the player game object
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //get a reference to the grid layout 
         uiController = gameController.GetComponent<UIControl>();
+        clickManager = gameController.GetComponent<ClickManager>();
         resourceAndUpgradeManager = gameController.GetComponent<ResourceAndUpgradeManager>();
         movementController = player.GetComponent<MovementController>();
         GenerateMap(); //call the function to generate the map.
@@ -220,6 +224,14 @@ public class ManageMap : MonoBehaviour
 
     public void GenerateMap() //this function runs as soon as the scene loads. It's purpose is to either load a map from memory or create a new map for the game to use
     {
+        if(saveName == "TutorialFile")
+        {
+            if (QuickSaveRoot.Exists(saveName))
+            {
+                QuickSaveRoot.Delete(saveName);
+            }
+        }
+
         if (QuickSaveRoot.Exists(saveName)) //use the quicksave feature to check if a save file exists 
         {
             Load(); //if a save file exists, call the load function
@@ -237,7 +249,14 @@ public class ManageMap : MonoBehaviour
                     starField.SetTile(new Vector3Int(x, y, 0), starTileDict[starTileStrings[randTileIndx]]); //set the background hex at the current coordinates based on the random map tile selected before
                 }
             }
-            ContextualSpawnPlanets();
+            if(saveName == "TutorialFile")
+            {
+                TutorialSpawnPlanets();
+            }
+            else
+            {
+                ContextualSpawnPlanets();
+            }
         }
     }
     public void UpdateFogOfWar(int vision, Vector3Int playerCellPosition) //this script will clear the fog of war based on the player's vision
@@ -727,6 +746,20 @@ public class ManageMap : MonoBehaviour
                 SpawnPlanets(mapXMax - 10, mapYMax - 10, mapXMin + 10, mapYMin + 10, true, allowedPlaents, 15);
                 break;
         }
+    }
+
+    public void TutorialSpawnPlanets()
+    {
+        List<Vector3Int> planetSpawnPoints = new List<Vector3Int>() {new Vector3Int(12,-1,0),new Vector3Int(6,-1,0),new Vector3Int(-10,-15,0),new Vector3Int(-14,15,0),new Vector3Int(14,14,0),new Vector3Int(-1,0,0),new Vector3Int(7,-3,0),new Vector3Int(-11,-12,0),new Vector3Int(-1,8,0),new Vector3Int(8,-5,0),new Vector3Int(12,-12,0), };
+        List<string> planetNames = new List<string>() { "Planet10","Planet1","Planet8","Planet2","Planet6","Planet7","Planet0","Planet9","Planet3","Planet4","Planet5" };
+        int i = 0;
+        foreach(string planetName in planetNames)
+        {
+            Instantiate(planetObjectsDict[planetName], starField.CellToWorld(planetSpawnPoints[i]), Quaternion.identity);
+            i++;
+        }
+        Instantiate(starGate, starField.CellToWorld(new Vector3Int(-5,4,0)), Quaternion.identity);
+
     }
 
     public void GenericSpawnEnemies() //this function is intended to be the most basic application of the spawn enemies function to be used for testing
