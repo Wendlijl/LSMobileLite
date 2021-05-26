@@ -363,6 +363,7 @@ public class UIControl : MonoBehaviour
 
     public IEnumerator MakeSceneTransition(int desiredSceneIndex)
     {
+        //animator.gameObject.SetActive(true);
         animator.SetTrigger("Start");
         levelMusicVolume = levelMusic.volume;
         playerShipSoundsVolume = playerShipSounds.volume;

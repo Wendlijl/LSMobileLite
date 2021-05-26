@@ -3438,7 +3438,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.75
+  m_fontSize: 11.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15125,7 +15125,7 @@ PrefabInstance:
     - target: {fileID: 6984032848573770193, guid: 3b13f7427c469af419c054b74ddabd3a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b13f7427c469af419c054b74ddabd3a, type: 3}
