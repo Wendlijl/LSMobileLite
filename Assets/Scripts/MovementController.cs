@@ -204,6 +204,10 @@ public class MovementController : MonoBehaviour
             uiController.SetThreatLevelSlider(resourceAndUpgradeManager.ThreatLevel);
             if (!movementState)
             {
+                if (mapManager.saveName != "TutorialFile")
+                {
+                    movementState = true;
+                }
                 break;
             }
             yield return new WaitForSeconds(0.2f);

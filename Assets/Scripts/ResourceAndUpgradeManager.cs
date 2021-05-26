@@ -650,10 +650,14 @@ public class ResourceAndUpgradeManager : MonoBehaviour
     {
         if (MaxThreatLevelCounter < 5)
         {
+            Debug.Log("Max threat counter is: "+MaxThreatLevelCounter+" before addition");
             MaxThreatLevelCounter++;
+            Debug.Log("Max threat counter is: " + MaxThreatLevelCounter + " after addition");
         }
         else
         {
+            Debug.Log("Spawning enemies at max threat");
+            movementController.DisableMovement();
             SaveResourceAndUpgradeData();
             movementController.HasMoved = false;
             abilityController.AbilityUsed = false;

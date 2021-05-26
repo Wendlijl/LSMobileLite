@@ -335,7 +335,7 @@ public class EnemyShipControl : MonoBehaviour
                         int sumFurthestFromRocketsDist = 0;
                         int i = 1;
                         int randJump = Random.Range(0, 2);
-                        if (jumpChargeTracker < 1 && randJump>0.2)
+                        if (jumpChargeTracker < 1 && randJump>0.1)
                         {
                             jumpChargeTracker = 1;
                             List<Vector3Int> playerNeighbours = mapManager.GetNeighbours(movementController.playerCellPosition, 2);
