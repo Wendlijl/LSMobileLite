@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI; // Required when Using UI elements.
 using UnityEngine.SceneManagement;
 using CI.QuickSave;
+using TMPro;
 
 public class SelectionControls : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class SelectionControls : MonoBehaviour
     public GameObject continuePanel;
     public GameObject optionsPanel;
     public GameObject creditsPanel;
+    public GameObject highScorePanel;
     public Animator animator;
 
     public string mapSaveName;
@@ -20,6 +23,12 @@ public class SelectionControls : MonoBehaviour
     private AudioSource musicSource;
     private float musicVolume;
     private bool quietMusic;
+
+    private List<HighScoreObject> highScoreObjectList;
+    //private Transform[] allChildren;
+    private List<TMP_Text> nameList;
+    private List<TMP_Text> scoresList;
+    private TMP_Text[] allChildren;
 
     public void Awake()
     {
@@ -35,6 +44,36 @@ public class SelectionControls : MonoBehaviour
         {
             continueButton.SetActive(false);
         }
+        if (QuickSaveRoot.Exists("HighScoreFile")) //if a save file exists, load data from that file
+        {
+            QuickSaveReader instReader = QuickSaveReader.Create("HighScoreFile"); //create an instance of the quick save reader to pull in the save file
+            highScoreObjectList = instReader.Read<List<HighScoreObject>>("HighScoreObjectList");
+            highScorePanel.SetActive(true);
+            allChildren = GameObject.Find("HighScoreVerticalLayoutGroup2").GetComponentsInChildren<TMP_Text>();
+            int i= 0;
+            foreach (TMP_Text child in allChildren)
+            {
+                if (i > 0)
+                {
+                    child.text = highScoreObjectList[i-1].scoreString;
+                }
+                i++;
+            }
+            i = 0;
+            allChildren = GameObject.Find("HighScoreVerticalLayoutGroup3").GetComponentsInChildren<TMP_Text>();
+            foreach (TMP_Text child in allChildren)
+            {
+                if (i > 0)
+                {
+                    child.text = highScoreObjectList[i-1].scoreValue.ToString();
+                }
+                i++;
+            }
+            highScorePanel.SetActive(false);
+        }
+
+
+
     }
 
     private void Update()
@@ -81,6 +120,19 @@ public class SelectionControls : MonoBehaviour
             creditsPanel.SetActive(true);
         }
         
+    }
+
+    public void SetHighScorePanelState()
+    {
+        if (highScorePanel.activeInHierarchy)
+        {
+            highScorePanel.SetActive(false);
+        }
+        else
+        {
+            highScorePanel.SetActive(true);
+        }
+
     }
 
 

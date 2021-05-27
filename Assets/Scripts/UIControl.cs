@@ -109,7 +109,12 @@ public class UIControl : MonoBehaviour
     private Slider zoomSlider;
     private GameObject virtualCamera;
 
+    private TMP_Text scoreTextDisplay;
+    private TMP_InputField nameTextDisplay;
+
     public bool IsPaused { get { return isPaused; } }
+    public TMP_Text ScoreTextDisplay { get { return scoreTextDisplay; } }
+    public TMP_InputField NameTextDisplay { get { return nameTextDisplay; } }
 
     private void Awake()
     {
@@ -179,6 +184,12 @@ public class UIControl : MonoBehaviour
         gameSavingMessage = GameObject.Find("GameSavingMessageBackgroundImage");
 
         uiCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+
+        victoryPanel.SetActive(true);
+        scoreTextDisplay = GameObject.Find("ScoreText(TMP)").GetComponent<TMP_Text>();
+        nameTextDisplay = GameObject.Find("HighScoreNameInputField(TMP)").GetComponent<TMP_InputField>();
+        victoryPanel.SetActive(false);
 
         Transform[] allTransforms = healthPanel.GetComponentsInChildren<Transform>();
         foreach (Transform child in allTransforms)
@@ -870,6 +881,7 @@ public class UIControl : MonoBehaviour
 
     public void DisplayVictoryText()
     {
+        ScoreTextDisplay.text = resourceAndUpgradeManager.Resources.ToString();
         TMP_Text[] victoryTextFields = victoryPanel.GetComponentsInChildren<TMP_Text>(); ;
         if (resourceAndUpgradeManager.Resources < 1000)
         {

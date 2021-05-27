@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using CI.QuickSave;
-using System.IO;
 
 public class ResourceAndUpgradeManager : MonoBehaviour
 {
@@ -73,6 +71,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
 
     private float threatLevel = 0;
     private int maxThreatLevelCounter=0;
+
+    private List<HighScoreObject> highScoreObjectList;
 
     public string ResourceAndUpgradeDataSaveFileName { get { return resourceAndUpgradeDataSaveFileName; } }
     public int SolarSystemNumber { get { return solarSystemNumber; } set { solarSystemNumber = value; } }
@@ -147,6 +147,8 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         gridlayout = GameObject.Find("Grid").GetComponent<GridLayout>();
 
 
+        highScoreObjectList = new List<HighScoreObject>() { new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0),new HighScoreObject("AAA",0) };
+
         if(mapManager.saveName == "TutorialFile")
         {
             resourceAndUpgradeDataSaveFileName = "tutorialResourceAndUpgradeDataSaveFile";
@@ -163,6 +165,7 @@ public class ResourceAndUpgradeManager : MonoBehaviour
             abilityController.laserRange = currentMaxLaserRange;
             uiController.SetLaserCharge(abilityController.laserRange, currentMaxLaserRange);
         }
+        LoadHighScores();
     }
 
     private void LoadResourceAndUpgradeData()
@@ -304,6 +307,69 @@ public class ResourceAndUpgradeManager : MonoBehaviour
         else
         {
             print("Nothing to delete"); //if no save file exists, send a message that nothing was done
+        }
+    }
+
+    public void SaveHighScores()
+    {
+        if (QuickSaveRoot.Exists("HighScoreFile"))
+        {
+            QuickSaveRoot.Delete("HighScoreFile"); //if the file exists, then delete it
+        }
+
+        string nameForScore;
+        if (uiController.NameTextDisplay.text != null)
+        {
+            if (uiController.NameTextDisplay.text.Length > 3)
+            {
+                nameForScore = uiController.NameTextDisplay.text.Substring(0, 3);
+            }
+            else
+            {
+                nameForScore = uiController.NameTextDisplay.text;
+            }
+        }
+        else
+        {
+            nameForScore = "AAA";
+        }
+
+        highScoreObjectList.Add(new HighScoreObject(nameForScore, Resources));
+        highScoreObjectList.Sort();
+        highScoreObjectList.Reverse();
+        if (highScoreObjectList.Count > 10)
+        {
+            highScoreObjectList.RemoveAt(highScoreObjectList.Count - 1);
+        }
+        foreach(HighScoreObject highScoreObject in highScoreObjectList)
+        {
+            Debug.Log("The High score for "+highScoreObject.scoreString+" is " + highScoreObject.scoreValue);
+        }
+
+        QuickSaveWriter instWriter = QuickSaveWriter.Create("HighScoreFile"); //create an instance of the QuickSaveWriter
+        instWriter.Write<List<HighScoreObject>>("HighScoreObjectList", highScoreObjectList);
+        instWriter.Commit();//write the save file
+    }
+
+    public void DeleteHighScores()
+    {
+        if (QuickSaveRoot.Exists("HighScoreFile")) //check if the file exists
+        {
+            QuickSaveRoot.Delete("HighScoreFile"); //if the file exists, then delete it
+            print("Deleted data file " + "HighScoreFile"); //send a message that the file was deleted
+        }
+        else
+        {
+            print("Nothing to delete"); //if no save file exists, send a message that nothing was done
+        }
+    }
+
+    public void LoadHighScores()
+    {
+        if (QuickSaveRoot.Exists("HighScoreFile")) //if a save file exists, load data from that file
+        {
+            QuickSaveReader instReader = QuickSaveReader.Create("HighScoreFile"); //create an instance of the quick save reader to pull in the save file
+            highScoreObjectList = instReader.Read<List<HighScoreObject>>("HighScoreObjectList");
         }
     }
 

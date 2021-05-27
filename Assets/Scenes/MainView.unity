@@ -3847,7 +3847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &838638762
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5296,8 +5296,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352580159}
-        m_MethodName: SaveTestFile
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: LoadHighScores
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1352580158}
+        m_MethodName: SaveHighScores
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14890,11 +14901,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 529752950}
     m_Modifications:
+    - target: {fileID: 5448476647188959605, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_text
+      value: Enter Initials...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1352580152}
+      objectReference: {fileID: 1352580158}
     - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -14904,7 +14925,72 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
+      objectReference: {fileID: 1352580152}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1352580158}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: DeleteResourceAndUpgradeSaveFile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Delete
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadHighScores
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
       objectReference: {fileID: 1352580153}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: Quit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6418846871626252467, guid: 88f5e89e5b670664090be64fa695199f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveHighScores
+      objectReference: {fileID: 0}
     - target: {fileID: 6418846873009939026, guid: 88f5e89e5b670664090be64fa695199f,
         type: 3}
       propertyPath: m_LocalPosition.x
