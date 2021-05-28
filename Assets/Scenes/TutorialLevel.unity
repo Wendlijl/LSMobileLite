@@ -6989,7 +6989,6 @@ GameObject:
   - component: {fileID: 1003538990}
   - component: {fileID: 1003538989}
   - component: {fileID: 1003538988}
-  - component: {fileID: 1003538997}
   - component: {fileID: 1003538996}
   - component: {fileID: 1003538995}
   - component: {fileID: 1003538998}
@@ -7032,6 +7031,7 @@ GameObject:
   - component: {fileID: 1003539034}
   - component: {fileID: 1003539033}
   - component: {fileID: 1003539032}
+  - component: {fileID: 1003538997}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -7123,7 +7123,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.36364
     y: 70
-    width: 124.137886
+    width: 129.99992
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7155,11 +7155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 434.7017, y: -756.1236}
+  scrollPos: {x: 976.1694, y: -1333.25}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
-  blockViewHeight: 280
-  zoom: 0.58000034
+  blockViewHeight: 401
+  zoom: 0.4000004
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -7167,9 +7167,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1003539016}
+  - {fileID: 1003538976}
   selectedCommands:
-  - {fileID: 1003539032}
+  - {fileID: 1003538985}
   variables:
   - {fileID: 1003538889}
   - {fileID: 1003538899}
@@ -7381,7 +7381,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196
     y: 178
-    width: 106.896515
+    width: 112.49994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7469,7 +7469,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -28
     y: 170
-    width: 75.86205
+    width: 74.99998
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7524,7 +7524,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 40.838734
     y: 693.92267
-    width: 101.724106
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7648,7 +7648,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196.27567
     y: 605.4788
-    width: 113.79306
+    width: 119.99993
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7768,7 +7768,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -115.15278
     y: 608.33594
-    width: 118.96548
+    width: 127.49992
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7891,7 +7891,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.32022
     y: 486.11597
-    width: 101.724106
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8013,7 +8013,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 171.29893
     y: 380.18893
-    width: 108.62065
+    width: 109.99994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8133,7 +8133,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -99.278534
     y: 391.58167
-    width: 108.62065
+    width: 114.99994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8298,7 +8298,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 55.06185
     y: 265.43292
-    width: 99.99997
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8817,7 +8817,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 34.7518
     y: 789.57465
-    width: 99.99997
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9159,7 +9159,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -79.75803
     y: 899.12256
-    width: 99.99997
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9241,7 +9241,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -96.49431
     y: 1138.899
-    width: 113.79306
+    width: 119.99993
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9297,7 +9297,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 181.55438
     y: 1133.4745
-    width: 165.51718
+    width: 167.49988
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9400,7 +9400,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 33.505703
     y: 1069.3867
-    width: 99.99997
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9599,7 +9599,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 35.323895
     y: 1243.9323
-    width: 99.99997
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9816,7 +9816,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 33.89532
     y: 1328.2185
-    width: 99.99997
+    width: 102.49995
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9874,7 +9874,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 155.37845
     y: 1376.1635
-    width: 94.82756
+    width: 99.999954
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9930,7 +9930,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -141.99506
     y: 1376.2175
-    width: 160.34476
+    width: 169.99988
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10124,7 +10124,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 36.376743
     y: 1467.7671
-    width: 105.17238
+    width: 107.49994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10240,7 +10240,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -214.41129
     y: 1558.8928
-    width: 132.75858
+    width: 134.99991
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10298,7 +10298,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 7.8961506
     y: 1564.6622
-    width: 179.31027
+    width: 179.99988
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10439,7 +10439,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 264.42114
     y: 1567.1813
-    width: 170.68958
+    width: 172.49988
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10870,7 +10870,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 47.56828
     y: 1705.6456
-    width: 105.17238
+    width: 107.49994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10906,7 +10906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 241
   indentLevel: 0
-  storyText: 'Each gate links to every other gate in the system, and we have no idea
+  storyText: 'Each gate links to every other gate in the system, but we have no idea
     how many there are. More than we''ve been able to count. '
   description: 
   character: {fileID: 441710990}
@@ -10934,8 +10934,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 240
   indentLevel: 0
-  storyText: It's a mystery we'll probably never solve. But here is the important
-    part. The warp gates are how you get around the galaxy.
+  storyText: It's a mystery we might never solve. But here is the important part.
+    The warp gates are how you get around the galaxy.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -11017,7 +11017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 235
   indentLevel: 0
-  storyText: 'Truth is, no one really knows why it looks that way. '
+  storyText: 'Truth is, no one really knows who or how or why the gates were made. '
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -11045,7 +11045,7 @@ MonoBehaviour:
   itemId: 234
   indentLevel: 0
   storyText: 'Alright kid, this is it. This is the key to everything. The Warp Gate.
-    ...I know it just looks like a giant green dot. '
+    ...I know kinda wild isn''t it. '
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -11074,7 +11074,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.548805
     y: 1945.7808
-    width: 105.17238
+    width: 107.49994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11086,7 +11086,6 @@ MonoBehaviour:
   - {fileID: 1003538972}
   - {fileID: 1003538975}
   - {fileID: 1003538974}
-  - {fileID: 1003538997}
   - {fileID: 1003538971}
   - {fileID: 1003538970}
   - {fileID: 1003538986}
@@ -11277,7 +11276,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 38.033047
     y: 1798.2072
-    width: 106.896515
+    width: 107.49994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11337,8 +11336,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 243
   indentLevel: 0
-  storyText: 'This is also how you get back home when you have as many resources
-    as you want, or if you don''t think you can make it any further. '
+  storyText: 'This is also how you get back home when you have mined to your heart''s
+    content, or if you don''t think you can make it any further. '
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -11421,7 +11420,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 256
   indentLevel: 0
-  storyText: We'll talk again once you're closer.
+  storyText: Hopefully that's hard to miss. Head towards it and we'll talk again
+    once you're closer.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -11476,8 +11476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 250
   indentLevel: 0
-  storyText: There, you should be able to see better now. Alright now look around
-    for a big green dot on your map and head towards it.
+  storyText: 'There, you should be able to see better now. '
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -11590,7 +11589,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 20.732128
     y: 1870.5603
-    width: 106.896515
+    width: 107.49994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11605,6 +11604,7 @@ MonoBehaviour:
   - {fileID: 1003538991}
   - {fileID: 1003538989}
   - {fileID: 1003538990}
+  - {fileID: 1003538997}
   - {fileID: 1003538988}
   - {fileID: 1003539007}
   - {fileID: 1003539011}
@@ -11667,7 +11667,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &1003538997
 MonoBehaviour:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -11677,10 +11677,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: 258
+  itemId: 316
   indentLevel: 0
-  storyText: It's almost like whoever made all this just kind of... ran out of time
-    at the last minute and couldn't add the final details.
+  storyText: Alright now look around for a big floating metal ring swirling with
+    bearly contained graviational energy.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -12209,7 +12209,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.317919
     y: 975.0714
-    width: 108.62065
+    width: 112.49994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12333,7 +12333,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 115.51117
     y: 899.70844
-    width: 108.62065
+    width: 109.99994
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12591,7 +12591,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &1003539030
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12618,7 +12618,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &1003539031
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12646,7 +12646,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &1003539032
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12674,7 +12674,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &1003539033
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12702,7 +12702,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &1003539034
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -16063,7 +16063,7 @@ PrefabInstance:
     - target: {fileID: 3668506016003361181, guid: c8683725f5da4a7458502658eebe14f7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000076293945
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3668506016003361181, guid: c8683725f5da4a7458502658eebe14f7,
         type: 3}
