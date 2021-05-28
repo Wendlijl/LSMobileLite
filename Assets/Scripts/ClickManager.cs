@@ -4,40 +4,82 @@ using UnityEngine;
 
 public class ClickManager : MonoBehaviour
 {
-    public bool mouseClicked;
+    //public bool mouseClicked;
     public bool waitForQuarterSec;
     private float timer;
+    private bool touchRegistered;
+    private bool touchEnded;
+    private Touch touch;
+    private Vector3 touchPosition;
     private GameObject gameController;
     private ManageMap mapManager;
     private UIControl uiControler;
+    private GameObject player;
+    private MovementController movementController;
+    private AbilityController abilityController;
+
+    public bool TouchRegistered { get { return touchRegistered; } set { touchRegistered = value; } }
+    public Vector3 TouchPosition { get { return touchPosition; } set { touchPosition = value; } }
+
     // Start is called before the first frame update
     void Start()
     {
+        touchRegistered = false;
+        touchEnded = true;
         gameController = GameObject.Find("GameController");
         mapManager = gameController.GetComponent<ManageMap>();
         uiControler = gameController.GetComponent<UIControl>();
+        player = GameObject.Find("Player");
+        movementController = player.GetComponent<MovementController>();
+        abilityController = player.GetComponent<AbilityController>();
         waitForQuarterSec = false;
-        mouseClicked = false;
+        //mouseClicked = false;
         timer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)&&!uiControler.IsPaused) //This operation is initiated by the player clicking the fire button.
+        //if (Input.GetMouseButtonDown(0)&&!uiControler.IsPaused) //This operation is initiated by the player clicking the fire button.
+        if (Input.touchCount>0&&!uiControler.IsPaused) //This operation is initiated by the player clicking the fire button.
         {
+            touch = Input.GetTouch(0);
+            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+
 
             //Debug.Log(Input.mousePosition);
-            //Debug.Log("Screen height " + Screen.height + " Screen width " + Screen.width);
-            //Debug.Log("% Screen height " + Input.mousePosition.y/Screen.height + " % Screen width " + Input.mousePosition.x / Screen.width);
-            float percentageScreenHeight = Input.mousePosition.y / Screen.height;
+            Debug.Log(touch.position);
+            Debug.Log("Screen height " + Screen.height + " Screen width " + Screen.width);
+            Debug.Log("% Screen height " + touch.position.y/Screen.height + " % Screen width " + touch.position.x / Screen.width);
+            //float percentageScreenHeight = Input.mousePosition.y / Screen.height;
+            float percentageScreenHeight = touch.position.y / Screen.height;
+            //Debug.Log(percentageScreenHeight);
             if (percentageScreenHeight > 0.1 && percentageScreenHeight < 0.9)
             {
-                mouseClicked = true;
+                //mouseClicked = true;
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Debug.Log("Click Manager hears the touch");
+                    touchRegistered = true;
+                    movementController.TouchRegistered = touchRegistered;
+
+                }
+                if(touch.phase == TouchPhase.Moved)
+                {
+                    touchRegistered = false;
+                    movementController.TouchRegistered = touchRegistered;
+                }
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    touchRegistered = false;
+                    movementController.TouchRegistered = touchRegistered;
+                }
             }
             else
             {
-                mouseClicked = false;
+                //mouseClicked = false;
+                touchRegistered = false;
+                movementController.TouchRegistered = touchRegistered;
             }
 
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -52,7 +94,9 @@ public class ClickManager : MonoBehaviour
         }
         else
         {
-            mouseClicked = false;
+            //mouseClicked = false;
+            touchRegistered = false;
+            movementController.TouchRegistered = touchRegistered;
         }
 
         if (timer>0)

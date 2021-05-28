@@ -64,6 +64,7 @@ public class EnemyShipControl : MonoBehaviour
     {
         if (collision.gameObject.tag == "Rocket")
         {
+            Debug.Log("This enemy told him to blow up!");
             collision.gameObject.GetComponent<RocketController>().Detonate(transform.position);
         }
     }

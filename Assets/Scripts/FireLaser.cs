@@ -14,7 +14,7 @@ public class FireLaser : MonoBehaviour
     private Quaternion targetRotation; //Variable to hold the intended rotation of this game object
     private SpriteRenderer laserSprite; //Variable to hold a reference to the Sprite Renderer component
     private GridLayout gridLayout; //Variable to hold a reference to the grid layout
-
+    private ClickManager clickManager;
     //The below value is used in another method to set the rotation of this object
     //private float rotAngle;
 
@@ -22,9 +22,11 @@ public class FireLaser : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        clickManager = GameObject.Find("GameController").GetComponent<ClickManager>();
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Access and store a reference to the grid layout
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Create a Ray defining the loction of the mouse pointer within the screen
-        target = gridLayout.CellToWorld(gridLayout.WorldToCell(ray.origin)); //set the target position equal to the position of the mouse pointer
+        //target = gridLayout.CellToWorld(gridLayout.WorldToCell(ray.origin)); //set the target position equal to the position of the mouse pointer
+        target = gridLayout.CellToWorld(gridLayout.WorldToCell(clickManager.TouchPosition)); //set the target position equal to the position of the mouse pointer
         timer = 0; //set the initial value of the timer that tracks the life of the laser animation
 
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store a reference to the player game object

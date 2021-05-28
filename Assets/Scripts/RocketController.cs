@@ -42,6 +42,7 @@ public class RocketController : MonoBehaviour
         alreadyUsed = false;
         rocketYield = resourceAndUpgradeManager.CurrentMaxRocketYield;
         SetRotation(); //Call the function that will orient this object in the direction of the target. 
+        Debug.Log("Rocket reporting in");
 
     }
 
@@ -87,6 +88,7 @@ public class RocketController : MonoBehaviour
         Instantiate(rocketExplosion, origin, Quaternion.identity);
         rocketYield = resourceAndUpgradeManager.CurrentMaxRocketYield;
         GetExplosionNeighbours(gridLayout.WorldToCell(origin),rocketYield);
+        Debug.Log("Look I tried to blow up ok.");
         Destroy(gameObject);
     }
 

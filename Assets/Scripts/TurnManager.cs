@@ -109,6 +109,7 @@ public class TurnManager : MonoBehaviour
                 //
                 movementController.HasMoved = false;
                 abilityController.AbilityUsed = false;
+                abilityController.HasFired = false;
                 StartCoroutine("OrderEnemyTurns");
             }
             else if (enemyTurn)

@@ -41,6 +41,10 @@ public class MovementController : MonoBehaviour
     private ResourceAndUpgradeManager resourceAndUpgradeManager;
     private GameObject gameController;
 
+    private bool touchRegistered;
+
+    public bool TouchRegistered { get { return touchRegistered; } set { touchRegistered = value; } }
+
     public Vector3Int ClickCellPosition { get { return clickCellPosition; } set { clickCellPosition = value; } }
 
 
@@ -79,26 +83,29 @@ public class MovementController : MonoBehaviour
         if (!abilityController.abilityActive && (!turnManager.combatActive || turnManager.playerTurn) && movementState) //if the ability active flag is true then disable movement
         {
             //The next two parameters and the following if statement are for keyboard movement. Primary movement is mouse based, but keyboard is kept for an alternate control scheme. Will need to make sure that all functionality is duplicated on the keyboard
-            sidewaysMovement = Input.GetAxis("Horizontal");
-            upDownMovement = Input.GetAxis("Vertical");
-
-            //Determine if the player has moved yet for a given keypress. Since up/down movement does not require any addition definition, that is used as the initiation of all motion
-            if (upDownMovement == 0)
-            {
-                //hasMoved = false;
-            }
-            else if (upDownMovement != 0 && !hasMoved) //If up or down input is detected and the player has not moved, then call the movement function and set hasMoved to true
-            {
-                hasMoved = true;
-                GetMovementDirection();
-            }
+            //sidewaysMovement = Input.GetAxis("Horizontal");
+            //upDownMovement = Input.GetAxis("Vertical");
+            //
+            ////Determine if the player has moved yet for a given keypress. Since up/down movement does not require any addition definition, that is used as the initiation of all motion
+            //if (upDownMovement == 0)
+            //{
+            //    //hasMoved = false;
+            //}
+            //else if (upDownMovement != 0 && !hasMoved) //If up or down input is detected and the player has not moved, then call the movement function and set hasMoved to true
+            //{
+            //    hasMoved = true;
+            //    GetMovementDirection();
+            //}
 
             //the following if statement controls the mouse movement 
-            if (clickManager.mouseClicked) //listen for mouse input from the user
+            //if (clickManager.mouseClicked) //listen for mouse input from the user
+            if (TouchRegistered) //listen for mouse input from the user
             {
+                Debug.Log("Movement Controller hears the touch");
                 cantMove = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //when the mouse is clicked, create a ray whose origin is at the mouse click position
-                clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
+                //clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
+                clickCellPosition = gridLayout.WorldToCell(clickManager.TouchPosition); //extract the mouse click position from the ray and convert it to grid space
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
 
