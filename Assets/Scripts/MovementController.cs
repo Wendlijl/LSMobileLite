@@ -24,8 +24,8 @@ public class MovementController : MonoBehaviour
     private bool hasMoved; //variable to check for whether movement has happened yet
     private bool cantMove;
     private bool longMoveRunning=false;
-    private float sidewaysMovement; //varaible to define sideways movement of player
-    private float upDownMovement; //variable to define vertical movement of player
+    //private float sidewaysMovement; //varaible to define sideways movement of player
+    //private float upDownMovement; //variable to define vertical movement of player
     private int moveCount = 0;
     //private float rotTrack; //variable to track where the ship is in it's rotation (Depricated)
     private float clickDistance; //variable to determine how far away a clicked cell is 
@@ -237,47 +237,47 @@ public class MovementController : MonoBehaviour
         MovementState = true;
     }
 
-    public void GetMovementDirection()
-    {
-        //The GetMovementDirection function determines the players intended movement based on updown and left right keys
-        if (upDownMovement < 0)
-        {
-            if (sidewaysMovement > 0)
-            {
-                direction = new Vector3(0.5f, -0.5f); //Move player down right
-            }
-            else if (sidewaysMovement < 0)
-            {
-                direction = new Vector3(-0.5f, -0.5f); //Move player down left
-            }
-            else
-            {
-                direction = new Vector3(0, -1, 0); //Move player down
-            }
-
-        }
-        else if (upDownMovement > 0)
-        {
-            if (sidewaysMovement > 0)
-            {
-                direction = new Vector3(0.5f, 0.5f); //Move player up right
-            }
-            else if (sidewaysMovement < 0)
-            {
-                direction = new Vector3(-0.5f, 0.5f); //Move player up left
-            }
-            else
-            {
-                direction = new Vector3(0, 1, 0); //Move player up
-            }
-        }
-        //Once direction is determined, the player transform is moved to that location and centered in the destination cell
-
-        transform.position += direction * moveScale;
-        playerCellPosition = gridLayout.WorldToCell(transform.position);
-        transform.position = gridLayout.CellToWorld(playerCellPosition);
-        mapManager.UpdateFogOfWar(vision, playerCellPosition); //A call to the fog of war function is made to update what the player can see
-    }
+    //public void GetMovementDirection()
+    //{
+    //    //The GetMovementDirection function determines the players intended movement based on updown and left right keys
+    //    if (upDownMovement < 0)
+    //    {
+    //        if (sidewaysMovement > 0)
+    //        {
+    //            direction = new Vector3(0.5f, -0.5f); //Move player down right
+    //        }
+    //        else if (sidewaysMovement < 0)
+    //        {
+    //            direction = new Vector3(-0.5f, -0.5f); //Move player down left
+    //        }
+    //        else
+    //        {
+    //            direction = new Vector3(0, -1, 0); //Move player down
+    //        }
+    //
+    //    }
+    //    else if (upDownMovement > 0)
+    //    {
+    //        if (sidewaysMovement > 0)
+    //        {
+    //            direction = new Vector3(0.5f, 0.5f); //Move player up right
+    //        }
+    //        else if (sidewaysMovement < 0)
+    //        {
+    //            direction = new Vector3(-0.5f, 0.5f); //Move player up left
+    //        }
+    //        else
+    //        {
+    //            direction = new Vector3(0, 1, 0); //Move player up
+    //        }
+    //    }
+    //    //Once direction is determined, the player transform is moved to that location and centered in the destination cell
+    //
+    //    transform.position += direction * moveScale;
+    //    playerCellPosition = gridLayout.WorldToCell(transform.position);
+    //    transform.position = gridLayout.CellToWorld(playerCellPosition);
+    //    mapManager.UpdateFogOfWar(vision, playerCellPosition); //A call to the fog of war function is made to update what the player can see
+    //}
 
     public void MovePlayer(Vector3Int moveTarget, bool regularMove)
     {

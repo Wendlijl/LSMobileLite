@@ -56,11 +56,17 @@ public class ClickManager : MonoBehaviour
             //Debug.Log(percentageScreenHeight);
             if (percentageScreenHeight > 0.1 && percentageScreenHeight < 0.9)
             {
+                if (!touchEnded)
+                {
+                    touchRegistered = false;
+                    movementController.TouchRegistered = touchRegistered;
+                }
                 //mouseClicked = true;
                 if (touch.phase == TouchPhase.Began)
                 {
                     Debug.Log("Click Manager hears the touch");
                     touchRegistered = true;
+                    touchEnded = false;
                     movementController.TouchRegistered = touchRegistered;
 
                 }
@@ -71,6 +77,7 @@ public class ClickManager : MonoBehaviour
                 }
                 if (touch.phase == TouchPhase.Ended)
                 {
+                    touchEnded = true;
                     touchRegistered = false;
                     movementController.TouchRegistered = touchRegistered;
                 }
