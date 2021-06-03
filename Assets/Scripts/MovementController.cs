@@ -98,14 +98,15 @@ public class MovementController : MonoBehaviour
             //}
 
             //the following if statement controls the mouse movement 
-            //if (clickManager.mouseClicked) //listen for mouse input from the user
-            if (TouchRegistered) //listen for mouse input from the user
+            if (clickManager.MouseClicked) //listen for mouse input from the user
+            //if (TouchRegistered) //listen for mouse input from the user
             {
                 //Debug.Log("Movement Controller hears the touch");
                 cantMove = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //when the mouse is clicked, create a ray whose origin is at the mouse click position
                 //clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
-                clickCellPosition = gridLayout.WorldToCell(clickManager.TouchPosition); //extract the mouse click position from the ray and convert it to grid space
+                //clickCellPosition = gridLayout.WorldToCell(clickManager.TouchPosition); //extract the mouse click position from the ray and convert it to grid space
+                clickCellPosition = gridLayout.WorldToCell(clickManager.ClickPosition); //extract the mouse click position from the ray and convert it to grid space
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
 

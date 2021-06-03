@@ -7123,7 +7123,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.36364
     y: 70
-    width: 85.34244
+    width: 80.491776
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7155,11 +7155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 307.78915, y: -1038.8439}
+  scrollPos: {x: 396.03857, y: -1250.7659}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 401
-  zoom: 0.73000026
+  zoom: 0.61000025
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -7167,9 +7167,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1003538923}
+  - {fileID: 1003538976}
   selectedCommands:
-  - {fileID: 1003539006}
+  - {fileID: 1003538984}
   variables:
   - {fileID: 1003538889}
   - {fileID: 1003538899}
@@ -7381,7 +7381,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196
     y: 178
-    width: 67.534225
+    width: 65.737686
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7524,7 +7524,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 39.468872
     y: 695.29254
-    width: 60.684914
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7648,7 +7648,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196.27567
     y: 605.4788
-    width: 75.7534
+    width: 72.29506
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7768,7 +7768,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -115.15278
     y: 608.33594
-    width: 81.23285
+    width: 77.21309
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7891,7 +7891,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.32022
     y: 486.11597
-    width: 60.684914
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8013,7 +8013,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 171.29893
     y: 380.18893
-    width: 67.534225
+    width: 67.37703
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8133,7 +8133,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -99.278534
     y: 391.58167
-    width: 70.27396
+    width: 67.37703
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8354,8 +8354,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 62
   indentLevel: 0
-  storyText: You may have noticed the hex that is highlighted as you tap on your
-    tactical map.
+  storyText: You may have noticed the hex that is highlighted as you move your mouse
+    over the tactical map.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -8494,7 +8494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 69
   indentLevel: 0
-  storyText: If you tap on a hex you can see, your ship will move there. Go ahead,
+  storyText: If you click on a hex you can see, your ship will move there. Go ahead,
     try moving around a bit. Shouldn't run into anything out here.
   description: 
   character: {fileID: 441710990}
@@ -9239,9 +9239,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: -96.49431
-    y: 1138.899
-    width: 77.12326
+    x: -111.2484
+    y: 1140.5385
+    width: 72.29506
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9297,7 +9297,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 181.55438
     y: 1133.4745
-    width: 122.32873
+    width: 119.83602
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9542,7 +9542,7 @@ MonoBehaviour:
   itemId: 129
   indentLevel: 0
   storyText: 'Alright kid, you see those highlighted red hexes that showed up? That''s
-    the range of your laser. Tap on one of those hexes to fire at that hex. '
+    the range of your laser. Click on one of those hexes to fire at that hex. '
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -9814,8 +9814,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 33.89532
-    y: 1328.2185
+    x: 35.32389
+    y: 1323.9327
     width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -9930,7 +9930,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -141.99506
     y: 1376.2175
-    width: 122.32873
+    width: 114.91799
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10124,7 +10124,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 36.376743
     y: 1467.7671
-    width: 64.7945
+    width: 65.737686
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10240,7 +10240,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -214.41129
     y: 1558.8928
-    width: 93.561615
+    width: 93.60652
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10298,7 +10298,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 7.8961506
     y: 1564.6622
-    width: 138.76707
+    width: 141.14749
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10439,7 +10439,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 264.42114
     y: 1567.1813
-    width: 130.54791
+    width: 131.31143
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10473,7 +10473,7 @@ MonoBehaviour:
   itemId: 196
   indentLevel: 0
   storyText: Oh and one more thing, if you want to know the hexes that the enemies
-    are able to shoot at, just tap on an enemy.
+    are able to shoot at, just click on an enemy.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -10870,7 +10870,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 47.56828
     y: 1705.6456
-    width: 64.7945
+    width: 64.09834
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11074,7 +11074,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.548805
     y: 1945.7808
-    width: 64.7945
+    width: 64.09834
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11276,7 +11276,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 38.033047
     y: 1798.2072
-    width: 66.16437
+    width: 65.737686
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11589,7 +11589,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 20.732128
     y: 1869.3408
-    width: 66.16437
+    width: 65.737686
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12209,7 +12209,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.317919
     y: 975.0714
-    width: 68.90408
+    width: 65.737686
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12333,7 +12333,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 115.51117
     y: 899.70844
-    width: 67.534225
+    width: 65.737686
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0

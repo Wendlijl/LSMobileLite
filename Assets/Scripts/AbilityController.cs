@@ -72,7 +72,8 @@ public class AbilityController : MonoBehaviour
         instY = player.transform.position.y; //set the initial y position for instantiated objects
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
         //target = gridLayout.WorldToCell(ray.origin); //set the initial position of the target (i.e. where is the mouse pointing in grid coordinates)
-        target = gridLayout.WorldToCell(clickManager.TouchPosition); //set the initial position of the target (i.e. where is the mouse pointing in grid coordinates)
+        //target = gridLayout.WorldToCell(clickManager.TouchPosition); //set the initial position of the target (i.e. where is the mouse pointing in grid coordinates)
+        target = gridLayout.WorldToCell(clickManager.ClickPosition); //set the initial position of the target (i.e. where is the mouse pointing in grid coordinates)
         laserState = false; //set the initial state of the laser ability activation
         jumpState = false;
         jumpCells = new List<Vector3Int>();
@@ -92,12 +93,13 @@ public class AbilityController : MonoBehaviour
     void Update()
     {
         //player = GameObject.FindGameObjectWithTag("Player"); //at one point, the player game object was being set every update. I don't think this is necessary, but it may have had some effect.
-        //if (clickManager.mouseClicked && !turnOffAb) //check if the laser has been activated
-        if (clickManager.TouchRegistered && !turnOffAb) //check if the laser has been activated
+        if (clickManager.MouseClicked && !turnOffAb) //check if the laser has been activated
+        //if (clickManager.TouchRegistered && !turnOffAb) //check if the laser has been activated
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //get the current position of the mouse pointer
             //target = gridLayout.WorldToCell(ray.origin); //set the position of the target to the position of the mouse pointer in grid coordinates
-            target = gridLayout.WorldToCell(clickManager.TouchPosition); //set the position of the target to the position of the mouse pointer in grid coordinates
+            //target = gridLayout.WorldToCell(clickManager.TouchPosition); //set the position of the target to the position of the mouse pointer in grid coordinates
+            target = gridLayout.WorldToCell(clickManager.ClickPosition); //set the position of the target to the position of the mouse pointer in grid coordinates
             //clickDistance = Vector3.Distance(gridLayout.CellToWorld(target), gridLayout.CellToWorld(gridLayout.WorldToCell(player.transform.position))); //this is find the distance between the player and the point where they click. It converts multiple times bewteen the grid and world coordinates because it wants the world coordinates of the exact center of the relevant hexs. The easiest way I have found to do this is to first take world coordinates, convert them to grid coordinates, then convert those back to world coordinates
             playerHex = gridLayout.WorldToCell(player.transform.position); //get the current position of the player in grid coordinates
             clickDistance = mapManager.HexCellDistance(mapManager.evenq2cube(target),mapManager.evenq2cube(playerHex)); //This calculation determines the distance to the clicked cell using the cube coordiante method 
@@ -126,7 +128,8 @@ public class AbilityController : MonoBehaviour
                             instX = player.transform.position.x; //set the x position of the instatiation equal to the player's current x position
                             instY = player.transform.position.y; //set the y position of the instatiation equal to the player's current x position
                             //laserSpwanMod = Vector3.Normalize(player.transform.position - ray.origin); //calculate a vector that points between the target and the player, then normalize it
-                            laserSpwanMod = Vector3.Normalize(player.transform.position - clickManager.TouchPosition); //calculate a vector that points between the target and the player, then normalize it
+                            //laserSpwanMod = Vector3.Normalize(player.transform.position - clickManager.TouchPosition); //calculate a vector that points between the target and the player, then normalize it
+                            laserSpwanMod = Vector3.Normalize(player.transform.position - clickManager.ClickPosition); //calculate a vector that points between the target and the player, then normalize it
                             newInstance = Instantiate(laser, new Vector3(instX - (laserSpwanMod.x ), instY - (laserSpwanMod.y ), 0), Quaternion.identity); //Instantiate the laser object and apply some modifications that move the laser off of the ceneter of the player game object and to the edge of the ship sprite (this looks better in game then spawning at the center).
                             turnOffAb = true;
                         }
