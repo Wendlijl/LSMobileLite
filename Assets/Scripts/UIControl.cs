@@ -237,14 +237,14 @@ public class UIControl : MonoBehaviour
         }
 
 
-        if (QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName)||mapManager.saveName=="TutorialFile")
-        {
-            //Do nothing
-        }
-        else
-        {
-            newGameMessage.SetActive(true);
-        }
+        //if (QuickSaveRoot.Exists(resourceAndUpgradeManager.ResourceAndUpgradeDataSaveFileName)||mapManager.saveName=="TutorialFile")
+        //{
+        //    //Do nothing
+        //}
+        //else
+        //{
+        //    newGameMessage.SetActive(true);
+        //}
 
 
         masterUpgradeLayoutGroup = GameObject.Find("MasterUpgradeHorizontalLayoutGroup");

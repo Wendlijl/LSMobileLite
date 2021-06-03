@@ -10,7 +10,7 @@ public class EnemyShipControl : MonoBehaviour
     public Vector3Int enemyCellPosition; //Variable to store the cellPosition of this enemy
     public GameObject explosion; //Variable to hold an instance of the explosion animation
     public EnemyObject thisEnemyObject; //This variable gets set initially from ManageMap when this object is created
-    public bool highlightEnabled;
+    private bool highlightEnabled;
     public GameObject enemyLaser;
 
     private bool shotIncoming; //Boolean to track if the laser animation is running
@@ -34,6 +34,7 @@ public class EnemyShipControl : MonoBehaviour
     private int jumpChargeTracker;
 
     public bool CheckShotRunning { get { return checkShotRunning; } set { checkShotRunning = value; } }
+    public bool HighlightEnabled { get { return highlightEnabled; } set { highlightEnabled = value; } }
 
     // Start is called before the first frame update
     void Awake()

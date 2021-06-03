@@ -308,13 +308,13 @@ public class ManageMap : MonoBehaviour
                     {
                         highlightWeaponMap.SetTile(playerCellPosition + new Vector3Int(x, y, 0), highlightTileRed); //change the cell at the current coordinates to the highlighted tile
                         currentHighlightedTiles.Add(playerCellPosition + new Vector3Int(x, y, 0)); //add the coordinates of this tile to the list of tiles currently highlighted
-                        //Debug.Log("Enabling Highlighting"+ playerCellPosition + new Vector3Int(x, y, 0));
+                        //Debug.Log("Enabling laser Highlighting"+ playerCellPosition + new Vector3Int(x, y, 0));
                     }
                     else //if the laser is not active, then disable the highlighted cells
                     {
                         highlightWeaponMap.SetTile(playerCellPosition + new Vector3Int(x, y, 0), null); //set the cell at the current coordinates to null
                         currentHighlightedTiles.Clear(); //clear the list of highlighted cell coordinates. This does not need to be done every single time. Maybe move this out of the loop to save processing power?
-                        //Debug.Log("disabling highlighting");
+                        //Debug.Log("disabling laser highlighting");
                     }
                 }
             }
@@ -323,7 +323,8 @@ public class ManageMap : MonoBehaviour
 
     public void HighlightSet(List<Vector3Int> highlightSet, bool setState)
     {
-        foreach(Vector3Int highlightCell in highlightSet)
+        //Debug.Log("General highlighting set " + setState); 
+        foreach (Vector3Int highlightCell in highlightSet)
         {
             if (setState)
             {
@@ -1036,25 +1037,25 @@ public class ManageMap : MonoBehaviour
 
     public void ShowFlats(string objectName, Vector3Int cellPosition, GameObject givenObject)
     {
-        Debug.Log("Called show flats");
+        //Debug.Log("Called show flats");
         List<Vector3Int> range = new List<Vector3Int>();
         if (objectName == "EnemyA")
         {
             range = GetFlats(3, cellPosition, false);
-            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
-            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+            givenObject.GetComponent<EnemyShipControl>().HighlightEnabled = !givenObject.GetComponent<EnemyShipControl>().HighlightEnabled;
+            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().HighlightEnabled);
         }
         else if (objectName == "EnemyB")
         {
             range = GetFlats(1, cellPosition, false);
-            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
-            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+            givenObject.GetComponent<EnemyShipControl>().HighlightEnabled = !givenObject.GetComponent<EnemyShipControl>().HighlightEnabled;
+            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().HighlightEnabled);
         }
         else if (objectName == "EnemyC")
         {
             range = GetRange(2, cellPosition);
-            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = !givenObject.GetComponent<EnemyShipControl>().highlightEnabled;
-            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().highlightEnabled);
+            givenObject.GetComponent<EnemyShipControl>().HighlightEnabled = !givenObject.GetComponent<EnemyShipControl>().HighlightEnabled;
+            HighlightSet(range, givenObject.GetComponent<EnemyShipControl>().HighlightEnabled);
         }
         else if (objectName == "Player")
         {
@@ -1068,22 +1069,22 @@ public class ManageMap : MonoBehaviour
 
     public void ShowFlats(string objectName, Vector3Int cellPosition, GameObject givenObject, bool state)
     {
-        Debug.Log("Called show flats overload");
+        //Debug.Log("Called show flats overload");
         List<Vector3Int> range = new List<Vector3Int>();
         if (objectName == "EnemyA")
         {
             range = GetFlats(3, cellPosition, false);
-            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
+            givenObject.GetComponent<EnemyShipControl>().HighlightEnabled = state;
         }
         else if (objectName == "EnemyB")
         {
             range = GetFlats(1, cellPosition, false);
-            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
+            givenObject.GetComponent<EnemyShipControl>().HighlightEnabled = state;
         }
         else if (objectName == "EnemyC")
         {
             range = GetRange(2, cellPosition);
-            givenObject.GetComponent<EnemyShipControl>().highlightEnabled = state;
+            givenObject.GetComponent<EnemyShipControl>().HighlightEnabled = state;
         }
         else if (objectName == "Player")
         {

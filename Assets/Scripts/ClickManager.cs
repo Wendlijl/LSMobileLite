@@ -17,6 +17,7 @@ public class ClickManager : MonoBehaviour
     private GameObject player;
     private MovementController movementController;
     private AbilityController abilityController;
+    private GridLayout gridLayout;
 
     public bool TouchRegistered { get { return touchRegistered; } set { touchRegistered = value; } }
     public Vector3 TouchPosition { get { return touchPosition; } set { touchPosition = value; } }
@@ -32,6 +33,7 @@ public class ClickManager : MonoBehaviour
         player = GameObject.Find("Player");
         movementController = player.GetComponent<MovementController>();
         abilityController = player.GetComponent<AbilityController>();
+        gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //store a reference to the grid layout component
         waitForQuarterSec = false;
         //mouseClicked = false;
         timer = 0;
@@ -46,11 +48,19 @@ public class ClickManager : MonoBehaviour
             touch = Input.GetTouch(0);
             touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
 
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy.GetComponent<EnemyShipControl>().HighlightEnabled && enemy.GetComponent<EnemyShipControl>().enemyCellPosition != gridLayout.WorldToCell(touchPosition))
+                {
+                    mapManager.ShowFlats(enemy.GetComponent<EnemyShipControl>().thisEnemyName, enemy.GetComponent<EnemyShipControl>().enemyCellPosition, enemy, false);
+                }
+            }
 
             //Debug.Log(Input.mousePosition);
-            Debug.Log(touch.position);
-            Debug.Log("Screen height " + Screen.height + " Screen width " + Screen.width);
-            Debug.Log("% Screen height " + touch.position.y/Screen.height + " % Screen width " + touch.position.x / Screen.width);
+            //Debug.Log(touch.position);
+            //Debug.Log("Screen height " + Screen.height + " Screen width " + Screen.width);
+            //Debug.Log("% Screen height " + touch.position.y/Screen.height + " % Screen width " + touch.position.x / Screen.width);
             //float percentageScreenHeight = Input.mousePosition.y / Screen.height;
             float percentageScreenHeight = touch.position.y / Screen.height;
             //Debug.Log(percentageScreenHeight);
@@ -61,14 +71,14 @@ public class ClickManager : MonoBehaviour
                     touchRegistered = false;
                     movementController.TouchRegistered = touchRegistered;
                 }
+
                 //mouseClicked = true;
                 if (touch.phase == TouchPhase.Began)
                 {
-                    Debug.Log("Click Manager hears the touch");
+                    //Debug.Log("Click Manager hears the touch");
                     touchRegistered = true;
                     touchEnded = false;
                     movementController.TouchRegistered = touchRegistered;
-
                 }
                 if(touch.phase == TouchPhase.Moved)
                 {
@@ -81,6 +91,17 @@ public class ClickManager : MonoBehaviour
                     touchRegistered = false;
                     movementController.TouchRegistered = touchRegistered;
                 }
+                if (TouchRegistered)
+                {
+                    foreach (GameObject enemy in enemies)
+                    {
+                        if (!enemy.GetComponent<EnemyShipControl>().CheckShotRunning)
+                        {
+                            enemy.GetComponent<EnemyShipControl>().CheckDisplayRange(gridLayout.WorldToCell(touchPosition));
+                        }
+
+                    }
+                }
             }
             else
             {
@@ -89,14 +110,7 @@ public class ClickManager : MonoBehaviour
                 movementController.TouchRegistered = touchRegistered;
             }
 
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies) //loop through the list of any enemies currently in the scene and destroy them
-            {
-                if (enemy.GetComponent<EnemyShipControl>().highlightEnabled)
-                {
-                    mapManager.ShowFlats(enemy.GetComponent<EnemyShipControl>().thisEnemyName, enemy.GetComponent<EnemyShipControl>().enemyCellPosition, enemy, false);
-                }
-            }
+
 
         }
         else

@@ -3940,7 +3940,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.85
+  m_fontSize: 19.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7123,7 +7123,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.36364
     y: 70
-    width: 89.99992
+    width: 85.34244
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7155,11 +7155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 976.1694, y: -1333.25}
+  scrollPos: {x: 307.78915, y: -1038.8439}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 401
-  zoom: 0.4000004
+  zoom: 0.73000026
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -7167,9 +7167,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1003538994}
+  - {fileID: 1003538923}
   selectedCommands:
-  - {fileID: 1003538997}
+  - {fileID: 1003539006}
   variables:
   - {fileID: 1003538889}
   - {fileID: 1003538899}
@@ -7381,7 +7381,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196
     y: 178
-    width: 72.49994
+    width: 67.534225
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7522,9 +7522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 40.838734
-    y: 693.92267
-    width: 62.499947
+    x: 39.468872
+    y: 695.29254
+    width: 60.684914
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7648,7 +7648,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 196.27567
     y: 605.4788
-    width: 79.99993
+    width: 75.7534
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7768,7 +7768,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -115.15278
     y: 608.33594
-    width: 87.49992
+    width: 81.23285
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -7891,7 +7891,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 63.32022
     y: 486.11597
-    width: 62.499947
+    width: 60.684914
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8013,7 +8013,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 171.29893
     y: 380.18893
-    width: 69.99994
+    width: 67.534225
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8133,7 +8133,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -99.278534
     y: 391.58167
-    width: 74.99994
+    width: 70.27396
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8298,7 +8298,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 55.06185
     y: 265.43292
-    width: 62.499947
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -8354,8 +8354,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 62
   indentLevel: 0
-  storyText: 'You may have noticed the hex that is highlighted on your tactical map
-    as you move your mouse around. '
+  storyText: You may have noticed the hex that is highlighted as you tap on your
+    tactical map.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -8494,7 +8494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 69
   indentLevel: 0
-  storyText: If you click on a hex you can see, your ship will move there. Go ahead,
+  storyText: If you tap on a hex you can see, your ship will move there. Go ahead,
     try moving around a bit. Shouldn't run into anything out here.
   description: 
   character: {fileID: 441710990}
@@ -8706,7 +8706,7 @@ MonoBehaviour:
   itemId: 120
   indentLevel: 0
   storyText: Calm down kid. I'm activating your weapons. See the big red button on
-    your ship console? hit that to activate your laser.
+    your ship console? Hit that to activate your laser.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -8817,7 +8817,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 34.7518
     y: 789.57465
-    width: 62.499947
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9159,7 +9159,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -79.75803
     y: 899.12256
-    width: 62.499947
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9241,7 +9241,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -96.49431
     y: 1138.899
-    width: 79.99993
+    width: 77.12326
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9297,7 +9297,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 181.55438
     y: 1133.4745
-    width: 127.499886
+    width: 122.32873
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9400,7 +9400,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 33.505703
     y: 1069.3867
-    width: 62.499947
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9542,7 +9542,7 @@ MonoBehaviour:
   itemId: 129
   indentLevel: 0
   storyText: 'Alright kid, you see those highlighted red hexes that showed up? That''s
-    the range of you laser. Click on one of those hexes to fire at that hex. '
+    the range of your laser. Tap on one of those hexes to fire at that hex. '
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -9599,7 +9599,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 35.323895
     y: 1243.9323
-    width: 62.499947
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9816,7 +9816,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 33.89532
     y: 1328.2185
-    width: 62.499947
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -9930,7 +9930,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -141.99506
     y: 1376.2175
-    width: 129.99988
+    width: 122.32873
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10124,7 +10124,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 36.376743
     y: 1467.7671
-    width: 67.49994
+    width: 64.7945
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10240,7 +10240,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -214.41129
     y: 1558.8928
-    width: 94.999916
+    width: 93.561615
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10298,7 +10298,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 7.8961506
     y: 1564.6622
-    width: 139.99988
+    width: 138.76707
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10439,7 +10439,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 264.42114
     y: 1567.1813
-    width: 132.49988
+    width: 130.54791
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -10473,7 +10473,7 @@ MonoBehaviour:
   itemId: 196
   indentLevel: 0
   storyText: Oh and one more thing, if you want to know the hexes that the enemies
-    are able to shoot at, just click on an enemy.
+    are able to shoot at, just tap on an enemy.
   description: 
   character: {fileID: 441710990}
   portrait: {fileID: 21300000, guid: 1f3fd8310fcc49246af0cafb6749f24b, type: 3}
@@ -10556,7 +10556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 209
   indentLevel: 0
-  storyText: So upgrades. They're easy. Just click on the upgrade button in the lower
+  storyText: So upgrades. They're easy. Just hit the upgrade button in the lower
     right of your ship console to open them up.
   description: 
   character: {fileID: 441710990}
@@ -10870,7 +10870,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 47.56828
     y: 1705.6456
-    width: 67.49994
+    width: 64.7945
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11074,7 +11074,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.548805
     y: 1945.7808
-    width: 67.49994
+    width: 64.7945
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11276,7 +11276,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 38.033047
     y: 1798.2072
-    width: 67.49994
+    width: 66.16437
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11588,8 +11588,8 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 20.732128
-    y: 1870.5603
-    width: 67.49994
+    y: 1869.3408
+    width: 66.16437
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -11667,7 +11667,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &1003538997
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12209,7 +12209,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 26.317919
     y: 975.0714
-    width: 72.49994
+    width: 68.90408
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -12333,7 +12333,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 115.51117
     y: 899.70844
-    width: 69.99994
+    width: 67.534225
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0

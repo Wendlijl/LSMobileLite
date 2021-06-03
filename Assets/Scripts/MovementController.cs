@@ -101,7 +101,7 @@ public class MovementController : MonoBehaviour
             //if (clickManager.mouseClicked) //listen for mouse input from the user
             if (TouchRegistered) //listen for mouse input from the user
             {
-                Debug.Log("Movement Controller hears the touch");
+                //Debug.Log("Movement Controller hears the touch");
                 cantMove = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //when the mouse is clicked, create a ray whose origin is at the mouse click position
                 //clickCellPosition = gridLayout.WorldToCell(ray.origin); //extract the mouse click position from the ray and convert it to grid space
@@ -109,15 +109,7 @@ public class MovementController : MonoBehaviour
                 clickCellPositionCubeCoords = mapManager.evenq2cube(clickCellPosition); //the clicked cell coordinates converted to cube coordinates
                 playerCellPositionCubeCoords = mapManager.evenq2cube(playerCellPosition);//the player cell coordinates converted to cube coordinates
 
-                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-                foreach (GameObject enemy in enemies) //loop through the list of any enemies currently in the scene and destroy them
-                {
-                    if (!enemy.GetComponent<EnemyShipControl>().CheckShotRunning)
-                    {
-                        enemy.GetComponent<EnemyShipControl>().CheckDisplayRange(clickCellPosition);
-                    }
 
-                }
 
                 //Debug.Log("Clicked distance " + mapManager.HexCellDistance(playerCellPositionCubeCoords, clickCellPositionCubeCoords));
                 //Debug.Log("Clicked on "+clickCellPosition);
