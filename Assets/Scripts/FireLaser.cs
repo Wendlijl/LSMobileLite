@@ -26,8 +26,8 @@ public class FireLaser : MonoBehaviour
         gridLayout = GameObject.Find("Grid").GetComponent<GridLayout>(); //Access and store a reference to the grid layout
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Create a Ray defining the loction of the mouse pointer within the screen
         //target = gridLayout.CellToWorld(gridLayout.WorldToCell(ray.origin)); //set the target position equal to the position of the mouse pointer
-        //target = gridLayout.CellToWorld(gridLayout.WorldToCell(clickManager.TouchPosition)); //set the target position equal to the position of the mouse pointer
-        target = gridLayout.CellToWorld(gridLayout.WorldToCell(clickManager.ClickPosition)); //set the target position equal to the position of the mouse pointer
+        target = gridLayout.CellToWorld(gridLayout.WorldToCell(clickManager.TouchPosition)); //set the target position equal to the position of the mouse pointer
+        //target = gridLayout.CellToWorld(gridLayout.WorldToCell(clickManager.ClickPosition)); //set the target position equal to the position of the mouse pointer
         timer = 0; //set the initial value of the timer that tracks the life of the laser animation
 
         player = GameObject.FindGameObjectWithTag("Player"); //Access and store a reference to the player game object
